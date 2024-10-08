@@ -5,7 +5,6 @@ import { LoginDto } from '@shared/dto/login.dto';
 import { RefreshDto } from '@shared/dto/refresh.dto';
 import { TokenModel } from '@shared/models/token.model';
 
-const {api_url} = environment;
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +12,7 @@ export class AuthService {
 
   http = inject(HttpClient);
 
-  url = `${api_url}/auth`;
+  url = `auth`;
 
   login(credentials:LoginDto){
     return this.http.post<TokenModel>(`${this.url}/login`,credentials);
