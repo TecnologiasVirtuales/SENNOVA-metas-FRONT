@@ -5,6 +5,11 @@ import { AuthService } from '@shared/services/auth.service';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { heroEye, heroEyeSlash, heroIdentification, heroLockClosed } from '@ng-icons/heroicons/outline';
+import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzFlexModule } from 'ng-zorro-antd/flex';
 
 @Component({
   selector: 'app-login',
@@ -15,15 +20,29 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     ReactiveFormsModule,
     NzFormModule,
     NzInputModule,
-    NzButtonModule
+    NzButtonModule,
+    NzGridModule,
+    NzFlexModule,
+    NzTypographyModule,
+    NgIconComponent
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
+  viewProviders: [provideIcons({ 
+    heroIdentification,
+    heroEye,
+    heroEyeSlash,
+    heroLockClosed
+  })]
 })
 export class LoginComponent {
 
   private authService = inject(AuthService);
   private formBuilder = inject(FormBuilder);
+
+  showPassword:boolean = false;
+  passwordType:'text'|'password'= 'password'
+  passwordIcon:'heroEyeSlash'|'heroEye' = 'heroEyeSlash';
 
   form:FormGroup;
 
@@ -32,6 +51,17 @@ export class LoginComponent {
       documento: new FormControl(null,[Validators.required,Validators.pattern('^[0-9]*$')]),
       password: new FormControl(null,[Validators.required])
     });
+  }
+
+  onShowPassword(){
+    this.showPassword = !this.showPassword;
+    if(this.showPassword){
+      this.passwordType = 'text';
+      this.passwordIcon = 'heroEye';
+      return;
+    }
+    this.passwordType = 'password';
+    this.passwordIcon = 'heroEyeSlash';
   }
 
   submitForm(){

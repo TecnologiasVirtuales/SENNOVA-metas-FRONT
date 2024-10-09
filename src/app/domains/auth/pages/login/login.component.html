@@ -1,29 +1,42 @@
-<form nz-form [formGroup]="form" class="login-form" (ngSubmit)="submitForm()">
-    <nz-form-item>
-        <nz-form-control nzErrorTip="Por favor ingrese su documento!">
-            <nz-input-group nzPrefixIcon="user">
-                <input type="text" nz-input formControlName="documento" placeholder="Documento de identidad" />
-            </nz-input-group>
-        </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-        <nz-form-control nzErrorTip="Por favor ingrese su password!">
-            <nz-input-group nzPrefixIcon="lock">
-                <input type="password" nz-input formControlName="password" placeholder="Password" />
-            </nz-input-group>
-        </nz-form-control>
-    </nz-form-item>
-    <div nz-row class="login-form-margin">
-        <div nz-col [nzSpan]="12">
-            <label nz-checkbox formControlName="remember">
-                <span>Remember me</span>
-            </label>
+<main class="login-conainter" nz-col nzSpan="20">
+    <div nz-flex nzJustify="center" nzAlign="start" nzWrap="wrap" nzGap="50px">
+        <div nz-col nzSpan="24">
+            <div nz-row nzJustify="center" class="login-title">
+                <h2 nz-typography>Análitica: Iniciar Sesión</h2>
+            </div>
         </div>
-        <div nz-col [nzSpan]="12">
-            <a class="login-form-forgot">Forgot password</a>
+        <div nz-flex nzAlign="center" nzJustify="center">
+            <form nz-form nz-row nzJustify="center" [formGroup]="form" (ngSubmit)="submitForm()">
+                <nz-form-item nz-col nzSpan="18">
+                    <nz-form-control nzErrorTip="Por favor ingrese su documento!">
+                        <nz-form-label class="label-container">
+                            <span class="login-label" nz-typography>Documento de identidad</span>
+                        </nz-form-label>
+                        <nz-input-group [nzPrefix]="iconDoc">
+                            <input class="input-login" type="number" nz-input formControlName="documento" placeholder="Documento de identidad" />
+                        </nz-input-group>
+                        <ng-template #iconDoc>
+                            <ng-icon name="heroIdentification"></ng-icon>
+                        </ng-template>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item nz-col nzSpan="18">
+                    <nz-form-control nzErrorTip="Por favor ingrese su contraseña!">
+                        <nz-input-group [nzPrefix]="iconLock" [nzSuffix]="showIcon">
+                            <input class="input-login" [type]="passwordType" nz-input formControlName="password" placeholder="Password" />
+                            <ng-template #showIcon>
+                                <ng-icon [name]="passwordIcon" (click)="onShowPassword()"></ng-icon>
+                            </ng-template>
+                            <ng-template #iconLock>
+                                <ng-icon name="heroLockClosed" ></ng-icon>
+                            </ng-template>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <button nz-col nzSpan="16" nz-button class="login-button">
+                    <span nz-typography>Iniciar Sesión</span>
+                </button>
+            </form>
         </div>
     </div>
-    <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Log in</button>
-    Or
-    <a>register now!</a>
-</form>
+</main>

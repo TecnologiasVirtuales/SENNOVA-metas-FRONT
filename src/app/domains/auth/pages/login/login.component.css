@@ -1,0 +1,38 @@
+.login-conainter{
+    margin-left: auto;
+    margin-right: auto;
+    height: 400px;
+    padding: 0;
+    background-color: var(--primary-white-color-transparent);
+    border-radius: 5px;
+}
+.login-title{
+    padding-top: 1%;
+    background-color: var(--primary-green-color);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.login-title h2{
+    color: var(--primary-white-color);
+}
+
+.login-button{
+    background-color: var(--primary-green-color);
+    border: none;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.login-button span{
+    color: var(--primary-white-color);
+}
+
+.input-login{
+    background-color: var(--secondary-white-color-transparent);
+}
+
+.login-label,.login-label label::after{
+    color:var(--primary-green-color);
+    font-size: 1.2rem;
+}

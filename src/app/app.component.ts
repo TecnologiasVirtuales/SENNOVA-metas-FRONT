@@ -14,8 +14,12 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     NzButtonModule
   ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
   title = 'proyecto-metas-sennova-front';
 }
+function provideIcons(arg0: { heroUsers: any; }): import("@angular/core").Provider {
+  throw new Error('Function not implemented.');
+}
+
