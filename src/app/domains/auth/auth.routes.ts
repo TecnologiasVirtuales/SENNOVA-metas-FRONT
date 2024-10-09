@@ -16,8 +16,4 @@ export const routes: Routes = [
             }
         ]
     },
-    // {
-    //     path:'login',
-    //     loadComponent:()=>import('@domains/auth/pages/login/login.component')
-    // }
 ];
