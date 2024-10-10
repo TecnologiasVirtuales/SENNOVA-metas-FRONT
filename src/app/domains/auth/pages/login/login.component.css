@@ -1,11 +1,16 @@
 .login-conainter{
+    height: 400px;
+    width: 50%;
+    min-width: 320px;
+
     margin-left: auto;
     margin-right: auto;
-    height: 400px;
     padding: 0;
+
     background-color: var(--primary-white-color-transparent);
     border-radius: 5px;
 }
+
 .login-title{
     padding-top: 1%;
     background-color: var(--primary-green-color);
@@ -13,26 +18,76 @@
     border-top-right-radius: 5px;
 }
 
-.login-title h2{
+.login-title_text{
     color: var(--primary-white-color);
+    font-size: 1.5rem;
+    font-weight:600;
 }
 
-.login-button{
+.login-form{
+    width: 95%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+::ng-deep .login-form_label label::after,
+.form-label_text {
+    color:var(--primary-green-color);
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+
+.form-input {
+    height: 30px;
+    font-size: 1.3rem;
+}
+
+::ng-deep  .ant-input:hover{
+    border-color: var(--primary-green-color);
+}
+
+.form-input_icon{
+    color: var(--primary-green-color);
+    font-size: 1.2rem;
+}
+
+.input-icon_password:hover{
+    color: var(--tertiary-green-color);
+}
+
+.input-icon_password:active{
+    color: var(--secondary-green-color);
+}
+
+.form-button{
+    height: 40px;
     background-color: var(--primary-green-color);
     border: none;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border-radius: 5px;
 }
 
-.login-button span{
+.form-button:hover{
+    background-color: var(--tertiary-green-color);
+}
+
+.form-button:active{
+    background-color: var(--secondary-green-color);
+}
+
+.form-button_text{
+    font-size: 1.2rem;
     color: var(--primary-white-color);
 }
 
-.input-login{
-    background-color: var(--secondary-white-color-transparent);
-}
+@media (max-width: 549px) {
+    .login-title_text {
+        font-size: 1.2rem;
+    }
 
-.login-label,.login-label label::after{
-    color:var(--primary-green-color);
-    font-size: 1.2rem;
+    .form-label_text,
+    .form-button_text{
+        font-size: 1rem;
+    }
 }

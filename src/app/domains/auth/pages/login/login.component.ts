@@ -10,6 +10,7 @@ import { heroEye, heroEyeSlash, heroIdentification, heroLockClosed } from '@ng-i
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzFlexModule } from 'ng-zorro-antd/flex';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -40,6 +41,7 @@ export class LoginComponent {
   private authService = inject(AuthService);
   private formBuilder = inject(FormBuilder);
 
+  loading:boolean = false;
   showPassword:boolean = false;
   passwordType:'text'|'password'= 'password'
   passwordIcon:'heroEyeSlash'|'heroEye' = 'heroEyeSlash';
@@ -66,10 +68,19 @@ export class LoginComponent {
 
   submitForm(){
     const {value} = this.form;
-    this.authService.login(value)
+    this.loading = true;
+    const login_sub = this.authService.login(value)
       .subscribe({
         next:(token)=>{
           console.log(token);
+        },
+        error:()=>{
+          this.loading = false;
+          login_sub.unsubscribe();
+        },
+        complete:()=>{
+          this.loading = false;
+          login_sub.unsubscribe();
         }
       });
   }

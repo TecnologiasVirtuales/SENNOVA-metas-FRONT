@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 :root{
     --primary-green-color:#47A603;
+    --secondary-green-color:#a3d381;
+    --tertiary-green-color:#2b5b09;
     --primary-white-color:#ffffff;
     --primary-white-color-transparent:rgb(255, 255, 255,0.8);
     --secondary-white-color-transparent:rgb(255, 255, 255,0.9);

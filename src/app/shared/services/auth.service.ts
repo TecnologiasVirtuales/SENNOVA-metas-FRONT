@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { environment } from '@env/environment.development';
 import { LoginDto } from '@shared/dto/login.dto';
 import { RefreshDto } from '@shared/dto/refresh.dto';
 import { TokenModel } from '@shared/models/token.model';
+import { UsuarioModel } from '@shared/models/usuario.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class AuthService {
   }
 
   me(){
-    return 
+    return this.http.get<UsuarioModel>(`${this.url}/me`);
   }
 
   refresh(token:RefreshDto){
