@@ -2,7 +2,7 @@
     <div nz-flex nzJustify="center" nzAlign="start" nzWrap="wrap" nzGap="50px">
         <div nz-col nzSpan="24">
             <div nz-row nzJustify="center" class="login-title">
-                <span class="login-title_text" nz-typography>Análitica: Iniciar Sesión</span>
+                <span class="login-title_text" nz-typography>METAS: Iniciar Sesión</span>
             </div>
         </div>
         <div nz-col nzSpan="24">
@@ -28,10 +28,10 @@
                         </nz-form-label>
                         <nz-form-control nzErrorTip="Por favor ingrese su contraseña!">
                             <nz-input-group class="form-group" [nzPrefix]="iconLock" [nzSuffix]="showIcon">
-                                <input class="form-input" (focus)="onFocus($event)" (blur)="onBlur($event)" [type]="passwordType" nz-input formControlName="password"
+                                <input class="form-input" (focus)="onFocus($event)" (blur)="onBlur($event)" [type]="password_type" nz-input formControlName="password"
                                     placeholder="Escriba su contraseña" id="password" nz-typography/>
                                 <ng-template #showIcon>
-                                    <ng-icon class="form-input_icon input-icon_password" [name]="passwordIcon" (click)="onShowPassword()"></ng-icon>
+                                    <ng-icon class="form-input_icon input-icon_password" [name]="password_icon" (click)="onShowPassword()"></ng-icon>
                                 </ng-template>
                                 <ng-template #iconLock>
                                     <ng-icon class="form-input_icon" name="heroLockClosed"></ng-icon>
@@ -39,7 +39,7 @@
                             </nz-input-group>
                         </nz-form-control>
                     </nz-form-item>
-                    <button nz-col nzSpan="12" nz-button class="form-button" [nzLoading]="loading">
+                    <button #submitButton nz-col nzSpan="12" [disabled]="form.invalid" nz-button [ngClass]="{'form-button_invalid':form.invalid}" class="form-button" [nzLoading]="loading">
                         <span class="form-button_text" nz-typography>Iniciar Sesión</span>
                     </button>
                 </form>

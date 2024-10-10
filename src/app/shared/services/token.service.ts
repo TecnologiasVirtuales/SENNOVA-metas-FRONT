@@ -36,7 +36,7 @@ export class TokenService {
         if (time <= 0) {
           clearInterval(session_time);
           this.deleteToken();
-          this.router.navigate(['/auth/login']);
+          // this.router.navigate(['/auth/login']);
         }
       }, 1000);
     }

@@ -31,9 +31,8 @@ export class AppComponent implements OnInit{
           next:(usuario)=>{
             console.log(usuario);
           },
-          complete:()=>{
-            usuario_sub.unsubscribe();
-          }
+          error:()=>usuario_sub.unsubscribe(),
+          complete:()=> usuario_sub.unsubscribe()
         });
     }
   }

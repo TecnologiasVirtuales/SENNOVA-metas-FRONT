@@ -1,5 +1,5 @@
 .login-conainter{
-    height: 400px;
+    height: 350px;
     width: 50%;
     min-width: 320px;
 
@@ -78,6 +78,10 @@
     background-color: var(--primary-green-color);
     border: none;
     border-radius: 5px;
+}
+
+.form-button_invalid{
+    background-color: var(--cuaternary-green-color);
 }
 
 .form-button:hover{
