@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, Renderer2 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '@shared/services/auth.service';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -40,6 +40,7 @@ export class LoginComponent {
 
   private authService = inject(AuthService);
   private formBuilder = inject(FormBuilder);
+  private renderer = inject(Renderer2);
 
   loading:boolean = false;
   showPassword:boolean = false;
@@ -53,6 +54,16 @@ export class LoginComponent {
       documento: new FormControl(null,[Validators.required,Validators.pattern('^[0-9]*$')]),
       password: new FormControl(null,[Validators.required])
     });
+  }
+
+  onFocus(event:FocusEvent){
+    const group = (event.target as HTMLElement).closest('.form-group');
+    this.renderer.addClass(group, 'form-group_focus');
+  }
+
+  onBlur(event: FocusEvent) {
+    const group = (event.target as HTMLElement).closest('.form-group');
+    this.renderer.removeClass(group, 'form-group_focus');
   }
 
   onShowPassword(){

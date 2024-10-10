@@ -13,8 +13,8 @@
                             <nz-form-label nzFor="documento" class="login-form_label">
                                 <span class="form-label_text" nz-typography>Documento de identidad</span>
                             </nz-form-label>
-                            <nz-input-group [nzPrefix]="iconDoc">
-                                <input class="form-input" type="number" nz-input formControlName="documento"
+                            <nz-input-group class="form-group" [nzPrefix]="iconDoc">
+                                <input class="form-input" (focus)="onFocus($event)" (blur)="onBlur($event)" type="number" nz-input formControlName="documento"
                                     placeholder="Escriba su documento de identidad" id="documento" nz-typography/>
                             </nz-input-group>
                             <ng-template #iconDoc>
@@ -28,7 +28,7 @@
                         </nz-form-label>
                         <nz-form-control nzErrorTip="Por favor ingrese su contraseña!">
                             <nz-input-group class="form-group" [nzPrefix]="iconLock" [nzSuffix]="showIcon">
-                                <input class="form-input" [type]="passwordType" nz-input formControlName="password"
+                                <input class="form-input" (focus)="onFocus($event)" (blur)="onBlur($event)" [type]="passwordType" nz-input formControlName="password"
                                     placeholder="Escriba su contraseña" id="password" nz-typography/>
                                 <ng-template #showIcon>
                                     <ng-icon class="form-input_icon input-icon_password" [name]="passwordIcon" (click)="onShowPassword()"></ng-icon>
