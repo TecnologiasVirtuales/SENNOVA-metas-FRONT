@@ -51,7 +51,7 @@
     box-shadow: 0 0 3px 1px var(--tertiary-green-color);
 }
 
-.form-input {
+::ng-deep .form-input {
     height: 30px;
     font-size: 1.3rem;
 }

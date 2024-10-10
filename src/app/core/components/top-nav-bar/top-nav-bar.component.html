@@ -1,18 +1,37 @@
 <nav nz-flex nzJustify="space-between" nzAlign="center">
     <div nz-col nzSpan="6">
-        Logo sena y boton responsive
+        <div class="logo-sena">
+        </div>
     </div>
     <div nz-col nzSpan="12">
-        <h4>METAS</h4>
+        <div nz-row nzJustify="center">
+            <h4 class="title">METAS</h4>
+        </div>
     </div>
     <div nz-col nzSpan="6">
-       <ul nz-menu-group [nzTitle]="profile">
-            <li nz-menu-item>
-
-            </li>
-       </ul>
-       <ng-template #profile>
-        menu
-       </ng-template>
+        <div nz-row>
+            <div nz-col>
+                <nz-avatar nzIcon="user"></nz-avatar>
+            </div>
+            <div nz-col>
+                <div nz-row>
+                    <div nz-col nzSpan="24">
+                        Mi nombre es
+                    </div>
+                    <div nz-col nzSpan="24">
+                        y soy admin
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </nav>
+<nz-dropdown-menu #menuPerfil>
+    <ul class="menu-list" nz-menu>
+        <li nz-menu-item>Perfil</li>
+        <li class="menu-list_divider" nz-menu-divider></li>
+        <li nz-menu-item>
+            Cerrar sesión
+        </li>
+    </ul>
+</nz-dropdown-menu>

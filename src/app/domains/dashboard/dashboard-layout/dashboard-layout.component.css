@@ -3,5 +3,6 @@ nz-layout{
 }
 
 nz-header{
-    background-color: var(--primary-green-color);
+    background-color: var(--primary-white-color);
+    border-bottom: var(--primary-green-color) solid 1px;
 }
