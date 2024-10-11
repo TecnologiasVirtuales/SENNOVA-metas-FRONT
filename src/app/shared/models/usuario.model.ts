@@ -3,6 +3,7 @@ import { RoleModel } from "./role.model";
 
 export interface UsuarioModel {
     documento:number;
+    email:string;
     tipo_documento:TipoDocumentoEnum;
     nombre:string;
     segundo_nombre:string;
@@ -12,5 +13,5 @@ export interface UsuarioModel {
     is_superurser:boolean;
     is_staff:boolean;
     is_active:boolean;
-    roles:RoleModel[];
+    roles?:RoleModel[];
 }

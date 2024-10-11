@@ -32,11 +32,11 @@ export class TokenService {
         let now = new Date();
         let time = Math.ceil((exp.getTime() - now.getTime()) / 1000);
         this.session_time.update(() => (time >= 0 ? time : 0));
-
-        if (time <= 0) {
+        console.log(`quedan ${time} segundos`);
+        if (time <= 0 || !this.getToken()) {
           clearInterval(session_time);
           this.deleteToken();
-          // this.router.navigate(['/auth/login']);
+          this.router.navigate(['/auth','inicio-sesion']);
         }
       }, 1000);
     }
@@ -54,5 +54,6 @@ export class TokenService {
     localStorage.removeItem('token');
     localStorage.removeItem('refresh');
     localStorage.removeItem('token_exp');
+    this.router.navigate(['/auth','inicio-sesion']);
   }
 }

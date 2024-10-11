@@ -81,23 +81,22 @@ export class LoginComponent {
   }
 
   submitForm(){
-    this.router.navigate(['dashboard'])
-    // const {value} = this.form;
-    // this.loading = true;
-    // const login_sub = this.authService.login(value)
-    //   .subscribe({
-    //     next:(token)=>{
-    //       console.log(token);
-    //     },
-    //     error:()=>{
-    //       this.loading = false;
-    //       login_sub.unsubscribe();
-    //     },
-    //     complete:()=>{
-    //       this.loading = false;
-    //       login_sub.unsubscribe();
-    //     }
-    //   });
+    const {value} = this.form;
+    this.loading = true;
+    const login_sub = this.authService.login(value)
+      .subscribe({
+        next:()=>{
+          this.router.navigate(['/dashboard'])
+        },
+        error:()=>{
+          this.loading = false;
+          login_sub.unsubscribe();
+        },
+        complete:()=>{
+          this.loading = false;
+          login_sub.unsubscribe();
+        }
+      });
   }
 
 }

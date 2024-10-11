@@ -11,15 +11,19 @@
     <div nz-col nzSpan="3">
         <div class="profile-menu" nz-dropdown [nzDropdownMenu]="menuPerfil" nz-flex nzJustify="end" nzAlign="center" nzGap="middle">
             <div class="profile-menu_avatar" nz-col nzSpan="4">
-                <nz-avatar class="menu-avatar_icon" nzIcon="user"></nz-avatar>
+                @if (usuario()) {
+                    <nz-avatar [nzSrc]="usuario()?.foto_perfil"></nz-avatar>
+                }@else {
+                    <nz-avatar class="menu-avatar_icon" nzIcon="user"></nz-avatar>
+                }
             </div>
             <div class="profile-menu_descripcion" nz-col nzSpan="16">
                 <div nz-row nzJustify="start">
                     <div nz-col nzSpan="20">
-                        <span class="nombre" nz-typography>Jhon Azcárate</span>
+                        <span class="nombre" nz-typography>{{usuario()?.nombre}} {{usuario()?.apellido}}</span>
                     </div>
                     <div nz-col nzSpan="20">
-                        <span class="rol" nz-typography>admin</span>
+                        <span class="rol" nz-typography>{{ usuario()?.roles?.[0]?.name || ''}}</span>
                     </div>
                 </div>
             </div>
@@ -33,7 +37,7 @@
                 </li>
                 <li class="menu-list_divider" nz-menu-divider></li>
                 <li nz-menu-item>
-                    <a [routerLink]="['/auth','inicio-sesion']" nz-typography>
+                    <a (click)="onLogOut()" nz-typography>
                         Cerrar Sesión
                     </a>
                 </li>
