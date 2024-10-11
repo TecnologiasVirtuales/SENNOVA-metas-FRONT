@@ -8,12 +8,19 @@ export const routes: Routes = [
             {
                 path:'',
                 pathMatch:'full',
-                redirectTo:'perfil'
+                redirectTo:'home'
             },
             {
                 path:'perfil',
                 title:'Perfil',
+                data:{breadcrumb:'Perfil'},
                 loadComponent:()=>import('@domains/dashboard/pages/profile/profile.component').then(c=>c.ProfileComponent)
+            },
+            {
+                path:'home',
+                title:'Home',
+                data:{breadcrumb:'Home'},
+                loadComponent:()=>import('@domains/dashboard/pages/home/home.component').then(c=>c.HomeComponent)
             }
         ]
     },

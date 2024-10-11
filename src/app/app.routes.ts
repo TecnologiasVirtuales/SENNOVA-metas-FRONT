@@ -12,6 +12,7 @@ export const routes: Routes = [
     },
     {
         path:'dashboard',
+        data:{breadcrumb:'Dashboard'},
         loadChildren:()=>import('@domains/dashboard/dashboard.routes').then(r=>r.routes)
     }
 ];

@@ -6,29 +6,50 @@ nav {
     background-color: var(--primary-green-color);
 }
 
-.logo-sena{
-    width: 50px;
-    height: 50px;
-    background-image: url('/logos/logo-sena.png');
-    background-size: cover;
-}
-
 .title{
     font-size: 2rem;
     color: var(--primary-green-color);
 }
 
-.profile-name,.profile-role{
-    height: 25px;
-    font-size: 1.2rem;
+.menu-avatar_icon{
+    background-color: var(--primary-green-color);
+    color: var(--primary-white-color);
 }
 
+.profile-menu_descripcion{
+    line-height: normal;
+    font-weight: 700;
+    font-size: 0.8rem;
+    line-break: auto;
+}
 
-.menu-list li:hover{
+.profile-menu_descripcion .nombre{
+    color: var(--primary-green-color);
+}
+
+.profile-menu_descripcion .rol{
+    color: var(--secondary-green-color);
+}
+
+.menu-list a{
+    text-decoration: none;
+    color: var(--primary-black-color);
+}
+
+.menu-list li:hover {
     background-color: var(--primary-green-color);
+}
+
+.menu-list li:hover a{
     color: var(--primary-white-color);
 }
 
 .menu-list_divider{
     background-color: var(--primary-green-color);
+}
+
+@media (max-width:949px) {
+    .profile-menu_descripcion{
+        display: none;
+    }
 }

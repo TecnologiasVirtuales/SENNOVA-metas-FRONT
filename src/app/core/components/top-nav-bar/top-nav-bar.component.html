@@ -1,37 +1,43 @@
 <nav nz-flex nzJustify="space-between" nzAlign="center">
-    <div nz-col nzSpan="6">
+    <div nz-col nzSpan="3">
         <div class="logo-sena">
         </div>
     </div>
-    <div nz-col nzSpan="12">
+    <div nz-col nzSpan="10">
         <div nz-row nzJustify="center">
             <h4 class="title">METAS</h4>
         </div>
     </div>
-    <div nz-col nzSpan="6">
-        <div nz-row>
-            <div nz-col>
-                <nz-avatar nzIcon="user"></nz-avatar>
+    <div nz-col nzSpan="3">
+        <div class="profile-menu" nz-dropdown [nzDropdownMenu]="menuPerfil" nz-flex nzJustify="end" nzAlign="center" nzGap="middle">
+            <div class="profile-menu_avatar" nz-col nzSpan="4">
+                <nz-avatar class="menu-avatar_icon" nzIcon="user"></nz-avatar>
             </div>
-            <div nz-col>
-                <div nz-row>
-                    <div nz-col nzSpan="24">
-                        Mi nombre es
+            <div class="profile-menu_descripcion" nz-col nzSpan="16">
+                <div nz-row nzJustify="start">
+                    <div nz-col nzSpan="20">
+                        <span class="nombre" nz-typography>Jhon Azcárate</span>
                     </div>
-                    <div nz-col nzSpan="24">
-                        y soy admin
+                    <div nz-col nzSpan="20">
+                        <span class="rol" nz-typography>admin</span>
                     </div>
                 </div>
             </div>
         </div>
+        <nz-dropdown-menu #menuPerfil>
+            <ul class="menu-list" nz-menu>
+                <li nz-menu-item>
+                    <a [routerLink]="['/dashboard','perfil']" nz-typography>
+                        Perfil
+                    </a>
+                </li>
+                <li class="menu-list_divider" nz-menu-divider></li>
+                <li nz-menu-item>
+                    <a [routerLink]="['/auth','inicio-sesion']" nz-typography>
+                        Cerrar Sesión
+                    </a>
+                </li>
+            </ul>
+        </nz-dropdown-menu>
     </div>
 </nav>
-<nz-dropdown-menu #menuPerfil>
-    <ul class="menu-list" nz-menu>
-        <li nz-menu-item>Perfil</li>
-        <li class="menu-list_divider" nz-menu-divider></li>
-        <li nz-menu-item>
-            Cerrar sesión
-        </li>
-    </ul>
-</nz-dropdown-menu>
