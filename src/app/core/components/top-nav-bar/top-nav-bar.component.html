@@ -30,14 +30,14 @@
         </div>
         <nz-dropdown-menu #menuPerfil>
             <ul class="menu-list" nz-menu>
-                <li nz-menu-item>
-                    <a [routerLink]="['/dashboard','perfil']" nz-typography>
+                <li nz-menu-item [routerLink]="['/dashboard','perfil']">
+                    <a nz-typography>
                         Perfil
                     </a>
                 </li>
                 <li class="menu-list_divider" nz-menu-divider></li>
-                <li nz-menu-item>
-                    <a (click)="onLogOut()" nz-typography>
+                <li nz-menu-item (click)="onLogOut()">
+                    <a nz-typography>
                         Cerrar Sesión
                     </a>
                 </li>

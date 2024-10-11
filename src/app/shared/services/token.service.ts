@@ -32,12 +32,13 @@ export class TokenService {
         let now = new Date();
         let time = Math.ceil((exp.getTime() - now.getTime()) / 1000);
         this.session_time.update(() => (time >= 0 ? time : 0));
-        console.log(`quedan ${time} segundos`);
         if (time <= 0 || !this.getToken()) {
           clearInterval(session_time);
           this.deleteToken();
           this.router.navigate(['/auth','inicio-sesion']);
+          return;
         }
+        console.log(`quedan ${time} segundos`);
       }, 1000);
     }
   }

@@ -1,4 +1,5 @@
 import { Routes } from "@angular/router";
+import { sideRoutes } from "@core/sidebar.routes";
 
 export const routes: Routes = [
     {
@@ -10,18 +11,7 @@ export const routes: Routes = [
                 pathMatch:'full',
                 redirectTo:'home'
             },
-            {
-                path:'perfil',
-                title:'Perfil',
-                data:{breadcrumb:'Perfil'},
-                loadComponent:()=>import('@domains/dashboard/pages/profile/profile.component').then(c=>c.ProfileComponent)
-            },
-            {
-                path:'home',
-                title:'Home',
-                data:{breadcrumb:'Home'},
-                loadComponent:()=>import('@domains/dashboard/pages/home/home.component').then(c=>c.HomeComponent)
-            }
+            ...sideRoutes
         ]
     },
 ];
