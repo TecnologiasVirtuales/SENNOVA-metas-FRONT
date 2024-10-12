@@ -1,0 +1,6 @@
+.page-title ng-icon,
+.page-title h1{
+    color: var(--primary-green-color);
+    font-size: 2rem;
+    margin-bottom: 0;
+}

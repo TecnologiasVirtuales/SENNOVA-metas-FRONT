@@ -1,1 +1,23 @@
-<p>modalidad-page works!</p>
+<nz-card 
+    nz-col 
+    nzSpan="24" 
+    [nzTitle]="pageTitle"
+    [nzExtra]="actionButton"
+    nzBorderless>
+
+</nz-card>
+<ng-template #pageTitle>
+    <div class="page-title" nz-row nzAlign="middle" nzGutter="15">
+        <div nz-col>
+            <ng-icon name="heroAcademicCapSolid"></ng-icon>
+        </div>
+        <div nz-col>
+            <h1>Modalidades</h1>
+        </div>
+    </div>
+</ng-template>
+<ng-template #actionButton>
+    <app-modalidad-actions></app-modalidad-actions>
+</ng-template>
+
+

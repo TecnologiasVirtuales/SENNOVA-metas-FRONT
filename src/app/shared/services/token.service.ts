@@ -38,7 +38,6 @@ export class TokenService {
           this.router.navigate(['/auth','inicio-sesion']);
           return;
         }
-        console.log(`quedan ${time} segundos`);
       }, 1000);
     }
   }

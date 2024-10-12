@@ -9,10 +9,13 @@ nz-header {
 
 nz-sider{
     background-color: var(--primary-white-color);
+    overflow: hidden;
 }
 
-
-
 nz-content {
-    padding: 2%;
+    padding: 1.5%;
+}
+
+nz-breadcrumb{
+    margin-bottom: 15px;
 }

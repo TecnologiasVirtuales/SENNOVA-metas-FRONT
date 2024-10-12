@@ -37,11 +37,11 @@ nav {
 }
 
 .menu-list li:hover {
-    background-color: var(--primary-green-color);
+    background-color: var(--primary-green-color-transparent);
 }
 
 .menu-list li:hover a{
-    color: var(--primary-white-color);
+    color: var(--primary-green-color);
 }
 
 .menu-list_divider{

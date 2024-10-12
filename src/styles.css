@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 :root{
     --primary-green-color:#47A603;
+    --primary-green-color-transparent:rgb(71, 166, 3,0.2);
     --secondary-green-color:#a3d381;
     --tertiary-green-color:#2b5b09;
     --cuaternary-green-color:#295d0475;
@@ -8,6 +9,12 @@
     --primary-white-color-transparent:rgb(255, 255, 255,0.8);
     --secondary-white-color-transparent:rgb(255, 255, 255,0.9);
     --primary-black-color:rgba(0, 0, 0, 0.767);
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .logo-sena{
@@ -20,4 +27,16 @@
 .ant-layout-sider-trigger{
     background-color: var(--primary-green-color);
     color: var(--primary-white-color);
+}
+
+.ant-breadcrumb .ant-breadcrumb-link a{
+    color: var(--secondary-green-color);
+}
+
+.ant-breadcrumb-separator{
+    color: var(--primary-green-color) !important;
+}
+
+.ant-breadcrumb > nz-breadcrumb-item:last-child, .ant-breadcrumb > nz-breadcrumb-item:last-child a, .ant-btn {
+    color: var(--primary-green-color) !important;
 }

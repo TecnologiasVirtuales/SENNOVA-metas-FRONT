@@ -1,0 +1,30 @@
+.menu-item_anchor,
+.menu-item_anchor span{
+    color:var(--primary-green-color)
+}
+
+.side-menu_item{
+    overflow: hidden;
+}
+
+.side-menu_item:hover,
+.menu-item_active a::before{
+    background-color: var(--primary-green-color-transparent);
+}
+
+.menu-item_active::after{
+    border-right: var(--primary-green-color) solid 3px;
+}
+
+.menu-item_anchor::before{
+    color:var(--primary-green-color);
+}
+
+.side-menu_item:hover .menu-item_anchor,
+.side-menu_item:hover .menu-item_anchor span{
+    color: var(--tertiary-green-color);
+}
+
+.menu-item_text{
+    text-overflow: ellipsis;
+}

@@ -10,7 +10,7 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import {NzDividerModule} from 'ng-zorro-antd/divider'
 import { AuthService } from '@shared/services/auth.service';
-import { RefreshDto } from '@shared/dto/refresh.dto';
+import { RefreshDto } from '@shared/dto/auth/refresh.dto';
 import { TokenService } from '@shared/services/token.service';
 
 @Component({

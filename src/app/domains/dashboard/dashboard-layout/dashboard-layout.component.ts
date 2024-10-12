@@ -17,7 +17,7 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
     NzLayoutModule,
     TopNavBarComponent,
     SidebarNavBarComponent,
-    NzBreadCrumbModule
+    NzBreadCrumbModule,
   ],
   templateUrl: './dashboard-layout.component.html',
   styleUrl: './dashboard-layout.component.css'
@@ -26,6 +26,8 @@ export class DashboardLayoutComponent implements OnInit{
 
   private token_service = inject(TokenService);
   private auth_service = inject(AuthService);
+
+  sidebarCollapsed:boolean = false;
 
   ngOnInit(): void {
     if(this.token_service.getToken()){

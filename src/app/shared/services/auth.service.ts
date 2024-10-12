@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { LoginDto } from '@shared/dto/login.dto';
-import { RefreshDto } from '@shared/dto/refresh.dto';
-import { RegisterDto } from '@shared/dto/register.dto';
+import { LoginDto } from '@shared/dto/auth/login.dto';
+import { RefreshDto } from '@shared/dto/auth/refresh.dto';
+import { RegisterDto } from '@shared/dto/auth/register.dto';
 import { MessageInfoModel } from '@shared/models/message-info.model';
 import { TokenModel } from '@shared/models/token.model';
 import { UsuarioModel } from '@shared/models/usuario.model';
