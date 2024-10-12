@@ -1,0 +1,11 @@
+.create-button {
+    background-color: var(--primary-green-color);
+}
+
+.create-button span{
+    color: var(--primary-white-color);
+}
+
+.delete-button span{
+    color: var(--primary-red-color);
+}

@@ -1,1 +1,27 @@
-
+@switch (type_actions) {
+    @case ('create') {
+        <button (click)="openForm()" class="create-button" nz-button><span>Crear modalidad</span></button>
+    }
+    @case ('icons') {
+        <div nz-flex nzJustify="space-evenly" nzAlign="center">
+            <button nz-button nzType="text">
+                <span nz-icon nzType="edit"></span>
+            </button>
+            <button nz-button nzType="text">
+                <span nz-icon nzType="delete"></span>
+            </button>
+        </div>
+    }
+    @case ('buttons') {
+        <div nz-flex nzJustify="space-evenly" nzAlign="center">
+            <button nz-button (click)="openForm()">
+                <span nz-icon nzType="edit"></span>
+                Editar
+            </button>
+            <button nz-button class="delete-button">
+                <span nz-icon nzType="delete"></span>
+                <span>Eliminar</span>
+            </button>
+        </div>
+    }
+}

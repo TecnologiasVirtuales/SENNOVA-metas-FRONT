@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { ModalidadDto } from '@shared/dto/modalidad/modalidad.dto';
 import { ModalidadModel } from '@shared/models/modalidad.model';
 
 @Injectable({
@@ -7,12 +8,28 @@ import { ModalidadModel } from '@shared/models/modalidad.model';
 })
 export class ModalidadService {
 
-  http = inject(HttpClient);
+  private http = inject(HttpClient);
 
-  url = 'modalidades';
+  private url = 'modalidades';
 
   getAll(){
     return this.http.get<ModalidadModel[]>(this.url);
+  }
+
+  getOneById(id:number){
+    return this.http.get<ModalidadModel>(`${this.url}/${id}/`);
+  }
+
+  create(form:ModalidadDto){
+    return this.http.post<ModalidadModel>(`${this.url}/`,form);
+  }
+
+  update(form:ModalidadDto,id:number){
+    return this.http.put<ModalidadModel>(`${this.url}/${id}/`,form);
+  }
+
+  delete(id:number){
+    return this.http.delete(`${this.url}/${id}/`);
   }
   
 }

@@ -7,7 +7,7 @@ import { TokenModel } from '@shared/models/token.model';
 })
 export class TokenService {
 
-  router = inject(Router);
+  private router = inject(Router);
 
   session_time = signal<number>(
     parseInt(localStorage.getItem('token_exp') ?? '0')

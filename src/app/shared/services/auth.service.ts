@@ -14,10 +14,10 @@ import { map } from 'rxjs';
 })
 export class AuthService {
 
-  http = inject(HttpClient);
-  token_service = inject(TokenService);
+  private http = inject(HttpClient);
+  private token_service = inject(TokenService);
 
-  url = `auth`;
+  private url = `auth`;
 
   usuario = signal<UsuarioModel|null>(null);
 

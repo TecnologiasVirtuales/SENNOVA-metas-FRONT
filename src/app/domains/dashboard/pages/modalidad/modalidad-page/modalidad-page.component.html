@@ -4,8 +4,40 @@
     [nzTitle]="pageTitle"
     [nzExtra]="actionButton"
     nzBorderless>
-
+    <nz-table #modalidadTable [nzData]="modalidades" [nzLoading]="loading" [nzLoadingIndicator]="loadingImg">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (modalidad of modalidadTable.data; track $index) {
+                <tr>
+                    <td>
+                        {{modalidad.id}}
+                    </td>
+                    <td>
+                        {{modalidad.nombre}}
+                    </td>
+                    <td>
+                        <app-modalidad-actions 
+                            [modalidad]="modalidad" 
+                            type_actions="buttons">
+                        </app-modalidad-actions>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </nz-table>
 </nz-card>
+<ng-template #loadingImg>
+    <div class="loading-container" nz-flex nzJustify="center" nzAlign="center">
+        <div class="logo-sena">
+        </div>
+    </div>
+</ng-template>
 <ng-template #pageTitle>
     <div class="page-title" nz-row nzAlign="middle" nzGutter="15">
         <div nz-col>

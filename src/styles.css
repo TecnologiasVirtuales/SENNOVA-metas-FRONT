@@ -9,6 +9,7 @@
     --primary-white-color-transparent:rgb(255, 255, 255,0.8);
     --secondary-white-color-transparent:rgb(255, 255, 255,0.9);
     --primary-black-color:rgba(0, 0, 0, 0.767);
+    --primary-red-color:#AA4F4F;
 }
 
 *{
@@ -39,4 +40,8 @@
 
 .ant-breadcrumb > nz-breadcrumb-item:last-child, .ant-breadcrumb > nz-breadcrumb-item:last-child a, .ant-btn {
     color: var(--primary-green-color) !important;
+}
+
+.ant-table-thead .ant-table-row th{
+    background-color: var(--primary-green-color-transparent);
 }
