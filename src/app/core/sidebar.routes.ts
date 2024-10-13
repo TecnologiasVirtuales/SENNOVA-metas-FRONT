@@ -12,5 +12,11 @@ export const sideRoutes:Routes = [
         title:'Gestión de Modalidades',
         data:{breadcrumb:'Gestión de modalidades',icon:'heroAcademicCapSolid'},
         loadComponent:()=>import('@domains/dashboard/pages/modalidad/modalidad-page/modalidad-page.component').then(c=>c.ModalidadPageComponent)
+    },
+    {
+        path:'regionales',
+        title:'Gestión de Regionales',
+        data:{breadcrumb:'Gestión de regionales',icon:'heroMapSolid'},
+        loadComponent:()=>import('@domains/dashboard/pages/regional/regional-page/regional-page.component').then(c=>c.RegionalPageComponent)
     }
 ]

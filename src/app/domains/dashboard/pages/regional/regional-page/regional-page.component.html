@@ -5,9 +5,9 @@
     [nzExtra]="actionButton"
     nzBorderless>
     <nz-table 
-        class="modalidad-table" 
-        #modalidadTable 
-        [nzData]="modalidades" 
+        class="regional-table" 
+        #regionalTable 
+        [nzData]="regionales" 
         [nzLoading]="loading" 
         [nzLoadingIndicator]="loadingImg"
         [nzShowPagination]="false"
@@ -16,27 +16,31 @@
             <tr>
                 <th>Código</th>
                 <th>Nombre</th>
-                <th *appCanUseActions class="modalidad-table_actions">Actions</th>
+                <th>Departamento</th>
+                <th *appCanUseActions class="regional-table_actions">Actions</th>
             </tr>
         </thead>
         <tbody>
-            @for (modalidad of modalidadTable.data; track $index) {
+            @for (regional of regionalTable.data; track $index) {
                 <tr>
                     <td>
-                        {{modalidad.codigo}}
+                        {{regional.codigo}}
                     </td>
                     <td>
-                        {{modalidad.nombre}}
+                        {{regional.nombre}}
+                    </td>
+                    <td>
+                        {{regional.departamento.nombre}}
                     </td>
                     <td *appCanUseActions>
-                        <app-modalidad-actions 
-                            [modalidad]="modalidad"
+                        <app-regional-actions 
+                            [regional]="regional"
                             [index]="$index"
                             type_actions="buttons"
                             (delete)="onDelete($event)"
                             (update)="onUpdate($event)"
                             (setLoading)="onLoad($event)">
-                        </app-modalidad-actions>
+                        </app-regional-actions>
                     </td>
                 </tr>
             }
@@ -49,19 +53,17 @@
 <ng-template #pageTitle>
     <div class="page-title" nz-row nzAlign="middle" nzGutter="15">
         <div nz-col>
-            <ng-icon name="heroAcademicCapSolid"></ng-icon>
+            <ng-icon name="heroMapSolid"></ng-icon>
         </div>
         <div nz-col>
-            <h1>Modalidades</h1>
+            <h1>regionales</h1>
         </div>
     </div>
 </ng-template>
 <ng-template #actionButton>
-    <app-modalidad-actions
+    <app-regional-actions
         *appCanUseActions
         (create)="onCreate($event)" 
         (setLoading)="onLoad($event)">
-    </app-modalidad-actions>
+    </app-regional-actions>
 </ng-template>
-
-

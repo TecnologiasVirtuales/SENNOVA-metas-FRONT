@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { sideRoutes } from '@core/sidebar.routes';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { heroAcademicCapSolid, heroHomeModernSolid } from '@ng-icons/heroicons/solid';
+import { heroAcademicCapSolid, heroHomeModernSolid, heroMapSolid } from '@ng-icons/heroicons/solid';
 import { NzFlexModule } from 'ng-zorro-antd/flex';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
@@ -27,7 +27,8 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
   styleUrl: './sidebar-nav-bar.component.css',
   viewProviders: [provideIcons({ 
     heroAcademicCapSolid,
-    heroHomeModernSolid
+    heroHomeModernSolid,
+    heroMapSolid
   })]
 })
 export class SidebarNavBarComponent {

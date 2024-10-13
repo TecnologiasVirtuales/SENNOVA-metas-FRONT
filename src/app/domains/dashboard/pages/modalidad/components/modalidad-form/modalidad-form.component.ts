@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ModalidadModel } from '@shared/models/modalidad.model';
+import { noWhiteSpaceValidator } from '@shared/validators/no-wite-space.validator';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzModalRef } from 'ng-zorro-antd/modal';
@@ -36,7 +37,8 @@ export class ModalidadFormComponent implements OnInit {
       nombre:new FormControl(null,[
         Validators.required,
         Validators.maxLength(60),
-        Validators.minLength(5)
+        Validators.minLength(5),
+        noWhiteSpaceValidator()
       ])
     });
   }
@@ -44,9 +46,9 @@ export class ModalidadFormComponent implements OnInit {
   ngOnInit(): void {
     this.modalidad = this.modal.getConfig().nzData.modalidad;
     if (this.modalidad) {
-      const {id} = this.modalidad;
+      const {id,nombre} = this.modalidad;
       this.form.addControl('id',new FormControl(id));
-      this.field_nombre.setValue(this.modalidad.nombre);
+      this.field_nombre.setValue(nombre);
     }
   }
 

@@ -11,7 +11,6 @@ import {NzSkeletonModule} from 'ng-zorro-antd/skeleton';
 import { ModalidadService } from '@shared/services/modalidad.service';
 import { ModalidadModel } from '@shared/models/modalidad.model';
 import { SenaLoadingComponent } from '@shared/components/sena-loading/sena-loading.component';
-import { AuthService } from '@shared/services/auth.service';
 import { CanUseActionsDirective } from '@shared/directives/can-use-actions.directive';
 
 @Component({
@@ -38,9 +37,6 @@ import { CanUseActionsDirective } from '@shared/directives/can-use-actions.direc
 export class ModalidadPageComponent implements OnInit{
 
   private modalidad_service = inject(ModalidadService);
-  private auth_service = inject(AuthService);
-
-  usuario = this.auth_service.usuario;
 
   modalidades:ModalidadModel[] = [];
 

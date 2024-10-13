@@ -20,6 +20,10 @@ export class ModalidadService {
     return this.http.get<ModalidadModel>(`${this.url}/${id}/`);
   }
 
+  getOneByCodigo(codigo:string){
+    return this.http.get<ModalidadModel>(`${this.url}/codigo/${codigo}/`);
+  }
+
   create(form:ModalidadDto){
     return this.http.post<ModalidadModel>(`${this.url}/`,form);
   }

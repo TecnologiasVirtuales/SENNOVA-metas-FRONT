@@ -20,7 +20,7 @@
 </form>
 
 <ng-template #nombreErrors>
-    @if (field_nombre.hasError('required')) {
+    @if (field_nombre.hasError('required')||field_nombre.hasError('whitespace')) {
         <div nz-col nzSpan="24">
             <span nz-typography nzType="danger">El nombre de la modalidad es obligatorio</span>
         </div>
