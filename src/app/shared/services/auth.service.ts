@@ -20,11 +20,13 @@ export class AuthService {
   private url = `auth`;
 
   usuario = signal<UsuarioModel|null>(null);
+  loading_user = signal<boolean>(true);
 
   login(credentials:LoginDto){
     return this.http.post<TokenModel>(`${this.url}/login`,credentials)
       .pipe(map((token)=>{
         this.token_service.setToken(token);
+        this.loading_user.set(true);
         return token;
       }));
   }

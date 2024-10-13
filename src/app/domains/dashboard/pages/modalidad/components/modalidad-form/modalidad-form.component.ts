@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ModalidadModel } from '@shared/models/modalidad.model';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzModalRef } from 'ng-zorro-antd/modal';
+import { NzTypographyModule } from 'ng-zorro-antd/typography';
 
 @Component({
   selector: 'app-modalidad-form',
@@ -14,7 +15,8 @@ import { NzModalRef } from 'ng-zorro-antd/modal';
     FormsModule,
     ReactiveFormsModule,
     NzInputModule,
-    NzFormModule
+    NzFormModule,
+    NzTypographyModule,
   ],
   templateUrl: './modalidad-form.component.html',
   styleUrl: './modalidad-form.component.css'
@@ -22,7 +24,8 @@ import { NzModalRef } from 'ng-zorro-antd/modal';
 export class ModalidadFormComponent implements OnInit {
 
   private form_builder = inject(FormBuilder);
-  private modal = inject(NzModalRef)
+  private modal = inject(NzModalRef);
+  private renderer = inject(Renderer2);
 
   form:FormGroup;
 
@@ -56,5 +59,15 @@ export class ModalidadFormComponent implements OnInit {
 
   get field_nombre(){
     return this.form.get('nombre') as FormControl<string>;
+  }
+
+  onFocus(event:FocusEvent){
+    const control = (event.target as HTMLElement).closest('.modalidad-form_control');
+    this.renderer.addClass(control, 'form-control_focus');
+  }
+
+  onBlur(event: FocusEvent) {
+    const control = (event.target as HTMLElement).closest('.modalidad-form_control');
+    this.renderer.removeClass(control, 'form-control_focus');
   }
 }

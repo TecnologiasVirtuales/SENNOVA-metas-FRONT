@@ -1,14 +1,19 @@
-<nz-layout>
-    <nz-header>
-        <app-top-nav-bar></app-top-nav-bar>
-    </nz-header>
+<nz-spin [nzIndicator]="loadingImg" [nzSpinning]="loading_user()">
     <nz-layout>
-        <nz-sider [(nzCollapsed)]="sidebarCollapsed" nzCollapsible>
-            <app-sidebar-nav-bar [collapsed]="sidebarCollapsed"></app-sidebar-nav-bar>
-        </nz-sider>
-        <nz-content>
-            <nz-breadcrumb nzSeparator=">" [nzAutoGenerate]="true"></nz-breadcrumb>
-            <router-outlet></router-outlet>
-        </nz-content>
+        <nz-header>
+            <app-top-nav-bar></app-top-nav-bar>
+        </nz-header>
+        <nz-layout>
+            <nz-sider [(nzCollapsed)]="sidebarCollapsed" nzCollapsible>
+                <app-sidebar-nav-bar [collapsed]="sidebarCollapsed"></app-sidebar-nav-bar>
+            </nz-sider>
+            <nz-content>
+                <nz-breadcrumb nzSeparator=">" [nzAutoGenerate]="true"></nz-breadcrumb>
+                <router-outlet></router-outlet>
+            </nz-content>
+        </nz-layout>
     </nz-layout>
-</nz-layout>
+</nz-spin>
+<ng-template #loadingImg>
+    <app-sena-loading [loading]="loading_user()"></app-sena-loading>
+</ng-template>

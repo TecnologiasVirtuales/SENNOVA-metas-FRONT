@@ -1,0 +1,9 @@
+<button nz-button class="cancel-button" [nzLoading]="loading" (click)="onCancel()"><span>Cancelar</span></button>
+@switch (type) {
+    @case ('save') {
+        <button nz-button [ngClass]="{'save-button_invalid':saveDisabled}" class="save-button" [nzLoading]="loading" [disabled]="saveDisabled" (click)="onSave()"><span>Guardar</span></button>
+    }
+    @case ('alert') {
+        <button nz-button class="save-button" [nzLoading]="loading" [disabled]="saveDisabled" (click)="onOk()"><span>Aceptar</span></button>
+    }
+}

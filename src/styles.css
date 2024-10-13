@@ -25,6 +25,13 @@
     background-size: cover;
 }
 
+.logo-sena_load{
+    width: 200px;
+    height: 200px;
+    background-image: url('/logos/logo-sena.png');
+    background-size: cover;
+}
+
 .ant-layout-sider-trigger{
     background-color: var(--primary-green-color);
     color: var(--primary-white-color);
@@ -44,4 +51,12 @@
 
 .ant-table-thead .ant-table-row th{
     background-color: var(--primary-green-color-transparent);
+}
+
+.ant-modal-title{
+    color: var(--primary-green-color);
+}
+
+.ant-modal-footer .cancel-button span{
+    color: var(--primary-red-color);
 }

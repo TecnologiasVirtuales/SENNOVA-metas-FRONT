@@ -10,6 +10,9 @@ import {NzTableModule} from 'ng-zorro-antd/table';
 import {NzSkeletonModule} from 'ng-zorro-antd/skeleton';
 import { ModalidadService } from '@shared/services/modalidad.service';
 import { ModalidadModel } from '@shared/models/modalidad.model';
+import { SenaLoadingComponent } from '@shared/components/sena-loading/sena-loading.component';
+import { AuthService } from '@shared/services/auth.service';
+import { CanUseActionsDirective } from '@shared/directives/can-use-actions.directive';
 
 @Component({
   selector: 'app-modalidad-page',
@@ -22,7 +25,9 @@ import { ModalidadModel } from '@shared/models/modalidad.model';
     ModalidadActionsComponent,
     NgIconComponent,
     NzTableModule,
-    NzSkeletonModule
+    NzSkeletonModule,
+    SenaLoadingComponent,
+    CanUseActionsDirective
 ],
   templateUrl: './modalidad-page.component.html',
   styleUrl: './modalidad-page.component.css',
@@ -33,6 +38,9 @@ import { ModalidadModel } from '@shared/models/modalidad.model';
 export class ModalidadPageComponent implements OnInit{
 
   private modalidad_service = inject(ModalidadService);
+  private auth_service = inject(AuthService);
+
+  usuario = this.auth_service.usuario;
 
   modalidades:ModalidadModel[] = [];
 
@@ -57,5 +65,25 @@ export class ModalidadPageComponent implements OnInit{
           dataSub.unsubscribe();
         }
       })
+  }
+
+  onCreate(modalidad:ModalidadModel){
+    this.modalidades = [...this.modalidades,modalidad];
+  }
+
+  onUpdate(data:{index:number,modalidad:ModalidadModel}){    
+    let modalidades = [...this.modalidades];
+    modalidades[data.index] = data.modalidad;
+    this.modalidades = [...modalidades];
+  }
+
+  onDelete(index:number){
+    let modalidades = [...this.modalidades];
+    modalidades.splice(index,1);
+    this.modalidades = modalidades;
+  }
+
+  onLoad(loadStatus:boolean){    
+    this.loading = loadStatus;
   }
 }

@@ -10,7 +10,7 @@ export interface UsuarioModel {
     apellido:string;
     segundo_apellido:string;
     foto_perfil:string;
-    is_superurser:boolean;
+    is_superuser:boolean;
     is_staff:boolean;
     is_active:boolean;
     roles?:RoleModel[];

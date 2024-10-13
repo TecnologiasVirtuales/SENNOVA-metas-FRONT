@@ -1,0 +1,15 @@
+.loading-container{
+    height: 100%;
+    animation: scaleAnimation 2s infinite;
+}
+
+@keyframes scaleAnimation {
+    0%,100%{
+        transform: scale(1);
+        opacity: 1;
+    }
+    50%{
+        transform: scale(0.9);
+        opacity: 0.5;
+    }
+}

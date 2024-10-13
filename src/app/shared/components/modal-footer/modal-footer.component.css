@@ -1,0 +1,37 @@
+.save-button,
+.cancel-button{
+    height: 40px;
+    border-radius: 5px;
+}
+
+.save-button{
+    background-color: var(--primary-green-color);
+    border: none;
+}
+
+.save-button:hover{
+    background-color: var(--tertiary-green-color);
+}
+
+.save-button:active{
+    background-color: var(--secondary-green-color);
+}
+
+.save-button_invalid{
+    background-color: var(--cuaternary-green-color);
+}
+
+.save-button span{
+    color: var(--primary-white-color);
+}
+
+.cancel-button {
+    border-color: var(--primary-red-color);
+    transition: none;
+}
+
+.cancel-button:hover,
+.cancel-button:hover span{
+    background-color: var(--primary-red-color);
+    color: var(--primary-white-color);
+}

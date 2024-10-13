@@ -12,6 +12,7 @@ import {NzDividerModule} from 'ng-zorro-antd/divider'
 import { AuthService } from '@shared/services/auth.service';
 import { RefreshDto } from '@shared/dto/auth/refresh.dto';
 import { TokenService } from '@shared/services/token.service';
+import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 
 @Component({
   selector: 'app-top-nav-bar',
@@ -26,7 +27,8 @@ import { TokenService } from '@shared/services/token.service';
     NzButtonModule,
     NzTypographyModule,
     NzDropDownModule,
-    NzDividerModule
+    NzDividerModule,
+    NzSkeletonModule
   ],
   templateUrl: './top-nav-bar.component.html',
   styleUrl: './top-nav-bar.component.css'
@@ -37,15 +39,17 @@ export class TopNavBarComponent {
   token_service = inject(TokenService);
 
   usuario = this.auth_service.usuario;
+  loading_user = this.auth_service.loading_user;
 
   onLogOut(){
     const refresh:RefreshDto = {
       refresh: this.token_service.getRefresh() ?? ''
     }
+    this.loading_user.update(()=>true);
     const sesionSub = this.auth_service.logOut(refresh)
       .subscribe({
-        next:(message)=>{
-          console.log(message);
+        next:()=>{
+          this.loading_user.update(()=>false);
         },
         error:()=>{
           sesionSub.unsubscribe();

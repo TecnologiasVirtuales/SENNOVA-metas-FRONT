@@ -4,12 +4,19 @@
     [nzTitle]="pageTitle"
     [nzExtra]="actionButton"
     nzBorderless>
-    <nz-table #modalidadTable [nzData]="modalidades" [nzLoading]="loading" [nzLoadingIndicator]="loadingImg">
+    <nz-table 
+        class="modalidad-table" 
+        #modalidadTable 
+        [nzData]="modalidades" 
+        [nzLoading]="loading" 
+        [nzLoadingIndicator]="loadingImg"
+        [nzShowPagination]="false"
+        nzBordered="">
         <thead>
             <tr>
                 <th>Código</th>
                 <th>Nombre</th>
-                <th>Actions</th>
+                <th *appCanUseActions class="modalidad-table_actions">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -21,10 +28,14 @@
                     <td>
                         {{modalidad.nombre}}
                     </td>
-                    <td>
+                    <td *appCanUseActions>
                         <app-modalidad-actions 
-                            [modalidad]="modalidad" 
-                            type_actions="buttons">
+                            [modalidad]="modalidad"
+                            [index]="$index"
+                            type_actions="buttons"
+                            (delete)="onDelete($event)"
+                            (update)="onUpdate($event)"
+                            (setLoading)="onLoad($event)">
                         </app-modalidad-actions>
                     </td>
                 </tr>
@@ -33,10 +44,7 @@
     </nz-table>
 </nz-card>
 <ng-template #loadingImg>
-    <div class="loading-container" nz-flex nzJustify="center" nzAlign="center">
-        <div class="logo-sena">
-        </div>
-    </div>
+    <app-sena-loading [loading]="loading"></app-sena-loading>
 </ng-template>
 <ng-template #pageTitle>
     <div class="page-title" nz-row nzAlign="middle" nzGutter="15">
@@ -49,7 +57,11 @@
     </div>
 </ng-template>
 <ng-template #actionButton>
-    <app-modalidad-actions></app-modalidad-actions>
+    <app-modalidad-actions
+        *appCanUseActions
+        (create)="onCreate($event)" 
+        (setLoading)="onLoad($event)">
+    </app-modalidad-actions>
 </ng-template>
 
 
