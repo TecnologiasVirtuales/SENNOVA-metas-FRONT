@@ -1,19 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Input, Output, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { ModalFooterComponent } from '@shared/components/modal-footer/modal-footer.component';
-import { RegionalModel } from '@shared/models/regional.model';
-import { RegionalService } from '@shared/services/regional.service';
+import { CentroFormacionModel } from '@shared/models/centro-formacion.model';
+import { CentroFormacionService } from '@shared/services/centro-formacion.service';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzFlexModule } from 'ng-zorro-antd/flex';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzModalModule, NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { Subscription } from 'rxjs';
-import { RegionalFormComponent } from '../regional-form/regional-form.component';
-import { RegionalDto } from '@shared/dto/regional/regional.dto';
+import { CentroFormacionFormComponent } from '../centro-formacion-form/centro-formacion-form.component';
+import { CentroFormacionDto } from '@shared/dto/centro-formacion/centro-formacion.dto';
 
 @Component({
-  selector: 'app-regional-actions',
+  selector: 'app-centro-formacion-actions',
   standalone: true,
   imports: [
     CommonModule,
@@ -24,10 +24,10 @@ import { RegionalDto } from '@shared/dto/regional/regional.dto';
     ModalFooterComponent,
     NzAlertModule
   ],
-  templateUrl: './regional-actions.component.html',
-  styleUrl: './regional-actions.component.css'
+  templateUrl: './centro-formacion-actions.component.html',
+  styleUrl: './centro-formacion-actions.component.css'
 })
-export class RegionalActionsComponent {
+export class CentroFormacionActionsComponent {
   @ViewChild('saveFooter', { static: true }) footerSaveTemplate!: TemplateRef<any>;
   @ViewChild('alertFooter', { static: true }) footerAlertTemplate!: TemplateRef<any>;
   @ViewChild('alertContent', { static: true }) contentAlertTemplate!: TemplateRef<any>;
@@ -35,18 +35,18 @@ export class RegionalActionsComponent {
 
   private modal_service = inject(NzModalService);
   private view_container_ref = inject(ViewContainerRef);
-  private regional_service = inject(RegionalService);
+  private centro_formacion_service = inject(CentroFormacionService);
 
   @Input() type_actions:'icons'|'buttons'|'create' = 'create';
-  @Input() regional?:RegionalModel;
+  @Input() centro_formacion?:CentroFormacionModel;
   @Input() index?:number;
 
-  @Output() create:EventEmitter<RegionalModel> = new EventEmitter();
-  @Output() update:EventEmitter<{regional:RegionalModel,index:number}> = new EventEmitter();
+  @Output() create:EventEmitter<CentroFormacionModel> = new EventEmitter();
+  @Output() update:EventEmitter<{centro_formacion:CentroFormacionModel,index:number}> = new EventEmitter();
   @Output() delete:EventEmitter<number> = new EventEmitter();
   @Output() setLoading:EventEmitter<boolean> = new EventEmitter();
 
-  title: 'Crear regional'|'Editar regional' = 'Crear regional';
+  title: 'Crear centro de formación'|'Editar centro de formación' = 'Crear centro de formación';
   icon: 'plus'|'edit' = 'plus';
   save_loading:boolean = false;
 
@@ -54,12 +54,12 @@ export class RegionalActionsComponent {
   validSub:Subscription|null = null;
   disabled:boolean = true;
 
-  instance?:RegionalFormComponent;
+  instance?:CentroFormacionFormComponent;
   modal?: NzModalRef;
 
   ngOnInit(): void {
-    if (this.regional) {      
-      this.title = 'Editar regional';
+    if (this.centro_formacion) {      
+      this.title = 'Editar centro de formación';
       this.icon = 'edit';
     }
   }
@@ -73,9 +73,9 @@ export class RegionalActionsComponent {
   openForm() {
     this.modal = this.modal_service.create({
       nzTitle:this.title,
-      nzContent:RegionalFormComponent,
+      nzContent:CentroFormacionFormComponent,
       nzViewContainerRef:this.view_container_ref,
-      nzData:{modalidad:this.regional},
+      nzData:{modalidad:this.centro_formacion},
       nzFooter:this.footerSaveTemplate,
       nzWidth:'500px',
       nzDraggable:true,
@@ -91,9 +91,9 @@ export class RegionalActionsComponent {
           if(!response)return;
           const {form} = response;
           if(!form) return;
-          this.instance!.regional
-            ? this.editarRegional(form,this.regional!.id)
-            : this.crearRegional(form)
+          this.instance!.centro_formacion
+            ? this.editarCentroFormacion(form,this.centro_formacion!.id)
+            : this.crearCentroFormacion(form)
         },
         error:()=>{
           this.save_loading = false;
@@ -132,10 +132,10 @@ export class RegionalActionsComponent {
     this.modal?.destroy({form:null});
   }
 
-  eliminarRegional(){
+  eliminarCentroFormacion(){
     this.loadingStatus(true);
-    const {id} = this.regional!;
-    const deleteSub = this.regional_service.delete(id)
+    const {id} = this.centro_formacion!;
+    const deleteSub = this.centro_formacion_service.delete(id)
       .subscribe({
         next:()=>{
           this.delete.emit(this.index!);
@@ -154,12 +154,12 @@ export class RegionalActionsComponent {
       });
   }
 
-  editarRegional(form:RegionalDto,id:number){    
+  editarCentroFormacion(form:CentroFormacionDto,id:number){    
     this.loadingStatus(true);
-    const editSub = this.regional_service.update(form,id)
+    const editSub = this.centro_formacion_service.update(form,id)
       .subscribe({
-        next:(modalidad)=>{
-          this.update.emit({index:this.index!,regional:modalidad});
+        next:(centro_formacion)=>{
+          this.update.emit({index:this.index!,centro_formacion:centro_formacion});
         },
         error:()=>{
           this.loadingStatus(false);
@@ -172,9 +172,9 @@ export class RegionalActionsComponent {
       });
   }
 
-  crearRegional(form: RegionalDto) {
+  crearCentroFormacion(form: CentroFormacionDto) {
     this.loadingStatus(true);
-    const createSub = this.regional_service.create(form)
+    const createSub = this.centro_formacion_service.create(form)
       .subscribe({
         next:(modalidad)=>{
           this.create.emit(modalidad);

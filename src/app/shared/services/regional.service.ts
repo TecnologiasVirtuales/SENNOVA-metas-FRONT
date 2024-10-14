@@ -26,7 +26,6 @@ export class RegionalService {
   }
 
   create(form:RegionalDto){
-    console.log(form);
     return this.http.post<RegionalModel>(`${this.url}/`,form);
   }
 

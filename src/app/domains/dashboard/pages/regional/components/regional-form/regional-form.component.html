@@ -24,6 +24,7 @@
         <nz-form-control [nzErrorTip]="departamentoErrors">
             <nz-input-group class="regional-form_control">
                 <nz-select
+                    id="departamento"
                     [formControl]="field_departamento"
                     [nzLoading]="loading_departamentos"
                     nzShowSearch
@@ -59,7 +60,7 @@
 </ng-template>
 
 <ng-template #departamentoErrors>
-    @if (field_nombre.hasError('required')) {
+    @if (field_departamento.hasError('required')) {
         <div nz-col nzSpan="24">
             <span nz-typography nzType="danger">Por favor elija un departamento</span>
         </div>

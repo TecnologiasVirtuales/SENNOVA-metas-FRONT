@@ -18,5 +18,11 @@ export const sideRoutes:Routes = [
         title:'Gestión de Regionales',
         data:{breadcrumb:'Gestión de regionales',icon:'heroMapSolid'},
         loadComponent:()=>import('@domains/dashboard/pages/regional/regional-page/regional-page.component').then(c=>c.RegionalPageComponent)
+    },
+    {
+        path:'centros-formacion',
+        title:'Gestión Centros de formación',
+        data:{breadcrumb:'Gestión Centros de formación',icon:'lucideSchool'},
+        loadComponent:()=>import('@domains/dashboard/pages/centro-formacion/centro-formacion-page/centro-formacion-page.component').then(c=>c.CentroFormacionPageComponent)
     }
 ]

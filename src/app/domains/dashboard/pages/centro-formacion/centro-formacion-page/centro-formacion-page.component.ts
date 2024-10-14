@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import {lucideSchool} from '@ng-icons/lucide';
 import { SenaLoadingComponent } from '@shared/components/sena-loading/sena-loading.component';
 import { CanUseActionsDirective } from '@shared/directives/can-use-actions.directive';
 import { NzCardModule } from 'ng-zorro-antd/card';
@@ -8,13 +9,12 @@ import { NzFlexModule } from 'ng-zorro-antd/flex';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { NzTableModule } from 'ng-zorro-antd/table';
-import { heroMapSolid } from '@ng-icons/heroicons/solid';
-import { RegionalModel } from '@shared/models/regional.model';
-import { RegionalService } from '@shared/services/regional.service';
-import { RegionalActionsComponent } from '../components/regional-actions/regional-actions.component';
+import { CentroFormacionActionsComponent } from '../components/centro-formacion-actions/centro-formacion-actions.component';
+import { CentroFormacionService } from '@shared/services/centro-formacion.service';
+import { CentroFormacionModel } from '@shared/models/centro-formacion.model';
 
 @Component({
-  selector: 'app-regional-page',
+  selector: 'app-centro-formacion-page',
   standalone: true,
   imports: [
     CommonModule,
@@ -26,19 +26,19 @@ import { RegionalActionsComponent } from '../components/regional-actions/regiona
     NzSkeletonModule,
     SenaLoadingComponent,
     CanUseActionsDirective,
-    RegionalActionsComponent
+    CentroFormacionActionsComponent
   ],
-  templateUrl: './regional-page.component.html',
-  styleUrl: './regional-page.component.css',
+  templateUrl: './centro-formacion-page.component.html',
+  styleUrl: './centro-formacion-page.component.css',
   viewProviders: [provideIcons({ 
-    heroMapSolid
+    lucideSchool
   })]
 })
-export class RegionalPageComponent implements OnInit {
+export class CentroFormacionPageComponent implements OnInit{
 
-  private regional_service = inject(RegionalService);
+  private centro_formacion_service = inject(CentroFormacionService);
 
-  regionales:RegionalModel[] = [];
+  centros_formacion:CentroFormacionModel[] = [];
 
   loading:boolean = true;
 
@@ -47,10 +47,10 @@ export class RegionalPageComponent implements OnInit {
   }
 
   private loadData(){
-    const dataSub = this.regional_service.getAll()
+    const dataSub = this.centro_formacion_service.getAll()
       .subscribe({
-        next:(regionales)=>{
-          this.regionales = [...regionales];
+        next:(centros_formacion)=>{
+          this.centros_formacion = [...centros_formacion];
         },
         error:()=>{
           this.loading = false;
@@ -63,24 +63,23 @@ export class RegionalPageComponent implements OnInit {
       })
   }
 
-  onCreate(regional:RegionalModel){
-    this.regionales = [...this.regionales,regional];
+  onCreate(regional:CentroFormacionModel){
+    this.centros_formacion = [...this.centros_formacion,regional];
   }
 
-  onUpdate(data:{index:number,regional:RegionalModel}){    
-    let regionales = [...this.regionales];
-    regionales[data.index] = data.regional;
-    this.regionales = [...regionales];
+  onUpdate(data:{index:number,centro_formacion:CentroFormacionModel}){    
+    let regionales = [...this.centros_formacion];
+    regionales[data.index] = data.centro_formacion;
+    this.centros_formacion = [...regionales];
   }
 
   onDelete(index:number){
-    let regionales = [...this.regionales];
+    let regionales = [...this.centros_formacion];
     regionales.splice(index,1);
-    this.regionales = regionales;
+    this.centros_formacion = regionales;
   }
 
   onLoad(loadStatus:boolean){    
     this.loading = loadStatus;
   }
-
 }

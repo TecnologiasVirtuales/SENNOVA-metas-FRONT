@@ -1,0 +1,69 @@
+<nz-card 
+    nz-col 
+    nzSpan="24" 
+    [nzTitle]="pageTitle"
+    [nzExtra]="actionButton"
+    nzBorderless>
+    <nz-table 
+        class="centro-table" 
+        #centroTable 
+        [nzData]="centros_formacion" 
+        [nzLoading]="loading" 
+        [nzLoadingIndicator]="loadingImg"
+        [nzShowPagination]="false"
+        nzBordered="">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Regional</th>
+                <th *appCanUseActions class="centro-table_actions">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (centro_formacion of centroTable.data; track $index) {
+                <tr>
+                    <td>
+                        {{centro_formacion.codigo}}
+                    </td>
+                    <td>
+                        {{centro_formacion.nombre}}
+                    </td>
+                    <td>
+                        {{centro_formacion.regional.nombre}}
+                    </td>
+                    <td *appCanUseActions>
+                        <app-centro-formacion-actions 
+                            [centro_formacion]="centro_formacion"
+                            [index]="$index"
+                            type_actions="buttons"
+                            (delete)="onDelete($event)"
+                            (update)="onUpdate($event)"
+                            (setLoading)="onLoad($event)">
+                        </app-centro-formacion-actions>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </nz-table>
+</nz-card>
+<ng-template #loadingImg>
+    <app-sena-loading [loading]="loading"></app-sena-loading>
+</ng-template>
+<ng-template #pageTitle>
+    <div class="page-title" nz-row nzAlign="middle" nzGutter="15">
+        <div nz-col>
+            <ng-icon name="lucideSchool"></ng-icon>
+        </div>
+        <div nz-col>
+            <h1>Centros de Formación</h1>
+        </div>
+    </div>
+</ng-template>
+<ng-template #actionButton>
+    <app-centro-formacion-actions
+        *appCanUseActions
+        (create)="onCreate($event)" 
+        (setLoading)="onLoad($event)">
+    </app-centro-formacion-actions>
+</ng-template>
