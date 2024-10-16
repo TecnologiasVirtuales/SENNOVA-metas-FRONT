@@ -5,6 +5,7 @@ import { sideRoutes } from '@core/sidebar.routes';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { heroAcademicCapSolid, heroHomeModernSolid, heroMapSolid } from '@ng-icons/heroicons/solid';
 import { lucideSchool } from '@ng-icons/lucide';
+import { simpleLevelsdotfyi } from '@ng-icons/simple-icons';
 import { NzFlexModule } from 'ng-zorro-antd/flex';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
@@ -30,7 +31,8 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
     heroAcademicCapSolid,
     heroHomeModernSolid,
     heroMapSolid,
-    lucideSchool
+    lucideSchool,
+    simpleLevelsdotfyi
   })]
 })
 export class SidebarNavBarComponent {

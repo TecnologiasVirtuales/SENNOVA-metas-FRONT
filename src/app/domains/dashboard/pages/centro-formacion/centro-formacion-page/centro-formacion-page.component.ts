@@ -68,15 +68,15 @@ export class CentroFormacionPageComponent implements OnInit{
   }
 
   onUpdate(data:{index:number,centro_formacion:CentroFormacionModel}){    
-    let regionales = [...this.centros_formacion];
-    regionales[data.index] = data.centro_formacion;
-    this.centros_formacion = [...regionales];
+    let centros_formacion = [...this.centros_formacion];
+    centros_formacion[data.index] = data.centro_formacion;
+    this.centros_formacion = [...centros_formacion];
   }
 
   onDelete(index:number){
-    let regionales = [...this.centros_formacion];
-    regionales.splice(index,1);
-    this.centros_formacion = regionales;
+    let centros_formacion = [...this.centros_formacion];
+    centros_formacion.splice(index,1);
+    this.centros_formacion = centros_formacion;
   }
 
   onLoad(loadStatus:boolean){    

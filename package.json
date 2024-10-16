@@ -21,6 +21,7 @@
     "@ng-icons/core": "^29.5.1",
     "@ng-icons/heroicons": "^29.5.1",
     "@ng-icons/lucide": "^29.5.1",
+    "@ng-icons/simple-icons": "^29.5.1",
     "ng-zorro-antd": "^18.1.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

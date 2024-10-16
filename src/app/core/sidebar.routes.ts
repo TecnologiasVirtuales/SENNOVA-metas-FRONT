@@ -24,5 +24,12 @@ export const sideRoutes:Routes = [
         title:'Gestión Centros de formación',
         data:{breadcrumb:'Gestión Centros de formación',icon:'lucideSchool'},
         loadComponent:()=>import('@domains/dashboard/pages/centro-formacion/centro-formacion-page/centro-formacion-page.component').then(c=>c.CentroFormacionPageComponent)
+    },
+    {
+        path:'niveles-formacion',
+        title:'Gestión niveles de formación',
+        data:{breadcrumb:'Gestión niveles de formación',icon:'simpleLevelsdotfyi'},
+        loadComponent:()=>import('@domains/dashboard/pages/nivel-formacion/nivel-formacion-page/nivel-formacion-page.component').then(c=>c.NivelFormacionPageComponent)
+
     }
 ]

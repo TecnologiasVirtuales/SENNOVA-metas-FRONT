@@ -1,0 +1,67 @@
+<nz-card 
+    nz-col 
+    nzSpan="24" 
+    [nzTitle]="pageTitle"
+    [nzExtra]="actionButton"
+    nzBorderless>
+    <nz-table 
+        class="nivel-table" 
+        #nivelTable 
+        [nzData]="niveles_formacion" 
+        [nzLoading]="loading" 
+        [nzLoadingIndicator]="loadingImg"
+        [nzShowPagination]="false"
+        nzBordered="">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th *appCanUseActions class="nivel-table_actions">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (nivel_formacion of nivelTable.data; track $index) {
+                <tr>
+                    <td>
+                        {{nivel_formacion.codigo}}
+                    </td>
+                    <td>
+                        {{nivel_formacion.nombre}}
+                    </td>
+                    <td *appCanUseActions>
+                        <app-nivel-formacion-actions 
+                            [nivel_formacion]="nivel_formacion"
+                            [index]="$index"
+                            type_actions="buttons"
+                            (delete)="onDelete($event)"
+                            (update)="onUpdate($event)"
+                            (setLoading)="onLoad($event)">
+                        </app-nivel-formacion-actions>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </nz-table>
+</nz-card>
+<ng-template #loadingImg>
+    <app-sena-loading [loading]="loading"></app-sena-loading>
+</ng-template>
+<ng-template #pageTitle>
+    <div class="page-title" nz-row nzAlign="middle" nzGutter="15">
+        <div nz-col>
+            <ng-icon name="simpleLevelsdotfyi"></ng-icon>
+        </div>
+        <div nz-col>
+            <h1>Niveles de Formación</h1>
+        </div>
+    </div>
+</ng-template>
+<ng-template #actionButton>
+    <app-nivel-formacion-actions
+        *appCanUseActions
+        (create)="onCreate($event)" 
+        (setLoading)="onLoad($event)">
+    </app-nivel-formacion-actions>
+</ng-template>
+
+

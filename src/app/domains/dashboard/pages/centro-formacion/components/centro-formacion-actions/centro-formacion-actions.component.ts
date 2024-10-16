@@ -75,7 +75,7 @@ export class CentroFormacionActionsComponent {
       nzTitle:this.title,
       nzContent:CentroFormacionFormComponent,
       nzViewContainerRef:this.view_container_ref,
-      nzData:{modalidad:this.centro_formacion},
+      nzData:{centro_formacion:this.centro_formacion},
       nzFooter:this.footerSaveTemplate,
       nzWidth:'500px',
       nzDraggable:true,
