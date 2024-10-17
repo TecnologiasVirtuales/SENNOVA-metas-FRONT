@@ -3,9 +3,10 @@ import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { sideRoutes } from '@core/sidebar.routes';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { heroAcademicCapSolid, heroHomeModernSolid, heroMapSolid } from '@ng-icons/heroicons/solid';
+import { heroAcademicCapSolid, heroHomeModernSolid, heroMapSolid, heroUserGroupSolid } from '@ng-icons/heroicons/solid';
 import { lucideSchool } from '@ng-icons/lucide';
 import { simpleLevelsdotfyi } from '@ng-icons/simple-icons';
+import { CanUseActionsDirective } from '@shared/directives/can-use-actions.directive';
 import { NzFlexModule } from 'ng-zorro-antd/flex';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
@@ -23,7 +24,8 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
     NzFlexModule,
     NzGridModule,
     NzTypographyModule,
-    NzPopoverModule
+    NzPopoverModule,
+    CanUseActionsDirective
   ],
   templateUrl: './sidebar-nav-bar.component.html',
   styleUrl: './sidebar-nav-bar.component.css',
@@ -32,7 +34,8 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
     heroHomeModernSolid,
     heroMapSolid,
     lucideSchool,
-    simpleLevelsdotfyi
+    simpleLevelsdotfyi,
+    heroUserGroupSolid
   })]
 })
 export class SidebarNavBarComponent {

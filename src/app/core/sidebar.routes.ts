@@ -8,6 +8,12 @@ export const sideRoutes:Routes = [
         loadComponent:()=>import('@domains/dashboard/pages/home/home.component').then(c=>c.HomeComponent)
     },
     {
+        path:'usuarios',
+        title:'Gestión de usuarios',
+        data:{breadcrumb:'Gestión de usuarios',icon:'heroUserGroupSolid'},
+        loadComponent:()=>import('@domains/dashboard/pages/usuario/usuario-page/usuario-page.component').then(c=>c.UsuarioPageComponent)
+    },
+    {
         path:'modalidades',
         title:'Gestión de Modalidades',
         data:{breadcrumb:'Gestión de modalidades',icon:'heroAcademicCapSolid'},
@@ -30,6 +36,5 @@ export const sideRoutes:Routes = [
         title:'Gestión niveles de formación',
         data:{breadcrumb:'Gestión niveles de formación',icon:'simpleLevelsdotfyi'},
         loadComponent:()=>import('@domains/dashboard/pages/nivel-formacion/nivel-formacion-page/nivel-formacion-page.component').then(c=>c.NivelFormacionPageComponent)
-
     }
 ]

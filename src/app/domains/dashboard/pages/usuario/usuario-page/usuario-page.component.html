@@ -1,0 +1,102 @@
+<nz-card
+    nz-col
+    nzSpan="24"
+    [nzTitle]="pageTitle"
+    nzBorderless>
+    <nz-table
+        class="usuario-table"
+        #usuarioTable
+        [nzData]="usuarios"
+        >
+        <thead>
+            <tr>
+                <th nzCustomFilter>
+                    Documento
+                    <nz-filter-trigger [(nzVisible)]="search_status" [nzActive]="search_value.length > 0" [nzDropdownMenu]="menu">
+                        <ng-icon name="lucideSearch"></ng-icon>
+                    </nz-filter-trigger>
+                </th>
+                <th>
+                    Tipo de documento
+                </th>
+                <th>
+                    Nombres
+                </th>
+                <th>
+                    Apellidos
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Estado
+                </th>
+                <th>
+                    Roles
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (usuario of usuarioTable.data; track $index) {
+                <tr>
+                    {{usuario.documento}}
+                </tr>
+                <tr>
+                    {{usuario.tipo_documento|tipoDocumento}}
+                </tr>
+                <tr>
+                    {{usuario.nombre}} {{usuario.segundo_nombre}}
+                </tr>
+                <tr>
+                    {{usuario.apellido}} {{usuario.segundo_apellido}}
+                </tr>
+                <tr>
+                    {{usuario.email}}
+                </tr>
+                <tr>
+                    @if (usuario.is_active) {
+                        <strong>Activo</strong>
+                    }@else {
+                        <strong>Inactivo</strong>
+                    }
+                </tr>
+                <tr>
+                    @for (rol of usuario.roles; track $index) {
+                        <strong>{{rol.name}}</strong>
+                        @if (rol.id !== usuario.roles!.at(-1)!.id) {
+                            <nz-divider nzOrientation="left"></nz-divider>
+                        }
+                    }@empty {
+                        No tiene roles asignados
+                    }
+                </tr>
+            }
+        </tbody>
+
+    </nz-table>
+</nz-card>
+<nz-dropdown-menu #menu="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search name" [(ngModel)]="search_value" />
+        <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">Search</button>
+        <button nz-button nzSize="small" (click)="resetSearch()">Reset</button>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+<ng-template #pageTitle>
+    <nz-space class="page-title" nzAlign="center">
+        <div *nzSpaceItem>
+            <ng-icon name="heroUserGroupSolid"></ng-icon>
+        </div>
+        <div *nzSpaceItem>
+            <h1>Usuarios</h1>
+        </div>
+    </nz-space>
+</ng-template>
+<ng-template #loadingImg>
+    <app-sena-loading [loading]="loading"></app-sena-loading>
+</ng-template>

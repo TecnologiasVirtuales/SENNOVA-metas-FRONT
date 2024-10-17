@@ -7,7 +7,8 @@
             nzMatchRouter
             nz-popover
             [nzPopoverContent]="popOver"
-            nzPopoverPlacement="right">
+            nzPopoverPlacement="right"
+            *appCanUseActions>
             <a class="menu-item_anchor" [routerLink]="['/dashboard',opcion.path]">
                 <ng-icon [name]="opcion.data?.['icon']"></ng-icon>
                 @if (!collapsed) {

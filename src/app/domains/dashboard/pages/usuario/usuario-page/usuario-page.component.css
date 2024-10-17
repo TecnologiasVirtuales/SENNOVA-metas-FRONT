@@ -1,0 +1,16 @@
+.page-title ng-icon,
+.page-title h1{
+    color: var(--primary-green-color);
+    font-size: 2rem;
+    margin-bottom: 0;
+}
+
+.usuario-table {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.usuario-table_actions{
+    width: 30%;
+}
