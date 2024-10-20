@@ -7,14 +7,29 @@
         </div>
         <div nz-col nzSpan="24">
             <div nz-flex nzAlign="center" nzJustify="center">
-                <form class="login-form" nz-form [formGroup]="form" (ngSubmit)="submitForm()">
+                <form class="form-container" nz-form [formGroup]="form" (ngSubmit)="submitForm()">
                     <nz-form-item nz-col nzSpan="20">
-                        <nz-form-control nzErrorTip="Por favor ingrese su documento valido!">
-                            <nz-form-label nzFor="documento" class="login-form_label">
-                                <span class="form-label_text" nz-typography>Documento de identidad</span>
+                        <nz-form-control 
+                            nzErrorTip="Por favor ingrese su documento valido!">
+                            <nz-form-label 
+                                nzFor="documento" 
+                                class="form-label">
+                                <span 
+                                    class="form-label_text" 
+                                    nz-typography>
+                                    Documento de identidad
+                                </span>
                             </nz-form-label>
-                            <nz-input-group class="form-group" [nzPrefix]="iconDoc">
-                                <input class="form-input" (focus)="onFocus($event)" (blur)="onBlur($event)" type="number" nz-input formControlName="documento"
+                            <nz-input-group 
+                                class="form-group" 
+                                [nzPrefix]="iconDoc">
+                                <input 
+                                    class="form-input" 
+                                    (focus)="onFocus($event)" 
+                                    (blur)="onBlur($event)" 
+                                    type="number" 
+                                    nz-input 
+                                    formControlName="documento"
                                     placeholder="Escriba su documento de identidad" id="documento" nz-typography/>
                             </nz-input-group>
                             <ng-template #iconDoc>

@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, 
 import { DepartamentoModel } from '@shared/models/departamento.model';
 import { RegionalModel } from '@shared/models/regional.model';
 import { DepartamentoService } from '@shared/services/departamento.service';
+import { FormStyle } from '@shared/style-clases/focus.style';
 import { noWhiteSpaceValidator } from '@shared/validators/no-wite-space.validator';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -25,13 +26,15 @@ import { forkJoin } from 'rxjs';
     NzSelectModule
   ],
   templateUrl: './regional-form.component.html',
-  styleUrl: './regional-form.component.css'
+  styleUrls: [
+    './regional-form.component.css',
+    '../../../../../../shared/styles/forms.style.css'
+  ]
 })
-export class RegionalFormComponent {
+export class RegionalFormComponent extends FormStyle {
 
   private form_builder = inject(FormBuilder);
   private modal = inject(NzModalRef);
-  private renderer = inject(Renderer2);
   private departamento_service = inject(DepartamentoService);
 
   loading_departamentos:boolean = true;;
@@ -42,6 +45,7 @@ export class RegionalFormComponent {
   departamentos:DepartamentoModel[] = [];
 
   constructor(){
+    super();
     this.form = this. form_builder.group({
       nombre:new FormControl(null,[
         Validators.required,
@@ -98,13 +102,4 @@ export class RegionalFormComponent {
     return this.form.get('departamento_id') as FormControl<number>;
   }
 
-  onFocus(event:FocusEvent){
-    const control = (event.target as HTMLElement).closest('.regional-form_control');
-    this.renderer.addClass(control, 'form-control_focus');
-  }
-
-  onBlur(event: FocusEvent) {
-    const control = (event.target as HTMLElement).closest('.regional-form_control');
-    this.renderer.removeClass(control, 'form-control_focus');
-  }
 }

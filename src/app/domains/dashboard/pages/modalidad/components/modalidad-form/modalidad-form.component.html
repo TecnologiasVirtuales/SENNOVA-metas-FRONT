@@ -1,21 +1,31 @@
-<form class="modalidad-form" nz-form [formGroup]="form">
+<form class="form-container" nz-form [formGroup]="form">
     <nz-form-item nz-col nzSpan="20">
-        <nz-form-label nzFor="nombre" class="modalidad-form_label" nzRequired>
-            <span class="form-label_text" nz-typography>Nombre</span>
-        </nz-form-label>
-        <nz-form-control [nzErrorTip]="nombreErrors">
-            <nz-input-group class="modalidad-form_control">
+        <nz-form-control 
+            [nzErrorTip]="nombreErrors">
+            <nz-form-label 
+                nzFor="nombre" 
+                class="form-label"
+                nzRequired>
+                <span 
+                    class="form-label_text" 
+                    nz-typography>
+                    Nombre
+                </span>
+            </nz-form-label>
+            <nz-input-group 
+                class="form-group">
                 <input 
-                    class="form-control_input"
-                    (focus)="onFocus($event)"
-                    (blur)="onBlur($event)"
-                    nz-input type="text" 
-                    [formControl]="field_nombre" 
+                    class="form-input" 
+                    (focus)="onFocus($event)" 
+                    (blur)="onBlur($event)" 
+                    type="text" 
+                    nz-input 
+                    [formControl]="field_nombre"
+                    placeholder="Escriba su documento de identidad" 
                     id="nombre" 
-                    nz-typography
-                    placeholder="Escriba el nombre de la modalidad">
+                    nz-typography/>
             </nz-input-group>
-        </nz-form-control> 
+        </nz-form-control>
     </nz-form-item>
 </form>
 

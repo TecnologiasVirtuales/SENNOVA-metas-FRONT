@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ModalidadModel } from '@shared/models/modalidad.model';
+import { FormStyle } from '@shared/style-clases/focus.style';
 import { noWhiteSpaceValidator } from '@shared/validators/no-wite-space.validator';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -20,19 +21,22 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
     NzTypographyModule,
   ],
   templateUrl: './modalidad-form.component.html',
-  styleUrl: './modalidad-form.component.css'
+  styleUrls:[
+    './modalidad-form.component.css',
+    '../../../../../../shared/styles/forms.style.css'
+  ]
 })
-export class ModalidadFormComponent implements OnInit {
+export class ModalidadFormComponent extends FormStyle implements OnInit {
 
   private form_builder = inject(FormBuilder);
   private modal = inject(NzModalRef);
-  private renderer = inject(Renderer2);
 
   form:FormGroup;
 
   modalidad?:ModalidadModel;
 
   constructor(){
+    super();
     this.form = this. form_builder.group({
       nombre:new FormControl(null,[
         Validators.required,
@@ -63,13 +67,4 @@ export class ModalidadFormComponent implements OnInit {
     return this.form.get('nombre') as FormControl<string>;
   }
 
-  onFocus(event:FocusEvent){
-    const control = (event.target as HTMLElement).closest('.modalidad-form_control');
-    this.renderer.addClass(control, 'form-control_focus');
-  }
-
-  onBlur(event: FocusEvent) {
-    const control = (event.target as HTMLElement).closest('.modalidad-form_control');
-    this.renderer.removeClass(control, 'form-control_focus');
-  }
 }

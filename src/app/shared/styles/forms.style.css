@@ -1,0 +1,137 @@
+.form-container{
+    width: 95%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+::ng-deep .form-label label::after,
+.form-label_text {
+    color:var(--primary-green-color);
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+
+.form-group{
+    border: var(--primary-green-color,) 1px solid;
+}
+
+.ant-input-affix-wrapper-status-error {
+    border: 1px solid red;
+}
+
+.form-group:hover{
+    border: var(--secondary-green-color,) 2px solid;
+}
+
+.form-group_focus {
+    box-shadow: 0 0 3px 1px var(--tertiary-green-color);
+}
+
+::ng-deep .form-input {
+    height: 30px;    
+    font-size: 1.3rem;
+}
+
+.form-input:focus,
+.form-input:hover,
+.form-input.ng-invalid{
+    outline: none;
+    box-shadow: none;
+    border-color: transparent !important;
+}
+
+::ng-deep .ant-input:hover{
+    border-color: var(--primary-green-color);
+}
+
+.form-input_icon{
+    color: var(--primary-green-color);
+    font-size: 1.2rem;
+}
+
+.input-icon_password:hover{
+    color: var(--tertiary-green-color);
+}
+
+.input-icon_password:active{
+    color: var(--secondary-green-color);
+}
+
+.form-button{
+    height: 40px;
+    background-color: var(--primary-green-color);
+    border: none;
+    border-radius: 5px;
+}
+
+.form-button_invalid{
+    background-color: var(--cuaternary-green-color);
+}
+
+.form-button:hover{
+    background-color: var(--tertiary-green-color);
+}
+
+.form-button:active{
+    background-color: var(--secondary-green-color);
+}
+
+.form-button_text{
+    font-size: 1.2rem;
+    color: var(--primary-white-color);
+}
+
+/* Estilo general del select */
+::ng-deep .ant-select-selector {
+    border: var(--primary-green-color) 1px solid;
+    height: 30px; /* Ajusta el alto igual que el input */
+    font-size: 1.3rem; /* Misma fuente que el input */
+    display: flex;
+    align-items: center; /* Alinear el texto verticalmente */
+}
+
+/* Estilo cuando el select está enfocado */
+::ng-deep .ant-select-focused .ant-select-selector,
+::ng-deep .form-select:focus {
+    box-shadow: 0 0 3px 1px var(--tertiary-green-color);
+    border-color: var(--primary-green-color) !important; /* Borde al enfocar */
+}
+
+/* Estilo cuando el select está en hover */
+::ng-deep .ant-select-selector:hover {
+    border-color: var(--secondary-green-color);
+}
+
+/* Eliminar el borde azul predeterminado en focus */
+::ng-deep .ant-select-selector:focus,
+::ng-deep .ant-select-selector:hover {
+    outline: none;
+    box-shadow: none;
+    border-color:transparent !important;
+}
+
+/* Estilo de las opciones dentro del select */
+::ng-deep .ant-select-item-option {
+    font-size: 1.3rem; /* Igual que el input */
+    color: var(--primary-green-color);
+}
+
+::ng-deep .ant-select-item-option-active {
+    color: var(--primary-green-color) !important;
+    background-color: var(--primary-green-color-transparent) !important;
+}
+
+::ng-deep .ant-select-item-option-selected {
+    background-color: var(--secondary-green-color);
+    color: white;
+}
+
+
+@media (max-width: 549px) {
+    .form-label_text,
+    .form-button_text{
+        font-size: 1rem;
+    }
+}

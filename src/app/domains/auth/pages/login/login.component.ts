@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule} from '@angular/common';
 import { Component, ElementRef, inject, Renderer2, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '@shared/services/auth.service';
@@ -11,6 +11,7 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzFlexModule } from 'ng-zorro-antd/flex';
 import { Router } from '@angular/router';
+import { FormStyle } from '@shared/style-clases/focus.style';
 
 @Component({
   selector: 'app-login',
@@ -28,7 +29,10 @@ import { Router } from '@angular/router';
     NgIconComponent
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
+  styleUrls: [
+    './login.component.css',
+    '../../../../shared/styles/forms.style.css'
+  ],
   viewProviders: [provideIcons({ 
     heroIdentification,
     heroEye,
@@ -36,11 +40,10 @@ import { Router } from '@angular/router';
     heroLockClosed
   })]
 })
-export class LoginComponent {
+export class LoginComponent extends FormStyle {
 
   private authService = inject(AuthService);
   private formBuilder = inject(FormBuilder);
-  private renderer = inject(Renderer2);
   private router = inject(Router);
 
   @ViewChild('submitButton') submit_button:ElementRef = {} as ElementRef;
@@ -53,20 +56,11 @@ export class LoginComponent {
   form:FormGroup;
 
   constructor(){
+    super();
     this.form = this.formBuilder.group({
       documento: new FormControl(null,[Validators.required,Validators.pattern('^[0-9]*$')]),
       password: new FormControl(null,[Validators.required])
     });      
-  }
-
-  onFocus(event:FocusEvent){
-    const group = (event.target as HTMLElement).closest('.form-group');
-    this.renderer.addClass(group, 'form-group_focus');
-  }
-
-  onBlur(event: FocusEvent) {
-    const group = (event.target as HTMLElement).closest('.form-group');
-    this.renderer.removeClass(group, 'form-group_focus');
   }
 
   onShowPassword(){

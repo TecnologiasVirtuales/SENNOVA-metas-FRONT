@@ -1,12 +1,12 @@
-<form class="regional-form" nz-form [formGroup]="form">
+<form class="form-container" nz-form [formGroup]="form">
     <nz-form-item nz-col nzSpan="20">
-        <nz-form-label nzFor="nombre" class="regional-form_label" nzRequired>
-            <span class="form-label_text" nz-typography>Nombre</span>
-        </nz-form-label>
         <nz-form-control [nzErrorTip]="nombreErrors">
-            <nz-input-group class="regional-form_control">
+            <nz-form-label nzFor="nombre" class="form-label" nzRequired>
+                <span class="form-label_text" nz-typography>Nombre</span>
+            </nz-form-label>
+            <nz-input-group class="form-group">
                 <input 
-                    class="form-control_input"
+                    class="form-input"
                     (focus)="onFocus($event)"
                     (blur)="onBlur($event)"
                     nz-input type="text" 
@@ -18,12 +18,13 @@
         </nz-form-control> 
     </nz-form-item>
     <nz-form-item nz-col nzSpan="20">
-        <nz-form-label nzFor="departamento" class="regional-form_label" nzRequired>
-            <span class="form-label_text" nz-typography>Departamento</span>
-        </nz-form-label>
         <nz-form-control [nzErrorTip]="departamentoErrors">
-            <nz-input-group class="regional-form_control">
+            <nz-form-label nzFor="departamento" class="form-label" nzRequired>
+                <span class="form-label_text" nz-typography>Departamento</span>
+            </nz-form-label>
+            <nz-input-group class="form-group">
                 <nz-select
+                    class="form-select"
                     id="departamento"
                     [formControl]="field_departamento"
                     [nzLoading]="loading_departamentos"

@@ -24,86 +24,8 @@
     font-weight:600;
 }
 
-.login-form{
-    width: 95%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-::ng-deep .login-form_label label::after,
-.form-label_text {
-    color:var(--primary-green-color);
-    font-weight: 500;
-    font-size: 1.2rem;
-}
-
-.form-group{
-    border: var(--primary-green-color,) 2px solid;
-}
-
-.form-group:hover{
-    border: var(--secondary-green-color,) 2px solid;
-}
-
-.form-group_focus {
-    box-shadow: 0 0 3px 1px var(--tertiary-green-color);
-}
-
-::ng-deep .form-input {
-    height: 30px;
-    font-size: 1.3rem;
-}
-
-::ng-deep  .ant-input:hover{
-    border-color: var(--primary-green-color);
-}
-
-.form-input_icon{
-    color: var(--primary-green-color);
-    font-size: 1.2rem;
-}
-
-.input-icon_password:hover{
-    color: var(--tertiary-green-color);
-}
-
-.input-icon_password:active{
-    color: var(--secondary-green-color);
-}
-
-.form-button{
-    height: 40px;
-    background-color: var(--primary-green-color);
-    border: none;
-    border-radius: 5px;
-}
-
-.form-button_invalid{
-    background-color: var(--cuaternary-green-color);
-}
-
-.form-button:hover{
-    background-color: var(--tertiary-green-color);
-}
-
-.form-button:active{
-    background-color: var(--secondary-green-color);
-}
-
-.form-button_text{
-    font-size: 1.2rem;
-    color: var(--primary-white-color);
-}
-
 @media (max-width: 549px) {
     .login-title_text {
         font-size: 1.2rem;
-    }
-
-    .form-label_text,
-    .form-button_text{
-        font-size: 1rem;
     }
 }

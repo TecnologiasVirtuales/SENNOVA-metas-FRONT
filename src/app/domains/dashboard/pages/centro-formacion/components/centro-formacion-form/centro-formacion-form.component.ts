@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, 
 import { CentroFormacionModel } from '@shared/models/centro-formacion.model';
 import { RegionalModel } from '@shared/models/regional.model';
 import { RegionalService } from '@shared/services/regional.service';
+import { FormStyle } from '@shared/style-clases/focus.style';
 import { noWhiteSpaceValidator } from '@shared/validators/no-wite-space.validator';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -25,13 +26,15 @@ import { forkJoin } from 'rxjs';
     NzSelectModule
   ],
   templateUrl: './centro-formacion-form.component.html',
-  styleUrl: './centro-formacion-form.component.css'
+  styleUrls: [
+    './centro-formacion-form.component.css',
+    '../../../../../../shared/styles/forms.style.css'
+  ]
 })
-export class CentroFormacionFormComponent {
+export class CentroFormacionFormComponent extends FormStyle{
 
   private form_builder = inject(FormBuilder);
   private modal = inject(NzModalRef);
-  private renderer = inject(Renderer2);
   private regional_service = inject(RegionalService);
 
   loading_regionales:boolean = true;;
@@ -42,6 +45,7 @@ export class CentroFormacionFormComponent {
   regionales:RegionalModel[] = [];
 
   constructor(){
+    super();
     this.form = this. form_builder.group({
       nombre:new FormControl(null,[
         Validators.required,
@@ -96,15 +100,5 @@ export class CentroFormacionFormComponent {
 
   get field_regional(){
     return this.form.get('regional_id') as FormControl<number>;
-  }
-
-  onFocus(event:FocusEvent){
-    const control = (event.target as HTMLElement).closest('.centro-form_control');
-    this.renderer.addClass(control, 'form-control_focus');
-  }
-
-  onBlur(event: FocusEvent) {
-    const control = (event.target as HTMLElement).closest('.centro-form_control');
-    this.renderer.removeClass(control, 'form-control_focus');
   }
 }
