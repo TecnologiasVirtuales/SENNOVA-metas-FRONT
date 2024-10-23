@@ -23,7 +23,19 @@ export const sideRoutes:Routes = [
         path:'regionales',
         title:'Gestión de Regionales',
         data:{breadcrumb:'Gestión de regionales',icon:'heroMapSolid'},
-        loadComponent:()=>import('@domains/dashboard/pages/regional/regional-page/regional-page.component').then(c=>c.RegionalPageComponent)
+        loadComponent:()=>import('@domains/dashboard/pages/regional/regional-layout/regional-layout.component').then(c=>c.RegionalLayoutComponent),
+        children:[
+            {
+                path:'',
+                data:{breadcrumb:'Gestión de regionales',icon:'heroMapSolid'},
+                loadComponent:()=>import('@domains/dashboard/pages/regional/regional-page/regional-page.component').then(c=>c.RegionalPageComponent),
+            },
+            {
+                path:':codigo_regional/centros-formacion',
+                data:{breadcrumb:'Gestión Centros de formación',icon:'lucideSchool'},
+                loadComponent:()=>import('@domains/dashboard/pages/centro-formacion/centro-formacion-page/centro-formacion-page.component').then(c=>c.CentroFormacionPageComponent)
+            }
+        ]
     },
     {
         path:'centros-formacion',

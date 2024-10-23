@@ -17,6 +17,7 @@
                 <th>Código</th>
                 <th>Nombre</th>
                 <th>Departamento</th>
+                <th>Centros de formación</th>
                 <th *appCanUseActions class="regional-table_actions">Actions</th>
             </tr>
         </thead>
@@ -31,6 +32,9 @@
                     </td>
                     <td>
                         {{regional.departamento.nombre}}
+                    </td>
+                    <td>
+                        <a [routerLink]="regional.codigo+'/centros-formacion'" >Ver centros</a>
                     </td>
                     <td *appCanUseActions>
                         <app-regional-actions 

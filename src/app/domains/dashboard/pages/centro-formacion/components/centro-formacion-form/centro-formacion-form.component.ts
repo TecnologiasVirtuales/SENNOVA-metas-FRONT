@@ -62,7 +62,7 @@ export class CentroFormacionFormComponent extends FormStyle{
   }
 
   configForm(){
-    this.centro_formacion = this.modal.getConfig().nzData.modalidad;
+    this.centro_formacion = this.modal.getConfig().nzData.centro_formacion;
     if (this.centro_formacion) {
       const {id,nombre,regional_id} = this.centro_formacion;
       this.form.addControl('id',new FormControl(id));

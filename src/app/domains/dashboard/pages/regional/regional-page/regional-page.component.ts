@@ -12,6 +12,7 @@ import { heroMapSolid } from '@ng-icons/heroicons/solid';
 import { RegionalModel } from '@shared/models/regional.model';
 import { RegionalService } from '@shared/services/regional.service';
 import { RegionalActionsComponent } from '../components/regional-actions/regional-actions.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-regional-page',
@@ -26,7 +27,8 @@ import { RegionalActionsComponent } from '../components/regional-actions/regiona
     NzSkeletonModule,
     SenaLoadingComponent,
     CanUseActionsDirective,
-    RegionalActionsComponent
+    RegionalActionsComponent,
+    RouterModule
   ],
   templateUrl: './regional-page.component.html',
   styleUrl: './regional-page.component.css',

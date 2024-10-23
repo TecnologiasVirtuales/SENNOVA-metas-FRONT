@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import {lucideSchool} from '@ng-icons/lucide';
 import { SenaLoadingComponent } from '@shared/components/sena-loading/sena-loading.component';
@@ -36,6 +36,8 @@ import { CentroFormacionModel } from '@shared/models/centro-formacion.model';
 })
 export class CentroFormacionPageComponent implements OnInit{
 
+  @Input() codigo_regional?:string;
+
   private centro_formacion_service = inject(CentroFormacionService);
 
   centros_formacion:CentroFormacionModel[] = [];
@@ -47,6 +49,23 @@ export class CentroFormacionPageComponent implements OnInit{
   }
 
   private loadData(){
+    if (this.codigo_regional) {
+      const dataSub = this.centro_formacion_service.getAllByRegional(this.codigo_regional)
+      .subscribe({
+        next:(centros_formacion)=>{
+          this.centros_formacion = [...centros_formacion];
+        },
+        error:()=>{
+          this.loading = false;
+          dataSub.unsubscribe();
+        },
+        complete:()=>{
+          this.loading = false;
+          dataSub.unsubscribe();
+        }
+      })
+      return;
+    }
     const dataSub = this.centro_formacion_service.getAll()
       .subscribe({
         next:(centros_formacion)=>{

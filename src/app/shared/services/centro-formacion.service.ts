@@ -16,6 +16,10 @@ export class CentroFormacionService {
     return this.http.get<CentroFormacionModel[]>(this.url);
   }
 
+  getAllByRegional(codigo:string){
+    return this.http.get<CentroFormacionModel[]>(`${this.url}/regional/${codigo}/`);
+  }
+
   getOneById(id:number){
     return this.http.get<CentroFormacionModel>(`${this.url}/${id}/`);
   }
