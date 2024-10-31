@@ -92,7 +92,7 @@ export class CentroFormacionActionsComponent {
           const {form} = response;
           if(!form) return;
           this.instance!.centro_formacion
-            ? this.editarCentroFormacion(form,this.centro_formacion!.id)
+            ? this.editarCentroFormacion(form,this.centro_formacion!.codigo)
             : this.crearCentroFormacion(form)
         },
         error:()=>{
@@ -134,8 +134,8 @@ export class CentroFormacionActionsComponent {
 
   eliminarCentroFormacion(){
     this.loadingStatus(true);
-    const {id} = this.centro_formacion!;
-    const deleteSub = this.centro_formacion_service.delete(id)
+    const {codigo} = this.centro_formacion!;
+    const deleteSub = this.centro_formacion_service.delete(codigo)
       .subscribe({
         next:()=>{
           this.delete.emit(this.index!);

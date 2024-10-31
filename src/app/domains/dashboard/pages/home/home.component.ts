@@ -1,13 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { FichasByModalidadModel } from '@shared/models/fichas-by-nivel-modalidad.model';
 import { ReportesService } from '@shared/services/reportes.service';
+import { NzFlexModule } from 'ng-zorro-antd/flex';
+import { NzTableModule } from 'ng-zorro-antd/table';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
+    NzTableModule,
+    NzFlexModule,
+    
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
@@ -15,18 +21,25 @@ import { Subscription } from 'rxjs';
 export class HomeComponent implements OnInit,OnDestroy{
   private reporte_service = inject(ReportesService);
 
-  private dataSub:Subscription|null = null;
+  private data_sub:Subscription|null = null;
+
+  fichas_by_nivel_modalidad:FichasByModalidadModel = {}
+
+  modalidades_matriz:string[] = [];
+  niveles_matriz:string[] = [];
 
   ngOnInit(): void {
-    this.dataSub = this.reporte_service.fichasByNivelModalidad()
+    this.data_sub = this.reporte_service.fichasByNivelModalidad()
       .subscribe({
         next:(data)=>{
-          console.log(data);
+          this.fichas_by_nivel_modalidad = {...data};
+          this.niveles_matriz = Object.keys(this.fichas_by_nivel_modalidad);
+          this.modalidades_matriz = Object.keys(this.fichas_by_nivel_modalidad[this.niveles_matriz[0]]);
         }
       })
   }
 
   ngOnDestroy(): void {
-    this.dataSub!.unsubscribe();
+    this.data_sub!.unsubscribe();
   }
 }

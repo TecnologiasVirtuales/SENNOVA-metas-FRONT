@@ -1,9 +1,9 @@
 import { RegionalModel } from "./regional.model";
 
 export interface CentroFormacionModel {
-    id:number;
+    codigo:number;
     nombre:string;
-    codigo:string;
+    slug:string;
     regional_id:number;
     regional:RegionalModel;
 }

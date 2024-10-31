@@ -33,7 +33,7 @@
                     [nzDisabled]="loading_regionales"
                     nzPlaceHolder="Seleccione la regional">
                     @for (regional of regionales; track $index) {
-                        <nz-option [nzLabel]="regional.nombre" [nzValue]="regional.id">
+                        <nz-option [nzLabel]="regional.nombre" [nzValue]="regional.codigo">
                         </nz-option>
                     }
                 </nz-select>

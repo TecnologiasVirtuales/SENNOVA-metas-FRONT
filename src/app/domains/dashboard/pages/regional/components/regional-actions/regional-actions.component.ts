@@ -92,7 +92,7 @@ export class RegionalActionsComponent {
           const {form} = response;
           if(!form) return;
           this.instance!.regional
-            ? this.editarRegional(form,this.regional!.id)
+            ? this.editarRegional(form,this.regional!.codigo)
             : this.crearRegional(form)
         },
         error:()=>{
@@ -134,8 +134,8 @@ export class RegionalActionsComponent {
 
   eliminarRegional(){
     this.loadingStatus(true);
-    const {id} = this.regional!;
-    const deleteSub = this.regional_service.delete(id)
+    const {codigo} = this.regional!;
+    const deleteSub = this.regional_service.delete(codigo)
       .subscribe({
         next:()=>{
           this.delete.emit(this.index!);

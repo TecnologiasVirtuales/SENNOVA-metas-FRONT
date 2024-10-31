@@ -36,7 +36,7 @@ import { CentroFormacionModel } from '@shared/models/centro-formacion.model';
 })
 export class CentroFormacionPageComponent implements OnInit{
 
-  @Input() codigo_regional?:string;
+  @Input() slug_regional?:string;
 
   private centro_formacion_service = inject(CentroFormacionService);
 
@@ -49,8 +49,8 @@ export class CentroFormacionPageComponent implements OnInit{
   }
 
   private loadData(){
-    if (this.codigo_regional) {
-      const dataSub = this.centro_formacion_service.getAllByRegional(this.codigo_regional)
+    if (this.slug_regional) {
+      const dataSub = this.centro_formacion_service.getAllByRegional(this.slug_regional)
       .subscribe({
         next:(centros_formacion)=>{
           this.centros_formacion = [...centros_formacion];

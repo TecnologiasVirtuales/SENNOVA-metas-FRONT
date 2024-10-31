@@ -1,0 +1,7 @@
+.modalidad{
+    background-color: var(--primary-green-color-transparent);
+}
+
+tr:hover .modalidad{
+    background-color: var(--primary-green-color-transparent);
+}

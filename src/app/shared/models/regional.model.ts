@@ -1,9 +1,9 @@
 import { DepartamentoModel } from "./departamento.model";
 
 export interface RegionalModel {
-    id:number;
+    codigo:number;
     nombre:string;
-    codigo:string;
+    slug:string;
     departamento_id:number;
     departamento:DepartamentoModel;
 }

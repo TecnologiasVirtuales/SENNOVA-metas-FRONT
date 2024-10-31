@@ -34,7 +34,7 @@
                         {{regional.departamento.nombre}}
                     </td>
                     <td>
-                        <a [routerLink]="regional.codigo+'/centros-formacion'" >Ver centros</a>
+                        <a [routerLink]="[regional.slug, 'centros-formacion']">Ver centros</a>                    
                     </td>
                     <td *appCanUseActions>
                         <app-regional-actions 

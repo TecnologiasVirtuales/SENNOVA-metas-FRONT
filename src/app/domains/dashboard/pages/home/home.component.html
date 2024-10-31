@@ -1,1 +1,24 @@
-<p>home works!</p>
+<nz-table #modalidadRow [nzData]="modalidades_matriz" nzShowPagination="false">
+  <thead>
+    <tr>
+      <th>Modalidad</th>
+      @for (nivel of niveles_matriz; track $index) {
+        <th>{{nivel}}</th>
+      }
+    </tr>
+  </thead>
+  <tbody>
+    @for (modalidad of modalidadRow.data; track $index) {
+        <tr>
+            <td class="modalidad">{{modalidad}}</td>
+            @for (nivel of niveles_matriz; track $index) {
+                <td>
+                    <div nz-flex nzAlign="center" nzJustify="end">
+                        {{fichas_by_nivel_modalidad[nivel][modalidad]}}
+                    </div>
+                </td>
+            }
+        </tr>
+    }
+  </tbody>
+</nz-table>

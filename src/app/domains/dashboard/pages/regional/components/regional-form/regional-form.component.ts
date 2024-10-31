@@ -64,8 +64,8 @@ export class RegionalFormComponent extends FormStyle {
   configForm(){
     this.regional = this.modal.getConfig().nzData.regional;
     if (this.regional) {
-      const {id,nombre,departamento_id} = this.regional;
-      this.form.addControl('id',new FormControl(id));
+      const {codigo,nombre,departamento_id} = this.regional;
+      this.form.addControl('id',new FormControl(codigo));
       this.field_departamento.setValue(departamento_id);
       this.field_nombre.setValue(nombre);
     }
