@@ -1,7 +1,23 @@
-<nz-table #modalidadRow [nzData]="modalidades_matriz" nzShowPagination="false">
+<div id="chart">
+  @if (chart_options) {
+    <apx-chart
+      [series]="chart_options.series"
+      [chart]="chart_options.chart"
+      [dataLabels]="chart_options.data_labels"
+      [plotOptions]="chart_options.plot_options"
+      [yaxis]="chart_options.yaxis"
+      [xaxis]="chart_options.xaxis"
+      [legend]="chart_options.legend"
+      [colors]="chart_options.colors"
+      [grid]="chart_options.grid">
+    </apx-chart>
+  }
+</div>
+
+<nz-table #modalidadRow [nzData]="modalidades_matriz" [nzScroll]="{x:'1000px'}" nzShowPagination="false">
   <thead>
     <tr>
-      <th>Modalidad</th>
+      <th nzLeft>Modalidad</th>
       @for (nivel of niveles_matriz; track $index) {
         <th>{{nivel}}</th>
       }
@@ -10,11 +26,12 @@
   <tbody>
     @for (modalidad of modalidadRow.data; track $index) {
         <tr>
-            <td class="modalidad">{{modalidad}}</td>
+            <td nzLeft class="modalidad">{{modalidad}}</td>
             @for (nivel of niveles_matriz; track $index) {
                 <td>
-                    <div nz-flex nzAlign="center" nzJustify="end">
-                        {{fichas_by_nivel_modalidad[nivel][modalidad]}}
+                    <div nz-flex nzWrap="wrap" nzAlign="center" nzJustify="end" nzGap="small">
+                        <span><strong>Inscritos:</strong> {{fichas_by_nivel_modalidad[nivel][modalidad].inscritos}} </span>
+                        <span><strong>Retirados:</strong> {{fichas_by_nivel_modalidad[nivel][modalidad].retirados}} </span>
                     </div>
                 </td>
             }

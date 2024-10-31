@@ -1,3 +1,3 @@
 export interface FichasByModalidadModel {
-    [nivel:string]:{[modalidad:string]:number}
+    [nivel:string]:{[modalidad:string]:{inscritos:number,retirados:number}}
 }
