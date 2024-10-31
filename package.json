@@ -22,6 +22,8 @@
     "@ng-icons/heroicons": "^29.5.1",
     "@ng-icons/lucide": "^29.5.1",
     "@ng-icons/simple-icons": "^29.5.1",
+    "apexcharts": "^3.54.1",
+    "ng-apexcharts": "^1.12.0",
     "ng-zorro-antd": "^18.1.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

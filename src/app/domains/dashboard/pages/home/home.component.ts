@@ -5,6 +5,17 @@ import { ReportesService } from '@shared/services/reportes.service';
 import { NzFlexModule } from 'ng-zorro-antd/flex';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { Subscription } from 'rxjs';
+import {
+  ApexAxisChartSeries,
+  ApexChart,
+  ChartComponent,
+  ApexDataLabels,
+  ApexPlotOptions,
+  ApexYAxis,
+  ApexTitleSubtitle,
+  ApexXAxis,
+  ApexFill
+} from "ng-apexcharts";
 
 @Component({
   selector: 'app-home',
@@ -13,7 +24,6 @@ import { Subscription } from 'rxjs';
     CommonModule,
     NzTableModule,
     NzFlexModule,
-    
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
