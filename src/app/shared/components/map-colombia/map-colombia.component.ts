@@ -4,6 +4,7 @@ import { MapParamsDataModel, MapParamsModel } from '@shared/models/map-d3-params
 import { MapDataModel } from '@shared/models/map-d3.models';
 import * as d3 from 'd3';
 import * as topojson from 'topojson-client';
+import {Topology} from 'topojson-specification';
 
 @Component({
   selector: 'app-map-colombia',
@@ -20,7 +21,7 @@ export class MapColombiaComponent implements OnInit{
   private width = 800;
   private height = 600;
 
-  private land?:MapDataModel;
+  private land?:any;
   private map3:any;
 
   ngOnInit(): void {
@@ -28,7 +29,7 @@ export class MapColombiaComponent implements OnInit{
   }
 
   loadMapData(): void {
-    d3.json<any>('/json/mapData.json')
+    d3.json<Topology>('/json/mapData.json')
       .then((data)=>{
         this.land = data;
         let algo = topojson.feature(data!,{
