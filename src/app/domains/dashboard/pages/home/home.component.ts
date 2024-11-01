@@ -9,6 +9,7 @@ import {
   ChartComponent,
 } from "ng-apexcharts";
 import { ChartOptions } from '@shared/types/chart-options.type';
+import { MapColombiaComponent } from '@shared/components/map-colombia/map-colombia.component';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +18,8 @@ import { ChartOptions } from '@shared/types/chart-options.type';
     CommonModule,
     NzTableModule,
     NzFlexModule,
-    ChartComponent
+    ChartComponent,
+    MapColombiaComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
