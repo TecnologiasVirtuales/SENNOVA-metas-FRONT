@@ -31,11 +31,11 @@ interface GeometryModel{
     properties:DeptoPropertiesModel|MPioPropertiesModel
 }
 
-interface DPtoGeometryModel extends GeometryModel{
+export interface DPtoGeometryModel extends GeometryModel{
     properties:DeptoPropertiesModel;
 }
 
-interface MPioGeometryModel extends GeometryModel{
+export interface MPioGeometryModel extends GeometryModel{
     properties:MPioPropertiesModel;
 }
 
@@ -50,7 +50,7 @@ interface DeptoPropertiesModel {
     VERSION:number;
 }
 
-interface MPioPropertiesModel extends DeptoPropertiesModel{
+export interface MPioPropertiesModel extends DeptoPropertiesModel{
     MPIO_CCDGO:string;
     MPIO_CDPMP:string;
     MPIO_CNMBR:string;
