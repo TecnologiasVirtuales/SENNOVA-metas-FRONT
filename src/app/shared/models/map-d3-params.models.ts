@@ -1,5 +1,6 @@
-import { ScaleSequential } from "d3";
+import { ScalePower, ScaleSequential } from "d3";
 import { MapDataModel } from "./map-d3.models";
+import { ElementRef } from "@angular/core";
 
 export interface MapParamsModel{
     data?:MapParamsDataModel[];
@@ -22,13 +23,13 @@ export interface MapParamsModel{
     alpha_map?:number;
     width?:number;
     height?:number;
-    container?:any;
-    context?:any;
-    context_map?:any;
+    container?:ElementRef<HTMLDivElement>;
+    context?:ElementRef<HTMLCanvasElement>;
+    context_map?:ElementRef<HTMLCanvasElement>;
     margin?:MapMarginModel;
     r_range?:number[];
     r_by_population?:boolean;
-    r?:number[];
+    r?:ScalePower<number, number, never>;
     force_to_center_id?:number;
     collide?:boolean;
     collide_margin?:number;
@@ -48,7 +49,7 @@ export interface MapParamsDataModel{
     value:number;
 }
 
-interface MapMarginModel{
+export interface MapMarginModel{
     left:number;
     top:number;
     rigth:number;

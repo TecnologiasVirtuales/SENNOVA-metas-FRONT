@@ -5,41 +5,41 @@ export interface MapDataModel {
     transform:MapTransformModel;
 }
 
-interface MapTransformModel {
+export interface MapTransformModel {
     scale:number[];
     translate:number[];
 }
 
-interface MapObjectsModel{
+export interface MapObjectsModel{
     MGN_ANM_DPTOS:MGNDptos;
     MGN_ANM_MPIOS:MGNPios;
 }
 
-interface MGNDptos{
+export interface MGNDptos{
     type:string;
     geometries:DPtoGeometryModel[];
 }
 
-interface MGNPios{
+export interface MGNPios{
     type:string;
     geometries:MPioGeometryModel[];
 }
 
-interface GeometryModel{
+export interface GeometryModel{
     type:string;
     arcs:number[];
-    properties:DeptoPropertiesModel|MPioPropertiesModel
+    properties:MPioPropertiesModel|DptoPropertiesModel
 }
 
 export interface DPtoGeometryModel extends GeometryModel{
-    properties:DeptoPropertiesModel;
+    properties:DptoPropertiesModel;
 }
 
 export interface MPioGeometryModel extends GeometryModel{
     properties:MPioPropertiesModel;
 }
 
-interface DeptoPropertiesModel {
+export interface DptoPropertiesModel {
     AREA:number;
     DPTO_CCDGO:string;
     DPTO_CNMBR:string;
@@ -50,7 +50,7 @@ interface DeptoPropertiesModel {
     VERSION:number;
 }
 
-export interface MPioPropertiesModel extends DeptoPropertiesModel{
+export interface MPioPropertiesModel extends DptoPropertiesModel{
     MPIO_CCDGO:string;
     MPIO_CDPMP:string;
     MPIO_CNMBR:string;

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { MapParamsDataModel, MapParamsModel } from '@shared/models/map-d3-params.models';
-import { DPtoGeometryModel, MapDataModel, MPioGeometryModel, MPioPropertiesModel } from '@shared/models/map-d3.models';
+import { DptoPropertiesModel, DPtoGeometryModel, MapDataModel, MPioGeometryModel, MPioPropertiesModel } from '@shared/models/map-d3.models';
 import * as d3 from 'd3';
 import { FeatureCollection, GeoJsonProperties, Geometry, GeometryCollection } from 'geojson';
 import * as topojson from 'topojson-client';
@@ -17,7 +17,8 @@ import {Topology} from 'topojson-specification';
   styleUrl: './map-colombia.component.css'
 })
 export class MapColombiaComponent implements OnInit{
-  @ViewChild('mapContainer') private map_container?:ElementRef;
+  @ViewChild('mapContainer') private map_container:ElementRef<HTMLDivElement> = {} as ElementRef<HTMLDivElement>;
+  @ViewChild('context') private context:ElementRef<HTMLCanvasElement> = {} as ElementRef<HTMLCanvasElement>;
 
   private width = 800;
   private height = 600;
@@ -34,11 +35,7 @@ export class MapColombiaComponent implements OnInit{
       .then((data)=>{
         const {objects} = data!;
         const {MGN_ANM_MPIOS} = objects;
-        // this.land = data;
-        this.land = topojson.feature(data!, MGN_ANM_MPIOS) as FeatureCollection<Geometry, GeoJsonProperties>;
-        console.log(this.land);
-        
-        // console.log('topojson',algo);
+        this.land = topojson.feature(data!, MGN_ANM_MPIOS) as FeatureCollection<Geometry, GeoJsonProperties>;   
         this.initializeMap(dpto_id)
       });
   }
@@ -46,7 +43,6 @@ export class MapColombiaComponent implements OnInit{
   initializeMap(dpto_id:string){
     if(!this.land) return;
     const {features} = this.land;
-    // console.log(features[0].properties);
     let filtrados = features.filter((f)=>{
       const {properties} = f;
       const {DPTO_CCDGO} = properties as MPioPropertiesModel;
@@ -58,130 +54,82 @@ export class MapColombiaComponent implements OnInit{
         id:MPIO_CCDGO,
         value:AREA
       }
-    });
-    console.log(filtrados);
-    
-    this.drawMap({
-      data:filtrados,
-      id:(d:MapParamsDataModel)=>d.id,
-      draw_cities:true
-    });
+    });    
+    this.drawMap({});
   }
 
   drawMap(map_data: MapParamsModel) {
     let {
+      data = null,
+      id = (d)=>d.id,
+      cod_departamento=null,
+      draw_cities=true,
+      draw_deps=true,
+      idFeatures = (d:MPioGeometryModel|DPtoGeometryModel) => {
+        if(draw_cities){
+          d = d as MPioGeometryModel;
+          const {properties} = d;
+          let mpio_properties = properties as MPioPropertiesModel;
+          return mpio_properties.MPIO_CDPMP;
+        }else{
+          d = d as DPtoGeometryModel;
+          const {properties} = d;
+          let dpto_properties = properties as DptoPropertiesModel;
+          return dpto_properties.DPTO_CNMBR;
+        }
+      },
+      value = (d:MPioGeometryModel|DPtoGeometryModel) =>d.properties.DPTO_CCDGO,
       color,
-      r,
-      draw_cities = true,
-      r_by_population = true,
+      fill = null,
+      projection,
       draw_map = true,
-      draw_deps = true,
-      alpha_map = 0.3,
-      stroke_map = "#aaa",
+      fill_map = null,
+      stroke_map = "#000",
       stroke_map_depts = "#333",
       stroke_nodes = "#eee",
-      r_range = [1, 20],
-      width = this.width,
-      height = this.height,
-      fill_map = null,
-      background_color = null,
-      label_color = "#000",
-      label_font = "9px sans-serif",
-      label_align = "center",
-      label_if_bigger_than = 10,
+      stroke_width_nodes = 1,
+      alpha_nodes = 1,
+      alpha_map = 0.3,
+      width = 600,
+      height = 600,
+      container = this.map_container,
+      context = this.context,
+      context_map = this.context,
+      margin = {left:10,top:10,rigth:10,bottom:10},
+      r_range = [1,20],
+      r_by_population = true,
+      r = d3.scaleSqrt()
+        .domain([
+          0,
+          d3.max(this.land!.features, (d) => {
+            const { properties } = d;
+            const { STP27_PERS } = properties!;
+            return STP27_PERS;
+          })
+        ]).range(r_range),
       force_to_center_id = 0.1,
       collide = true,
       collide_margin = 1,
       warmup = 200,
-      cod_departamento,
-      value = (d: MPioGeometryModel) => d.properties.MPIO_CCDGO,
+      label_color = "#000",
+      label_font = "9px sans-serif",
+      label_align = "center",
+      label_if_bigger_than = 10,
+      parent_invalidation,
+      background_color = "#f0f0f0",
+      drag = false,
+      ftm_val = d3.format('.2s')
     } = map_data;
-  
-    // Set up color and radius scaling
-    color = color || d3.scaleSequential(d3.interpolateReds);
-    if (!r) {
-      r = d3.scaleSqrt()
-        .domain([0, d3.max(this.land!.features, (d:MPioPropertiesModel) => d.properties!.STP27_PERS)])
-        .range(r_range);
-    }
-  
-    // Filter department if specified
-    const filteredData = cod_departamento
-      ? this.land?.features.filter((d) => d.properties?.DPTO_CCDGO == cod_departamento)
-      : this.land?.features;
-  
-    // Set up projection and path
-    const projection = d3.geoTransverseMercator()
-      .rotate([74 + 30 / 60, -38 - 50 / 60])
-      .fitExtent(
-        [
-          [10, 10],
-          [width - 10, height - 10]
-        ],
-        cod_departamento ? { type: "FeatureCollection", features: filteredData } : this.land
-      );
-  
-    const path = d3.geoPath().projection(projection);
-  
-    // Draw the map if required
-    const context = d3.select(this.map_container?.nativeElement)
-      .append('canvas')
-      .attr('width', width)
-      .attr('height', height)
-      .node()
-      ?.getContext('2d');
-  
-    if (context && draw_map) {
-      context.clearRect(0, 0, width, height);
-      context.strokeStyle = stroke_map;
-      context.globalAlpha = alpha_map;
-      if (fill_map) {
-        context.fillStyle = fill_map;
-        context.fill(path(filteredData));
-      }
-      context.stroke(path(filteredData));
-    }
-  
-    // Draw nodes
-    const nodes = (draw_cities ? filteredData : this.land.features).map(d => ({ ...d }));
-    nodes.forEach((n) => {
-      n.centroid = path.centroid(n);
-      n.x = n.centroid[0];
-      n.y = n.centroid[1];
-      n.r = r_by_population ? r(n.properties?.STP27_PERS) : r(value(n));
-    });
-  
-    // Initialize forces
-    const simulation = d3.forceSimulation(nodes)
-      .force('x', d3.forceX(d => d.x).strength(force_to_centroid))
-      .force('y', d3.forceY(d => d.y).strength(force_to_centroid))
-      .force('collide', d3.forceCollide((d) => d.r + collide_margin).iterations(1))
-      .stop();
-  
-    for (let i = 0; i < warmup; i++) simulation.tick();
-  
-    // Draw each node
-    context.save();
-    nodes.forEach((n) => {
-      context.beginPath();
-      context.arc(n.x, n.y, n.r, 0, 2 * Math.PI);
-      context.strokeStyle = stroke_nodes;
-      context.fillStyle = color(value(n));
-      context.lineWidth = 1;
-      context.stroke();
-      context.fill();
-    });
-    context.restore();
-  
-    // Add labels
-    context.fillStyle = label_color;
-    context.font = label_font;
-    context.textAlign = label_align;
-    nodes.forEach((n) => {
-      if (n.r > label_if_bigger_than) {
-        context.fillText(n.properties?.MPIO_CNMBR || "", n.x, n.y);
-      }
-    });
+
+    color = color || d3.scaleSequential(d3.interpolateReds)
+    
+    r.range(r_range);
+
+    // if(!r_by_population){
+    //   r.domain(d3.extent(data!,value!));
+    // }
+    
+
   }
 
 }
