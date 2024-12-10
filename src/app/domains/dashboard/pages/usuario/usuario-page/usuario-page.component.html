@@ -42,16 +42,16 @@
         <tbody>
             @for (usuario of usuarioTable.data; track $index) {
                 <tr>
-                    {{usuario.documento}}
+                    {{usuario.per_documento}}
                 </tr>
                 <tr>
-                    {{usuario.tipo_documento|tipoDocumento}}
+                    {{usuario.per_tipo_documento|tipoDocumento}}
                 </tr>
                 <tr>
-                    {{usuario.nombre}} {{usuario.segundo_nombre}}
+                    {{usuario.per_nombres}}
                 </tr>
                 <tr>
-                    {{usuario.apellido}} {{usuario.segundo_apellido}}
+                    {{usuario.per_apellidos}}
                 </tr>
                 <tr>
                     {{usuario.email}}

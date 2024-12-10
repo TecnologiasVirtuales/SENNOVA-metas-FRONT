@@ -1,4 +1,4 @@
 export interface LoginDto {
-    documento:number;
+    per_documento:number;
     password:string;
 }

@@ -46,15 +46,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   getData() {
-    this.data_sub = this.reporte_service.fichasByNivelModalidad()
-      .subscribe({
-        next: (data) => {
-          this.fichas_by_nivel_modalidad = { ...data };
-          this.configChart();
-          this.niveles_matriz = Object.keys(this.fichas_by_nivel_modalidad);
-          this.modalidades_matriz = Object.keys(this.fichas_by_nivel_modalidad[this.niveles_matriz[0]]);
-        }
-      });
+    // this.data_sub = this.reporte_service.fichasByNivelModalidad()
+    //   .subscribe({
+    //     next: (data) => {
+    //       this.fichas_by_nivel_modalidad = { ...data };
+    //       this.configChart();
+    //       this.niveles_matriz = Object.keys(this.fichas_by_nivel_modalidad);
+    //       this.modalidades_matriz = Object.keys(this.fichas_by_nivel_modalidad[this.niveles_matriz[0]]);
+    //     }
+    //   });
   }
 
   ngOnDestroy(): void {

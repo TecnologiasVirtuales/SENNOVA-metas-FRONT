@@ -14,6 +14,7 @@ export class CanUseActionsDirective implements OnDestroy {
   private auth_service = inject(AuthService);
   private usuario_obs = toObservable(this.auth_service.usuario);
   private usuario_sub: Subscription;
+
   constructor() {
     this.usuario_sub = this.usuario_obs.subscribe({
       next: (usuario) => {

@@ -5,7 +5,7 @@ import { RefreshDto } from '@shared/dto/auth/refresh.dto';
 import { RegisterDto } from '@shared/dto/auth/register.dto';
 import { MessageInfoModel } from '@shared/models/message-info.model';
 import { TokenModel } from '@shared/models/token.model';
-import { UsuarioModel } from '@shared/models/usuario.model';
+import { PersonaModel } from '@shared/models/persona.model';
 import { TokenService } from './token.service';
 import { map } from 'rxjs';
 
@@ -19,7 +19,7 @@ export class AuthService {
 
   private url = `auth`;
 
-  usuario = signal<UsuarioModel|null>(null);
+  usuario = signal<PersonaModel|null>(null);
   loading_user = signal<boolean>(true);
 
   login(credentials:LoginDto){
@@ -32,7 +32,7 @@ export class AuthService {
   }
 
   me(){
-    return this.http.get<UsuarioModel>(`${this.url}/me`);
+    return this.http.get<PersonaModel>(`${this.url}/me`);
   }
 
   refresh(token:RefreshDto){

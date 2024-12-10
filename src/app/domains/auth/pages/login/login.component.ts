@@ -58,7 +58,7 @@ export class LoginComponent extends FormStyle {
   constructor(){
     super();
     this.form = this.formBuilder.group({
-      documento: new FormControl(null,[Validators.required,Validators.pattern('^[0-9]*$')]),
+      per_documento: new FormControl(null,[Validators.required,Validators.pattern('^[0-9]*$')]),
       password: new FormControl(null,[Validators.required])
     });      
   }

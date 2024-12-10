@@ -5,7 +5,7 @@ import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { heroUserGroupSolid } from '@ng-icons/heroicons/solid';
 import { lucideSearch } from '@ng-icons/lucide';
 import { SenaLoadingComponent } from '@shared/components/sena-loading/sena-loading.component';
-import { UsuarioModel } from '@shared/models/usuario.model';
+import { PersonaModel } from '@shared/models/persona.model';
 import { TipoDocumentoPipe } from '@shared/pipes/tipo-documento.pipe';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
@@ -44,7 +44,7 @@ export class UsuarioPageComponent {
 
   search_value:string = '';
 
-  usuarios:UsuarioModel[] = [];
+  usuarios:PersonaModel[] = [];
 
   search(){
 
