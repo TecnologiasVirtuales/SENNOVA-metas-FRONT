@@ -1,5 +1,5 @@
 import { Routes } from "@angular/router";
-import { sideRoutes } from "@core/sidebar.routes";
+import { side_routes } from "@core/sidebar.routes";
 
 export const routes: Routes = [
     {
@@ -17,7 +17,7 @@ export const routes: Routes = [
                 data:{breadcrumb:'Perfil'},
                 loadComponent:()=>import('@domains/dashboard/pages/profile/profile.component').then(c=>c.ProfileComponent)
             },
-            ...sideRoutes
+            ...side_routes
         ]
     },
 ];

@@ -5,7 +5,7 @@
 :root{
     --primary-green-color:theme(colors.lime.600);
     --primary-green-color-transparent:theme(colors.lime.600/20%);
-    --secondary-green-color:theme(colors.lime.300);
+    --secondary-green-color:theme(colors.lime.500);
     --tertiary-green-color:theme(colors.lime.800);
     --cuaternary-green-color:#295d0475;
     --primary-white-color:#ffffff;

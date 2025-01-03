@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { sideRoutes } from '@core/sidebar.routes';
+import { side_routes } from '@core/sidebar.routes';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { heroAcademicCapSolid, heroHomeModernSolid, heroMapSolid, heroUserGroupSolid } from '@ng-icons/heroicons/solid';
 import { lucideSchool } from '@ng-icons/lucide';
@@ -42,5 +42,5 @@ export class SidebarNavBarComponent {
 
   @Input({required:true}) collapsed:boolean = false;
 
-  opciones_menu = sideRoutes;
+  opciones_menu = side_routes;
 }

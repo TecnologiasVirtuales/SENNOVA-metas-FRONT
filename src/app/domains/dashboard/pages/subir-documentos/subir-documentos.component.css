@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+    ant-select
+    select-input
+    ant-select-show-arrow
+    ant-select-single 
+    ng-tns-c364634890-1 
+    ant-select-focused 
+    ant-select-open
+*/
+
+.select-input{
+    @apply w-full;
+}
+
+::ng-deep .ant-select-single{
+   background-color: red !important;
+}
+
+/*
+    ant-select-item 
+    ant-select-item-option
+    ant-select-item-option-selected
+    ng-star-inserted
+    ant-select-item-option-active
+*/
+
+::ng-deep .ant-select-item-option-selected:not(.ant-select-item-option-disabled){
+    @apply bg-red-200;
+}

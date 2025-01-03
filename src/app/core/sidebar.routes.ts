@@ -1,6 +1,6 @@
 import { Routes } from "@angular/router";
 
-export const sideRoutes:Routes = [
+export const side_routes:Routes = [
     {
         path:'home',
         title:'Home',
@@ -48,5 +48,11 @@ export const sideRoutes:Routes = [
         title:'Gestión niveles de formación',
         data:{breadcrumb:'Gestión niveles de formación',icon:'simpleLevelsdotfyi'},
         loadComponent:()=>import('@domains/dashboard/pages/nivel-formacion/nivel-formacion-page/nivel-formacion-page.component').then(c=>c.NivelFormacionPageComponent)
+    },
+    {
+        path:'subir-documentos',
+        title:'Subir documentos',
+        data:{breadcrumb:'Subir socumentos',icon:'lucideSchool'},
+        loadComponent:()=>import('@domains/dashboard/pages/subir-documentos/subir-documentos.component').then(c=>c.SubirDocumentosComponent)
     }
 ]

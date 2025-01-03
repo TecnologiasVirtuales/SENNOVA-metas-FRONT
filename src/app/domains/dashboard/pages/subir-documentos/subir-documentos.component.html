@@ -1,0 +1,32 @@
+<nz-card class="max-w-[600px] w-2/3 mx-auto" [nzTitle]="header">
+    @if (nombre_documento) {
+        <section>
+            <nz-upload 
+                [nzCustomRequest]="onUpload"
+                [nzShowUploadList]="true"
+                [nzFileList]="uploaded_files">
+                <button nz-button>
+                    <i nz-icon nzType="upload"></i> Subir Documento
+                </button>
+            </nz-upload>
+        </section>
+    }@else {
+        <section class="w-full flex justify-center">
+            <span class="text-gray-300 text-xl">Documento no seleccionado</span>
+        </section>
+    }
+</nz-card>
+
+
+<ng-template #loadingImg>
+    <app-sena-loading [loading]="form_loading"></app-sena-loading>
+</ng-template>
+<ng-template #header>
+    <section>
+        <nz-select class="select-input"
+            nzPlaceHolder="Por favor seleccione el tipo documento que desea subir"
+            [(ngModel)]="nombre_documento">
+            <nz-option nzLabel="DF14" nzValue="DF14"></nz-option>
+        </nz-select>
+    </section>
+</ng-template>
