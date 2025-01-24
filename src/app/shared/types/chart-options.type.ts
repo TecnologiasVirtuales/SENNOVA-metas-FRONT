@@ -1,4 +1,4 @@
-import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexGrid, ApexLegend, ApexPlotOptions, ApexXAxis, ApexYAxis } from "ng-apexcharts"
+import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexGrid, ApexLegend, ApexNonAxisChartSeries, ApexPlotOptions, ApexResponsive, ApexXAxis, ApexYAxis } from "ng-apexcharts"
 
 export type ChartOptions = {
     series:ApexAxisChartSeries;
@@ -10,4 +10,12 @@ export type ChartOptions = {
     grid:ApexGrid;
     colors:string[];
     legend:ApexLegend;
+}
+
+export type ChartNonAxisOptions = {
+    series:ApexNonAxisChartSeries;
+    chart:ApexChart;
+    labels:string[];
+    responsive:ApexResponsive[];
+    legend?:ApexLegend;
 }

@@ -1,0 +1,154 @@
+<div class="container">
+    @if (chart_options) {
+        @if (empty_report) {
+            <div id="chart" [ngClass]="{'w-[49%]':this.mostrar_filtros,'w-full':!this.mostrar_filtros}" class="flex justify-center">
+                <apx-chart
+                    class="chart-container"
+                    [series]="chart_options.series"
+                    [chart]="chart_options.chart"
+                    [responsive]="chart_options.responsive"
+                    [labels]="chart_options.labels"
+                    [legend]="chart_options.legend">
+                </apx-chart>
+            </div>
+        }@else {
+            <span>{{empty_report}}</span>
+        }
+        
+    }
+    @if (mostrar_filtros) {
+        <div class="filter-container">
+            <section class="filter-sub__container">
+                <h3 class="filter-sub__title">Filtrar por estado del aprendiz y tipo de documento</h3>
+                <nz-select 
+                    class="filter-sub__select" 
+                    [(ngModel)]="estado_aprendiz"
+                    (ngModelChange)="onChangeEstadoAprendiz()"
+                    (nzScrollToBottom)="onScrollEstadoAprendiz()"
+                    (nzOnSearch)="onSearchEstadoAprendiz($event)"
+                    [nzAllowClear]="true"
+                    [nzShowSearch]="true"
+                    [nzServerSearch]="true"
+                    [nzDropdownRender]="loadingEstadoAprendiz"
+                    [nzLoading]="is_loading_estados_aprendiz"
+                    nzPlaceHolder="Filtrar por estado del aprendiz">
+                    @for (estado_aprendiz_item of estados_aprendiz; track $index) {
+                        <nz-option [nzLabel]="estado_aprendiz_item.estado_aprendiz" [nzValue]="estado_aprendiz_item.estado_aprendiz"></nz-option>
+                    }
+                </nz-select>
+                <nz-select 
+                    class="filter-sub__select" 
+                    [(ngModel)]="tipo_documento"
+                    (ngModelChange)="onChangeTipoDocumento()"
+                    (nzScrollToBottom)="onScrollTipoDocumento()"
+                    (nzOnSearch)="onSearchTipoDocumento($event)"
+                    [nzAllowClear]="true"
+                    [nzShowSearch]="true"
+                    [nzServerSearch]="true"
+                    nzPlaceHolder="Filtrar aprendices por tipo de documento">
+                    @for (tipo_documento_item of tipos_documento; track $index) {
+                        <nz-option [nzLabel]="tipo_documento_item.tipo_documento+' - '+tipo_documento_item.descripcion" [nzValue]="tipo_documento_item.tipo_documento"></nz-option>
+                    }
+                </nz-select>
+            </section>
+            <section class="filter-sub__container">
+                <h3 class="filter-sub__title">Filtrar por regional y centro de formación</h3>
+                <nz-select 
+                    class="filter-sub__select" 
+                    [(ngModel)]="regional"
+                    (ngModelChange)="onChangeRegional()"
+                    (nzScrollToBottom)="onScrollRegionales()"
+                    (nzOnSearch)="onSearchRegional($event)"
+                    [nzAllowClear]="true"
+                    [nzShowSearch]="true"
+                    [nzServerSearch]="true"
+                    [nzDropdownRender]="loadingRegionales"
+                    [nzLoading]="is_loading_regionales"
+                    nzPlaceHolder="Filtrar por regional">
+                    @for (regional_item of regionales; track $index) {
+                        <nz-option 
+                            [nzLabel]="regional_item.regional" 
+                            [nzValue]="regional_item.regional">
+                        </nz-option>
+                    }
+                </nz-select>
+                <nz-select 
+                    class="filter-sub__select" 
+                    [(ngModel)]="centro_formacion"
+                    (ngModelChange)="onChangeCentroFormacion()"
+                    (nzScrollToBottom)="onScrollCentroFormacion()"
+                    (nzOnSearch)="onSearchCentroFormacion($event)"
+                    [nzAllowClear]="true"
+                    [nzShowSearch]="true"
+                    [nzServerSearch]="true"
+                    [nzDropdownRender]="loadingCentroFormacion"
+                    [nzLoading]="is_loading_centro_formacion"
+                    nzPlaceHolder="Filtrar por centro de formación"
+                    [disabled]="centros_formacion.length < 1">
+                    @for (centro_formacion_item of centros_formacion; track $index) {
+                        <nz-option 
+                            [nzLabel]="centro_formacion_item.sede" 
+                            [nzValue]="centro_formacion_item.sede">
+                        </nz-option>
+                    }
+                </nz-select>
+            </section>
+            <section class="filter-sub__container">
+                <h3 class="filter-sub__title">Filtrar por nivel de formación y programa</h3>
+                <nz-select 
+                    class="filter-sub__select" 
+                    [(ngModel)]="nivel_formacion"
+                    (ngModelChange)="onChangeNivelFormacion()"
+                    (nzScrollToBottom)="onScrollNiveles()"
+                    (nzOnSearch)="onSearchNivel($event)"
+                    [nzAllowClear]="true"
+                    [nzShowSearch]="true"
+                    [nzServerSearch]="true"
+                    [nzDropdownRender]="loadingNiveles"
+                    [nzLoading]="is_loading_niveles"
+                    nzPlaceHolder="Filtrar por nivel de formación">
+                    @for (nivel_formacion_item of niveles_formacion; track $index) {
+                        <nz-option [nzLabel]="nivel_formacion_item.nivel_de_formacion" [nzValue]="nivel_formacion_item.nivel_de_formacion"></nz-option>
+                    }
+                </nz-select>
+                <nz-select class="filter-sub__select" 
+                    [(ngModel)]="codigo_programa"
+                    (ngModelChange)="onChangePrograma()"
+                    (nzScrollToBottom)="onScrollPrograma()"
+                    (nzOnSearch)="onSearchPrograma($event)"
+                    [disabled]="!this.nivel_formacion"
+                    [nzAllowClear]="true"
+                    [nzShowSearch]="true"
+                    [nzServerSearch]="true"
+                    [nzDropdownRender]="loadingProgramas"
+                    [nzLoading]="is_loading_programas"
+                    nzPlaceHolder="Filtrar por programa">
+                    @for (programa_item of programas; track $index) {
+                        <nz-option [nzLabel]="programa_item.programa" [nzValue]="programa_item.codigo_programa"></nz-option>
+                    }
+                </nz-select>
+            </section>
+        </div>
+    }
+</div>
+<ng-template #loadingEstadoAprendiz>
+    <nz-spin [nzSpinning]="is_loading_estados_aprendiz">
+    </nz-spin>
+</ng-template>
+<ng-template #loadingRegionales>
+    <nz-spin [nzSpinning]="is_loading_regionales">
+    </nz-spin>
+</ng-template>
+<ng-template #loadingCentroFormacion>
+    <nz-spin [nzSpinning]="is_loading_centro_formacion">
+    </nz-spin>
+</ng-template>
+<ng-template #loadingProgramas>
+    <nz-spin [nzSpinning]="is_loading_programas">
+    </nz-spin>
+</ng-template>
+<ng-template #loadingNiveles>
+    <nz-spin [nzSpinning]="is_loading_niveles">
+    </nz-spin>
+</ng-template>
+

@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.container{
+    @apply flex flex-wrap w-full gap-2 p-3;
+}
+
+.apexcharts-canvas{
+    @apply flex flex-wrap;
+}
+
+.chart-container{
+    @apply w-fit h-full flex justify-center;
+}
+
+.filter-container{
+    @apply w-[49%] flex flex-col gap-2 justify-items-center;
+}
+
+.filter-buttons{
+    @apply w-full flex justify-end gap-2;
+}
+.filter-buttons__button{
+    @apply px-3 py-1 rounded-sm;
+}
+
+.filter-buttons__primary{
+    @apply bg-[var(--primary-green-color)] text-[var(--primary-white-color)];
+    /*hover*/
+    @apply hover:bg-[var(--secondary-green-color)];
+    /*active*/
+    @apply active:bg-[var(--primary-green-color)];
+}
+
+.filter-sub__container{
+    @apply flex flex-wrap gap-1;
+}
+
+.filter-sub__title{
+    @apply w-full text-[var(--primary-green-color)] text-lg;
+}
+
+.filter-sub__select{
+    @apply w-[49%];
+}

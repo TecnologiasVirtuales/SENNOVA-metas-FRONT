@@ -1,0 +1,17 @@
+<nz-card 
+    nz-col
+    [nzSpan]="24"
+    [nzTitle]="pageTitle">
+    <app-pie-chart-aprentidices [mostrar_filtros]="true">
+    </app-pie-chart-aprentidices>
+</nz-card>
+<ng-template #pageTitle>
+    <div class="page-title" nz-row nzAlign="middle" nzGutter="15">
+        <div nz-col>
+            <ng-icon name="heroChartPie"></ng-icon>
+        </div>
+        <div nz-col>
+            <h1>Estado de los aprendices sena</h1>
+        </div>
+    </div>
+</ng-template>

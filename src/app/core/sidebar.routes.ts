@@ -54,5 +54,24 @@ export const side_routes:Routes = [
         title:'Subir documentos',
         data:{breadcrumb:'Subir socumentos',icon:'lucideSchool'},
         loadComponent:()=>import('@domains/dashboard/pages/subir-documentos/subir-documentos.component').then(c=>c.SubirDocumentosComponent)
+    },
+    {
+        path:'reportes',
+        title:'Reportes',
+        data:{breadcrumb:'Reportes',icon:'heroChartPie'},
+        loadComponent:()=>import('@domains/dashboard/pages/reportes/reportes-layout/reportes-layout.component').then(c=>c.ReportesLayoutComponent),
+        children:[
+            {
+                path:'',
+                pathMatch:'full',
+                redirectTo:'estado-aprendices'
+            },
+            {
+                path:'estado-aprendices',
+                title:'Estado de los aprendices sena',
+                data:{breadcrumb:'Estado de los aprendices sena'},
+                loadComponent:()=>import('@domains/dashboard/pages/reportes/pages/reporte-aprendices/reporte-aprendices-page/reporte-aprendices-page.component').then(c=>c.ReporteAprendicesPageComponent)
+            }
+        ]
     }
 ]

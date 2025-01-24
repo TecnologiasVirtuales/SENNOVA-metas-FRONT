@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { side_routes } from '@core/sidebar.routes';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { heroChartPie } from '@ng-icons/heroicons/outline';
 import { heroAcademicCapSolid, heroHomeModernSolid, heroMapSolid, heroUserGroupSolid } from '@ng-icons/heroicons/solid';
 import { lucideSchool } from '@ng-icons/lucide';
 import { simpleLevelsdotfyi } from '@ng-icons/simple-icons';
@@ -33,6 +34,7 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
     heroAcademicCapSolid,
     heroHomeModernSolid,
     heroMapSolid,
+    heroChartPie,
     lucideSchool,
     simpleLevelsdotfyi,
     heroUserGroupSolid
