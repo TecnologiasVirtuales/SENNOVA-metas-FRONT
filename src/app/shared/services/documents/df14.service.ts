@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { getQueryUrl } from '@shared/functions/url.functions';
-import { DF14AprendizModel, DF14CentroFormacionModel, DF14EstadoAprendizModel, DF14NivelFormacionModel, DF14ProgramaModel, DF14RegionalModel, DF14TipoDocumentoModel } from '@shared/models/df14.model';
+import { DF14AprendizModel, DF14CentroFormacionModel, DF14EstadoAprendizModel, DF14EstadoFichaModel, DF14FichaModel, DF14NivelFormacionModel, DF14ProgramaModel, DF14RegionalModel, DF14TipoDocumentoModel } from '@shared/models/df14.model';
 import { PaginateModel } from '@shared/models/paginate.model';
 import { QueryUrlModel } from '@shared/models/query-url.model';
 import { ReporteChartModel } from '@shared/models/reporte-chart.model';
@@ -20,6 +20,11 @@ export class Df14Service {
 
   countAprendicesPorEstado(data?:QueryUrlModel){
     let url:string = getQueryUrl(`${this.url}/count-aprendices-por-estado/`,data);
+    return this.http.get<ReporteChartModel>(url);
+  }
+
+  countFichasPorEstado(data?:QueryUrlModel){
+    let url:string = getQueryUrl(`${this.url}/count-fichas-por-estado/`,data);
     return this.http.get<ReporteChartModel>(url);
   }
 
@@ -48,6 +53,11 @@ export class Df14Service {
     return this.http.get<PaginateModel<DF14EstadoAprendizModel>>(url);
   }
 
+  getEstadosFichas(data?:QueryUrlModel){
+    let url:string = getQueryUrl(`${this.url}/get-estados-ficha/`,data);
+    return this.http.get<PaginateModel<DF14EstadoFichaModel>>(url);
+  }
+
   getTiposDocumento(data?:QueryUrlModel){
     let url:string = getQueryUrl(`${this.url}/get-tipos-documento/`,data);
     return this.http.get<PaginateModel<DF14TipoDocumentoModel>>(url);
@@ -57,4 +67,10 @@ export class Df14Service {
     let url:string = getQueryUrl(`${this.url}/get-aprendices/`,data);
     return this.http.get<PaginateModel<DF14AprendizModel>>(url);
   }
+
+  getFichas(data?:QueryUrlModel){
+    let url:string = getQueryUrl(`${this.url}/get-fichas/`,data);
+    return this.http.get<PaginateModel<DF14FichaModel>>(url);
+  }
+  
 }

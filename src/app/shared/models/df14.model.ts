@@ -16,6 +16,10 @@ export interface DF14EstadoAprendizModel{
     estado_aprendiz:string;
 }
 
+export interface DF14EstadoFichaModel{
+    estado_ficha:string;
+}
+
 export interface DF14ProgramaModel{
     codigo_programa:number;
     programa:string;
@@ -37,4 +41,10 @@ export interface DF14AprendizModel {
     ficha:number;
     programa:string;
     estado_aprendiz:string;
+}
+
+export interface DF14FichaModel {
+    ficha:number;
+    programa:string;
+    estado_ficha:string;
 }

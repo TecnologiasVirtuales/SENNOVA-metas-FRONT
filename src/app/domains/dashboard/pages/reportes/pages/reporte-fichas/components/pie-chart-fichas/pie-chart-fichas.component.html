@@ -13,45 +13,28 @@
             </div>
         }@else {
             <div class="chart-no-results" [ngClass]="{'chart-container-f':this.mostrar_filtros,'chart-container-no-f':!this.mostrar_filtros}">
-                <span class="no-results-title">No se encontraron aprendices</span>
+                <span class="no-results-title">No se encontraron fichas</span>
             </div>
         }
-        
     }
     @if (mostrar_filtros) {
         <div class="filter-container">
             <section class="filter-sub__container">
-                <h3 class="filter-sub__title">Filtrar por estado del aprendiz y tipo de documento</h3>
+                <h3 class="filter-sub__title">Filtrar por estado de la ficha</h3>
                 <nz-select 
                     class="filter-sub__select" 
-                    [(ngModel)]="estado_aprendiz"
-                    (ngModelChange)="onChangeEstadoAprendiz()"
-                    (nzScrollToBottom)="onScrollEstadoAprendiz()"
-                    (nzOnSearch)="onSearchEstadoAprendiz($event)"
+                    [(ngModel)]="estado_ficha"
+                    (ngModelChange)="onChangeEstadoFicha()"
+                    (nzScrollToBottom)="onScrollEstadoFichas()"
+                    (nzOnSearch)="onSearchEstadoFichas($event)"
                     [nzAllowClear]="true"
                     [nzShowSearch]="true"
                     [nzServerSearch]="true"
-                    [nzDropdownRender]="loadingEstadoAprendiz"
-                    [nzLoading]="is_loading_estados_aprendiz"
-                    nzPlaceHolder="Filtrar por estado del aprendiz">
-                    @for (estado_aprendiz_item of estados_aprendiz; track $index) {
-                        <nz-option [nzLabel]="estado_aprendiz_item.estado_aprendiz" [nzValue]="estado_aprendiz_item.estado_aprendiz"></nz-option>
-                    }
-                </nz-select>
-                <nz-select 
-                    class="filter-sub__select" 
-                    [(ngModel)]="tipo_documento"
-                    (ngModelChange)="onChangeTipoDocumento()"
-                    (nzScrollToBottom)="onScrollTipoDocumento()"
-                    (nzOnSearch)="onSearchTipoDocumento($event)"
-                    [nzAllowClear]="true"
-                    [nzShowSearch]="true"
-                    [nzServerSearch]="true"
-                    [nzDropdownRender]="loadingTipoDocumento"
-                    [nzLoading]="is_loading_tipo_documento"
-                    nzPlaceHolder="Filtrar aprendices por tipo de documento">
-                    @for (tipo_documento_item of tipos_documento; track $index) {
-                        <nz-option [nzLabel]="tipo_documento_item.tipo_documento+' - '+tipo_documento_item.descripcion" [nzValue]="tipo_documento_item.tipo_documento"></nz-option>
+                    [nzDropdownRender]="loadingEstadoFicha"
+                    [nzLoading]="is_loading_estados_ficha"
+                    nzPlaceHolder="Filtrar por estado de la ficha">
+                    @for (estado_ficha_item of estados_ficha; track $index) {
+                        <nz-option [nzLabel]="estado_ficha_item.estado_ficha" [nzValue]="estado_ficha_item.estado_ficha"></nz-option>
                     }
                 </nz-select>
             </section>
@@ -86,7 +69,7 @@
                     [nzShowSearch]="true"
                     [nzServerSearch]="true"
                     [nzDropdownRender]="loadingCentroFormacion"
-                    [nzLoading]="is_loading_centro_formacion"
+                    [nzLoading]="is_loading_centros_formacion"
                     nzPlaceHolder="Filtrar por centro de formación"
                     [disabled]="centros_formacion.length < 1">
                     @for (centro_formacion_item of centros_formacion; track $index) {
@@ -134,13 +117,10 @@
             </section>
         </div>
     }
+
 </div>
-<ng-template #loadingTipoDocumento>
-    <nz-spin [nzSpinning]="is_loading_tipo_documento">
-    </nz-spin>
-</ng-template>
-<ng-template #loadingEstadoAprendiz>
-    <nz-spin [nzSpinning]="is_loading_estados_aprendiz">
+<ng-template #loadingEstadoFicha>
+    <nz-spin [nzSpinning]="is_loading_estados_ficha">
     </nz-spin>
 </ng-template>
 <ng-template #loadingRegionales>
@@ -148,7 +128,7 @@
     </nz-spin>
 </ng-template>
 <ng-template #loadingCentroFormacion>
-    <nz-spin [nzSpinning]="is_loading_centro_formacion">
+    <nz-spin [nzSpinning]="is_loading_centros_formacion">
     </nz-spin>
 </ng-template>
 <ng-template #loadingProgramas>
@@ -159,4 +139,3 @@
     <nz-spin [nzSpinning]="is_loading_niveles">
     </nz-spin>
 </ng-template>
-

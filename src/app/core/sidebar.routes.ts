@@ -71,6 +71,12 @@ export const side_routes:Routes = [
                 title:'Estado de los aprendices sena',
                 data:{breadcrumb:'Estado de los aprendices sena'},
                 loadComponent:()=>import('@domains/dashboard/pages/reportes/pages/reporte-aprendices/reporte-aprendices-page/reporte-aprendices-page.component').then(c=>c.ReporteAprendicesPageComponent)
+            },
+            {
+                path:'estado-fichas',
+                title:'Estado de lass fichas sena',
+                data:{breadcrumb:'Estado de lass fichas sena'},
+                loadComponent:()=>import('@domains/dashboard/pages/reportes/pages/reporte-fichas/reporte-fichas-page/reporte-fichas-page.component').then(c=>c.ReporteFichasPageComponent)
             }
         ]
     }

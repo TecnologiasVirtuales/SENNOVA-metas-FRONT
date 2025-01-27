@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { DF14CentroFormacionModel, DF14EstadoAprendizModel, DF14NivelFormacionModel, DF14ProgramaModel, DF14RegionalModel, DF14TipoDocumentoModel } from '@shared/models/df14.model';
+import { DF14CentroFormacionModel, DF14EstadoFichaModel, DF14NivelFormacionModel, DF14ProgramaModel, DF14RegionalModel } from '@shared/models/df14.model';
 import { PaginateModel } from '@shared/models/paginate.model';
 import { ReporteChartModel } from '@shared/models/reporte-chart.model';
 import { Df14Service } from '@shared/services/documents/df14.service';
@@ -10,10 +10,10 @@ import { ApexNonAxisChartSeries, ChartComponent } from 'ng-apexcharts';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
-import { BehaviorSubject,debounceTime, forkJoin, Observable,skip, Subscription } from 'rxjs';
+import { BehaviorSubject, debounceTime, forkJoin, Observable, skip, Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-pie-chart-aprentidices',
+  selector: 'app-pie-chart-fichas',
   standalone: true,
   imports: [
     CommonModule,
@@ -23,80 +23,72 @@ import { BehaviorSubject,debounceTime, forkJoin, Observable,skip, Subscription }
     NzButtonModule,
     NzSpinModule
   ],
-  templateUrl: './pie-chart-aprentidices.component.html',
-  styleUrl: './pie-chart-aprentidices.component.css'
+  templateUrl: './pie-chart-fichas.component.html',
+  styleUrl: './pie-chart-fichas.component.css'
 })
-export class PieChartAprentidicesComponent implements OnInit,OnDestroy{
-  
+export class PieChartFichasComponent implements OnInit,OnDestroy{
+
   @Input() mostrar_filtros:boolean = false;
 
   @Output() filter:EventEmitter<{[key:string]:number|string}> = new EventEmitter();
 
   df14_service:Df14Service = inject(Df14Service);
 
-  reporte_aprendices:ReporteChartModel = {};
+  reporte_fichas:ReporteChartModel = {};
 
   chart_options?:Partial<ChartNonAxisOptions>;
 
+  estado_ficha?:string;
   regional?:string;
-  nivel_formacion?:string;
-  estado_aprendiz?:string;
   centro_formacion?:string;
-  codigo_programa?:number;
-  tipo_documento?:string;
+  nivel_formacion?:string;
+  codigo_programa?:string;
 
+  estados_ficha:DF14EstadoFichaModel[] = [];
   regionales:DF14RegionalModel[] = [];
-  niveles_formacion:DF14NivelFormacionModel[] = [];
-  estados_aprendiz:DF14EstadoAprendizModel[] = [];
-  tipos_documento:DF14TipoDocumentoModel[] = [];
   centros_formacion:DF14CentroFormacionModel[] = [];
+  niveles_formacion:DF14NivelFormacionModel[] = [];
   programas:DF14ProgramaModel[] = [];
 
-  is_loading_tipo_documento:boolean = false;
-  is_loading_estados_aprendiz:boolean = false;
+  is_loading_estados_ficha:boolean = false;
   is_loading_regionales:boolean = false;
-  is_loading_centro_formacion:boolean = false;
+  is_loading_centros_formacion:boolean = false;
   is_loading_niveles:boolean = false;
   is_loading_programas:boolean = false;
 
-  page_tipo_documento:number = 1;
-  num_tipo_documento:number = 1;
-  page_estados_aprendiz:number = 1;
-  num_estados_aprendiz:number = 1;
+  page_estados_ficha:number = 1;
+  num_estados_ficha:number = 1;
   page_regionales:number = 1;
   num_regionales:number = 1;
-  page_centro_formacion:number = 1;
-  num_centro_formacion:number = 1;
+  page_centros_formacion:number = 1;
+  num_centros_formacion:number = 1;
   page_niveles:number = 1;
   num_niveles:number = 1;
   page_programas:number = 1;
   num_programas:number = 1;
 
-  search_tipo_documento:string = '';
-  search_estados_aprendiz:string = '';
+  search_estados_ficha:string = '';
   search_regionales:string = '';
-  search_centro_formacion:string = '';
+  search_centros_formacion:string = '';
   search_niveles:string = '';
-  search_program:string = '';
+  search_programas:string = '';
 
   data_subscription?:Subscription;
-  search_tipo_documento_subscription?:Subscription;
-  search_estados_aprendiz_subscription?:Subscription;
+  search_estados_ficha_subscription?:Subscription;
   search_regionales_subscription?:Subscription;
-  search_centro_formacion_subscription?:Subscription;
+  search_centros_formacion_subscription?:Subscription;
   search_niveles_subscription?:Subscription;
-  search_program_subscription?:Subscription;
+  search_programas_subscription?:Subscription;
 
-  search_tipo_documento_subject:BehaviorSubject<string> = new BehaviorSubject('');
-  search_estados_aprendiz_subject:BehaviorSubject<string> = new BehaviorSubject('');
+  search_estados_ficha_subject:BehaviorSubject<string> = new BehaviorSubject('');
   search_regionales_subject:BehaviorSubject<string> = new BehaviorSubject('');
-  search_centro_formacion_subject:BehaviorSubject<string> = new BehaviorSubject('');
+  search_centros_formacion_subject:BehaviorSubject<string> = new BehaviorSubject('');
   search_niveles_subject:BehaviorSubject<string> = new BehaviorSubject('');
-  search_program_subject:BehaviorSubject<string> = new BehaviorSubject('');
-
+  search_programas_subject:BehaviorSubject<string> = new BehaviorSubject('');
+  
   ngOnInit(): void {
     let data_to_load = [
-      this.df14_service.countAprendicesPorEstado()
+      this.df14_service.countFichasPorEstado()
     ];
     if(this.mostrar_filtros){
       this.startSearch();
@@ -106,7 +98,7 @@ export class PieChartAprentidicesComponent implements OnInit,OnDestroy{
         next:([
           reporte,
         ])=>{
-          this.reporte_aprendices = reporte as ReporteChartModel;
+          this.reporte_fichas = reporte as ReporteChartModel;
           this.setChartData();
         }
       });
@@ -114,38 +106,31 @@ export class PieChartAprentidicesComponent implements OnInit,OnDestroy{
 
   ngOnDestroy(): void {
     this.resetDataSub();
-    this.resetSearch(); 
+    this.resetSearch();
   }
 
-  get filters():{[key:string]:string|number}{
+  get filters():{[key:string]:number|string}{
     let filters:{[key:string]:string|number} = {};
     if(this.regional) filters['regional'] = this.regional;
     if(this.nivel_formacion) filters['nivel_de_formacion'] = this.nivel_formacion;
-    if(this.estado_aprendiz) filters['estado_aprendiz'] = this.estado_aprendiz;
+    if(this.estado_ficha) filters['estado_ficha'] = this.estado_ficha;
     if(this.centro_formacion) filters['sede'] = this.centro_formacion;
     if(this.codigo_programa) filters['codigo_programa'] = this.codigo_programa;
-    if(this.tipo_documento) filters['tipo_documento'] = this.tipo_documento;
     return filters;
   }
 
   get empty_report():boolean {
-    return Object.keys(this.reporte_aprendices).length > 0;
+    return Object.keys(this.reporte_fichas).length > 0;
   }
 
   getReportes(){
-    return this.df14_service.countAprendicesPorEstado({filter:this.filters});
+    return this.df14_service.countFichasPorEstado({filter:this.filters});
   }
 
-  getTiposDocumento(){
+  getEstadosFicha(){
     let filters:{[key:string]:string|number} = {};
-    if(this.search_tipo_documento.length > 0) filters['tipo_documento'] = this.search_tipo_documento;
-    return this.df14_service.getTiposDocumento({filter:filters,page_number:this.page_tipo_documento});
-  }
-
-  getEstadosAprendiz(){
-    let filters:{[key:string]:string|number} = {};
-    if(this.search_estados_aprendiz.length > 0) filters['estado_aprendiz'] = this.search_estados_aprendiz;
-    return this.df14_service.getEstadosAprendiz({filter:filters,page_number:this.page_estados_aprendiz});
+    if(this.search_estados_ficha.length > 0) filters['estado_ficha'] = this.search_estados_ficha;
+    return this.df14_service.getEstadosFichas({filter:filters,page_number:this.page_estados_ficha});
   }
 
   getRegionales(){
@@ -161,8 +146,8 @@ export class PieChartAprentidicesComponent implements OnInit,OnDestroy{
       return undefined;
     };
     let filters:{[key:string]:string|number} = {'regional':this.regional};
-    if(this.search_centro_formacion.length > 0) filters['sede'] = this.search_centro_formacion;
-    return this.df14_service.getCentrosFormacion({filter:filters,page_number:this.page_centro_formacion});
+    if(this.search_centros_formacion.length > 0) filters['sede'] = this.search_centros_formacion;
+    return this.df14_service.getCentrosFormacion({filter:filters});
   }
 
   getNivelesFormacion(){
@@ -179,27 +164,16 @@ export class PieChartAprentidicesComponent implements OnInit,OnDestroy{
       return undefined;
     };    
     let filters:{[key:string]:string|number} = {'nivel_de_formacion':this.nivel_formacion};    
-    if(this.search_program.length > 0) filters['programa'] = this.search_program;
+    if(this.search_programas.length > 0) filters['programa'] = this.search_programas;
     return this.df14_service.getProgramas({filter:filters,page_number:this.page_programas});
   }
 
-  onChangeEstadoAprendiz(){
+  onChangeEstadoFicha(){
     this.resetDataSub();
     this.filter.emit(this.filters);
     this.data_subscription = this.getReportes().subscribe({
       next:(reporte)=>{
-        this.reporte_aprendices = reporte as ReporteChartModel;
-        this.setChartData();
-      }
-    });
-  }
-
-  onChangeTipoDocumento(){
-    this.resetDataSub();
-    this.filter.emit(this.filters);
-    this.data_subscription = this.getReportes().subscribe({
-      next:(reporte)=>{
-        this.reporte_aprendices = reporte as ReporteChartModel;
+        this.reporte_fichas = reporte as ReporteChartModel;
         this.setChartData();
       }
     });
@@ -225,8 +199,7 @@ export class PieChartAprentidicesComponent implements OnInit,OnDestroy{
             let {results:centros_formacion} = p_centro_formacion as PaginateModel<DF14CentroFormacionModel>;
             this.centros_formacion = [...centros_formacion];
           };
-
-          this.reporte_aprendices = reporte as ReporteChartModel;
+          this.reporte_fichas = reporte as ReporteChartModel;
           this.setChartData();
         }
       })
@@ -242,7 +215,7 @@ export class PieChartAprentidicesComponent implements OnInit,OnDestroy{
     this.data_subscription = forkJoin(data_to_load)
       .subscribe({
         next:([reporte])=>{
-          this.reporte_aprendices = reporte as ReporteChartModel;
+          this.reporte_fichas = reporte as ReporteChartModel;
           this.setChartData();
         }
       });
@@ -266,7 +239,7 @@ export class PieChartAprentidicesComponent implements OnInit,OnDestroy{
             this.programas = [...programas];
             this.num_programas = num_programas;
           };
-          this.reporte_aprendices = reporte as ReporteChartModel;
+          this.reporte_fichas = reporte as ReporteChartModel;
           this.setChartData();
         }
       });
@@ -282,40 +255,24 @@ export class PieChartAprentidicesComponent implements OnInit,OnDestroy{
     this.data_subscription = forkJoin(data_to_load)
     .subscribe({
       next:([reporte])=>{
-        this.reporte_aprendices = reporte as ReporteChartModel;
+        this.reporte_fichas = reporte as ReporteChartModel;
         this.setChartData();
       }
     });
   }
 
-  onScrollTipoDocumento(){
-    if(this.tipos_documento.length == this.num_tipo_documento) return;
-    let page = this.page_tipo_documento + 1;
+  onScrollEstadoFichas(){
+    if(this.estados_ficha.length == this.num_estados_ficha) return;
+    let page = this.page_estados_ficha + 1;
     this.resetDataSub();
-    this.is_loading_tipo_documento = true;
-    this.page_tipo_documento = page;
-    this.data_subscription = this.getTiposDocumento()
-      .subscribe({
-        next:(p_tipos)=>{
-          let {results} = p_tipos;
-          this.tipos_documento = [...this.tipos_documento,...results];
-          this.is_loading_tipo_documento = false;
-        }
-      });
-  }
-
-  onScrollEstadoAprendiz(){
-    if(this.estados_aprendiz.length == this.num_estados_aprendiz) return;
-    let page = this.page_estados_aprendiz + 1;
-    this.resetDataSub();
-    this.is_loading_estados_aprendiz = true;
-    this.page_estados_aprendiz = page;
-    this.data_subscription = this.getEstadosAprendiz()
+    this.is_loading_estados_ficha = true;
+    this.page_estados_ficha = page;
+    this.data_subscription = this.getEstadosFicha()
       .subscribe({
         next:(p_estados)=>{
           let {results} = p_estados;
-          this.estados_aprendiz = [...this.estados_aprendiz,...results];
-          this.is_loading_estados_aprendiz = false;
+          this.estados_ficha = [...this.estados_ficha,...results];
+          this.is_loading_estados_ficha = false;
         }
       });
   }
@@ -336,18 +293,18 @@ export class PieChartAprentidicesComponent implements OnInit,OnDestroy{
   }
 
   onScrollCentroFormacion(){
-    if(this.centros_formacion.length == this.num_centro_formacion) return;
-    let page = this.page_centro_formacion + 1;
+    if(this.centros_formacion.length == this.num_centros_formacion) return;
+    let page = this.page_centros_formacion + 1;
     this.resetDataSub();
-    this.is_loading_centro_formacion = true;
+    this.is_loading_centros_formacion = true;
     this.resetDataSub();
-    this.page_centro_formacion = page;
+    this.page_centros_formacion = page;
     this.data_subscription = this.getCentrosFormacion()!
       .subscribe({
         next:(p_centros)=>{
           let {results} = p_centros;
           this.centros_formacion = [...this.centros_formacion,...results];
-          this.is_loading_centro_formacion = false;
+          this.is_loading_centros_formacion = false;
         }
       });
   }
@@ -382,14 +339,9 @@ export class PieChartAprentidicesComponent implements OnInit,OnDestroy{
     });
   }
 
-  onSearchTipoDocumento(search:string){
-    this.is_loading_tipo_documento = true;
-    this.search_tipo_documento_subject.next(search);
-  }
-
-  onSearchEstadoAprendiz(search:string){
-    this.is_loading_estados_aprendiz = true;
-    this.search_estados_aprendiz_subject.next(search);
+  onSearchEstadoFichas(search:string){
+    this.is_loading_estados_ficha = true;
+    this.search_estados_ficha_subject.next(search);
   }
 
   onSearchRegional(search:string){
@@ -398,8 +350,8 @@ export class PieChartAprentidicesComponent implements OnInit,OnDestroy{
   }
 
   onSearchCentroFormacion(search:string){
-    this.is_loading_centro_formacion = true;
-    this.search_centro_formacion_subject.next(search);
+    this.is_loading_centros_formacion = true;
+    this.search_centros_formacion_subject.next(search);
   }
 
   onSearchNivel(search:string){
@@ -409,33 +361,19 @@ export class PieChartAprentidicesComponent implements OnInit,OnDestroy{
 
   onSearchPrograma(search:string){
     this.is_loading_programas = true;
-    this.search_program_subject.next(search);  
+    this.search_programas_subject.next(search);  
   }
 
-  executeSearchTipoDocumento(){
+  executeSearchEstadoFicha(){
     this.resetDataSub();
-    this.page_tipo_documento = 1;
-    this.data_subscription = this.getTiposDocumento()
-      .subscribe({
-        next:(p_tipos)=>{
-          let {results,count} = p_tipos;
-          this.tipos_documento = [...results];
-          this.num_tipo_documento = count;
-          this.is_loading_tipo_documento = false;
-        }
-      });
-  }
-
-  executeSearchEstadoAprendiz(){
-    this.resetDataSub();
-    this.page_estados_aprendiz = 1;
-    this.data_subscription = this.getEstadosAprendiz()
+    this.page_estados_ficha = 1;
+    this.data_subscription = this.getEstadosFicha()
       .subscribe({
         next:(p_estados)=>{
           let {results,count} = p_estados;
-          this.estados_aprendiz = [...results];
-          this.num_estados_aprendiz = count;
-          this.is_loading_estados_aprendiz = false;
+          this.estados_ficha = [...results];
+          this.num_estados_ficha = count;
+          this.is_loading_estados_ficha = false;
         }
       })
   }
@@ -456,14 +394,14 @@ export class PieChartAprentidicesComponent implements OnInit,OnDestroy{
 
   executeSearchCentroFormacion(){
     this.resetDataSub();
-    this.page_centro_formacion = 1;
+    this.page_centros_formacion = 1;
     this.data_subscription = this.getCentrosFormacion()!
       .subscribe({
         next:(p_centros)=>{
           let {results,count} = p_centros;
           this.centros_formacion = [...results];
-          this.num_centro_formacion = count;
-          this.is_loading_centro_formacion = false;
+          this.num_centros_formacion = count;
+          this.is_loading_centros_formacion = false;
         }
       });
   }
@@ -497,8 +435,8 @@ export class PieChartAprentidicesComponent implements OnInit,OnDestroy{
   }
 
   setChartData(){
-    let labels = Object.keys(this.reporte_aprendices);
-    let series:ApexNonAxisChartSeries = labels.map((label)=>this.reporte_aprendices[label]);
+    let labels = Object.keys(this.reporte_fichas);
+    let series:ApexNonAxisChartSeries = labels.map((label)=>this.reporte_fichas[label]);
     this.chart_options = {
       series:series,
       labels:labels,
@@ -529,25 +467,14 @@ export class PieChartAprentidicesComponent implements OnInit,OnDestroy{
     let search_wait:number = 200;
     let search_skip:number = 1;
 
-    this.search_tipo_documento_subscription = this.search_tipo_documento_subject
+    this.search_estados_ficha_subscription = this.search_estados_ficha_subject
       .pipe(
         skip(search_skip),
         debounceTime(search_wait)
       ).subscribe({
         next:(search)=>{
-          this.search_tipo_documento = search;
-          this.executeSearchTipoDocumento();
-        }
-      });
-
-    this.search_estados_aprendiz_subscription = this.search_estados_aprendiz_subject
-      .pipe(
-        skip(search_skip),
-        debounceTime(search_wait)
-      ).subscribe({
-        next:(search)=>{
-          this.search_estados_aprendiz = search;
-          this.executeSearchEstadoAprendiz();
+          this.search_estados_ficha = search;
+          this.executeSearchEstadoFicha();
         }
       });
 
@@ -562,13 +489,13 @@ export class PieChartAprentidicesComponent implements OnInit,OnDestroy{
         }
       });
     
-    this.search_centro_formacion_subscription = this.search_centro_formacion_subject
+    this.search_centros_formacion_subscription = this.search_centros_formacion_subject
       .pipe(
         skip(search_skip),
         debounceTime(search_wait)
       ).subscribe({
         next:(search)=>{
-          this.search_centro_formacion = search;
+          this.search_centros_formacion = search;
           this.executeSearchCentroFormacion();
         }
       });
@@ -584,13 +511,13 @@ export class PieChartAprentidicesComponent implements OnInit,OnDestroy{
         }
       })
 
-    this.search_program_subscription = this.search_program_subject
+    this.search_programas_subscription = this.search_programas_subject
       .pipe(
         skip(search_skip),
         debounceTime(search_wait)
       ).subscribe({
         next:(search)=>{
-          this.search_program = search;
+          this.search_programas = search;
           this.executeSearchProgramas();
         }
       });
@@ -601,11 +528,10 @@ export class PieChartAprentidicesComponent implements OnInit,OnDestroy{
   }
 
   resetSearch(){
-    if(this.search_tipo_documento_subscription) this.search_tipo_documento_subscription.unsubscribe();
-    if(this.search_estados_aprendiz_subscription) this.search_estados_aprendiz_subscription.unsubscribe();
+    if(this.search_estados_ficha_subscription) this.search_estados_ficha_subscription.unsubscribe();
     if(this.search_regionales_subscription) this.search_regionales_subscription.unsubscribe();
-    if(this.search_centro_formacion_subscription) this.search_centro_formacion_subscription.unsubscribe();
+    if(this.search_centros_formacion_subscription) this.search_centros_formacion_subscription.unsubscribe();
     if(this.search_niveles_subscription) this.search_niveles_subscription.unsubscribe();
-    if(this.search_program_subscription) this.search_program_subscription.unsubscribe();
+    if(this.search_programas_subscription) this.search_programas_subscription.unsubscribe();
   }
 }

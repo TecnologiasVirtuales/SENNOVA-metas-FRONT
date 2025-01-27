@@ -1,11 +1,11 @@
-<nz-card 
+<nz-card
     nz-col
     [nzSpan]="24"
     [nzTitle]="pageTitle">
-    <app-pie-chart-aprentidices (filter)="onFilter($event)" [mostrar_filtros]="true">
-    </app-pie-chart-aprentidices>
+    <app-pie-chart-fichas (filter)="onFilter($event)" [mostrar_filtros]="true">
+    </app-pie-chart-fichas>
     <div class="flex justify-between py-2">
-        <span class="text-lime-600 text-2xl">Aprendices sena: {{numero_aprendices}}</span>
+        <span class="text-lime-600 text-2xl">Fichas sena: {{numero_fichas}}</span>
         <nz-select [(ngModel)]="page_size" (ngModelChange)="sizeChange()">
             <nz-option [nzLabel]="10" [nzValue]="10"></nz-option>
             <nz-option [nzLabel]="20" [nzValue]="20"></nz-option>
@@ -19,35 +19,33 @@
             <nz-option [nzLabel]="100" [nzValue]="100"></nz-option>        
         </nz-select>
     </div>
-    <nz-table #aprendizTable [nzPageSize]="page_size" [nzData]="aprendices" [nzShowPagination]="false">
+    <nz-table
+        #fichaTable
+        [nzPageSize]="page_size"
+        [nzData]="fichas"
+        [nzShowPagination]="false">
         <thead>
             <tr>
-                <th>Nombre del aprendiz</th>
-                <th>Numero de documento</th>
-                <th>Tipo de documento</th>
                 <th>Ficha</th>
                 <th>Programa</th>
-                <th>Estado del aprendiz</th>
+                <th>Estado de la ficha</th>
             </tr>
         </thead>
         <tbody>
-            @for (aprendiz of aprendizTable.data; track $index) {
+            @for (ficha of fichaTable.data; track $index) {
                 <tr>
-                    <td>{{aprendiz.nombre}} {{aprendiz.primer_apellido}} {{aprendiz.segundo_apellido}}</td>
-                    <td>{{aprendiz.numero_documento}}</td>
-                    <td>{{aprendiz.tipo_documento}}</td>
-                    <td>{{aprendiz.ficha}}</td>
-                    <td>{{aprendiz.programa}}</td>
-                    <td>{{aprendiz.estado_aprendiz}}</td>
+                    <td>{{ficha.ficha}}</td>
+                    <td>{{ficha.programa}}</td>
+                    <td>{{ficha.estado_ficha}}</td>
                 </tr>
             }
         </tbody>
     </nz-table>
     <div class="flex py-3 w-full justify-end">
         <nz-pagination
-            (nzPageIndexChange)="changePage($event)" 
-            [nzPageIndex]="page_table" 
-            [nzTotal]="numero_aprendices"
+            (nzPageIndexChange)="changePage($event)"
+            [nzPageIndex]="page_table"
+            [nzTotal]="numero_fichas"
             [nzPageSize]="page_size">
         </nz-pagination>
     </div>
@@ -58,7 +56,7 @@
             <ng-icon name="heroChartPie"></ng-icon>
         </div>
         <div nz-col>
-            <h1>Estado de los aprendices sena</h1>
+            <h1>Estado de las fichas sena</h1>
         </div>
     </div>
 </ng-template>

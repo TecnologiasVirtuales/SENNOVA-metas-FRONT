@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.page-title,
+.page-title h1{
+    @apply text-[--primary-green-color] text-2xl;
+}

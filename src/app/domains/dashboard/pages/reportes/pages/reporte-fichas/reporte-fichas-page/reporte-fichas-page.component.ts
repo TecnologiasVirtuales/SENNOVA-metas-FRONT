@@ -1,47 +1,48 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { PieChartAprentidicesComponent } from '../components/pie-chart-aprentidices/pie-chart-aprentidices.component';
+import { PieChartFichasComponent } from '../components/pie-chart-fichas/pie-chart-fichas.component';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { heroChartPie } from '@ng-icons/heroicons/outline';
 import { NzTableModule } from 'ng-zorro-antd/table';
-import { Df14Service } from '@shared/services/documents/df14.service';
-import { DF14AprendizModel } from '@shared/models/df14.model';
-import { Subscription } from 'rxjs';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { FormsModule } from '@angular/forms';
+import { heroChartPie } from '@ng-icons/heroicons/outline';
+import { Df14Service } from '@shared/services/documents/df14.service';
+import { Subscription } from 'rxjs';
+import { DF14FichaModel } from '@shared/models/df14.model';
 
 @Component({
-  selector: 'app-reporte-aprendices-page',
+  selector: 'app-reporte-fichas-page',
   standalone: true,
   imports: [
     CommonModule,
-    PieChartAprentidicesComponent,
+    PieChartFichasComponent,
     NzCardModule,
     NzGridModule,
     NgIconComponent,
     NzTableModule,
     NzPaginationModule,
     NzSelectModule,
-    FormsModule
+    FormsModule,
   ],
-  templateUrl: './reporte-aprendices-page.component.html',
-  styleUrl: './reporte-aprendices-page.component.css',
+  templateUrl: './reporte-fichas-page.component.html',
+  styleUrl: './reporte-fichas-page.component.css',
   viewProviders: [provideIcons({ 
     heroChartPie
   })]
 })
-export class ReporteAprendicesPageComponent implements OnInit,OnDestroy {
+export class ReporteFichasPageComponent implements OnInit,OnDestroy{
 
   df14_service:Df14Service = inject(Df14Service);
 
   data_subscription?:Subscription;
 
-  aprendices:DF14AprendizModel[] = [];
+  fichas:DF14FichaModel[] = [];
 
-  numero_aprendices:number = 0;
+  numero_fichas:number = 0;
+
   page_table:number = 1;
   page_size:number = 10;
 
@@ -55,20 +56,20 @@ export class ReporteAprendicesPageComponent implements OnInit,OnDestroy {
     this.resetDataSub();
   }
 
-  getAprendices(){
-    return this.df14_service.getAprendices({filter:this.filters,page_number:this.page_table,page_size:this.page_size});
+  getFichas(){
+    return this.df14_service.getFichas({filter:this.filters,page_number:this.page_table,page_size:this.page_size});
   }
 
   getData(){
     this.resetDataSub();
-    this.data_subscription = this.getAprendices()
-    .subscribe({
-      next:(p_aprendices)=>{
-        let {results,count} = p_aprendices;
-        this.aprendices = [...results];
-        this.numero_aprendices = count;
-      }
-    });
+    this.data_subscription = this.getFichas()
+      .subscribe({
+        next:(p_fichas)=>{
+          let {results,count} = p_fichas
+          this.fichas = [...results];
+          this.numero_fichas = count;
+        }
+      });
   }
 
   onFilter(filters:{[key:string]:string|number}){
