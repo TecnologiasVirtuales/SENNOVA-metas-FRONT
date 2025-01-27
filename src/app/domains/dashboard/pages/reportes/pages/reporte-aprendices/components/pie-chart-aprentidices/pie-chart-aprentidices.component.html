@@ -1,7 +1,7 @@
 <div class="container">
     @if (chart_options) {
         @if (empty_report) {
-            <div id="chart" [ngClass]="{'w-[49%]':this.mostrar_filtros,'w-full':!this.mostrar_filtros}" class="flex justify-center">
+            <div id="chart" [ngClass]="{'chart-container-f':this.mostrar_filtros,'chart-container-no-f':!this.mostrar_filtros}" class="chart-results">
                 <apx-chart
                     class="chart-container"
                     [series]="chart_options.series"
@@ -12,7 +12,9 @@
                 </apx-chart>
             </div>
         }@else {
-            <span>{{empty_report}}</span>
+            <div class="chart-no-results" [ngClass]="{'chart-container-f':this.mostrar_filtros,'chart-container-no-f':!this.mostrar_filtros}">
+                <span class="no-results-title">No se encontraron aprendices</span>
+            </div>
         }
         
     }

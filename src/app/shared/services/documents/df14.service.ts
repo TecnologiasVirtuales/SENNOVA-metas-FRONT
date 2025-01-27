@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { getQueryUrl } from '@shared/functions/url.functions';
-import { DF14CentroFormacionModel, DF14EstadoAprendizModel, DF14NivelFormacionModel, DF14ProgramaModel, DF14RegionalModel, DF14TipoDocumentoModel } from '@shared/models/df14.model';
+import { DF14AprendizModel, DF14CentroFormacionModel, DF14EstadoAprendizModel, DF14NivelFormacionModel, DF14ProgramaModel, DF14RegionalModel, DF14TipoDocumentoModel } from '@shared/models/df14.model';
 import { PaginateModel } from '@shared/models/paginate.model';
 import { QueryUrlModel } from '@shared/models/query-url.model';
 import { ReporteChartModel } from '@shared/models/reporte-chart.model';
@@ -51,5 +51,10 @@ export class Df14Service {
   getTiposDocumento(data?:QueryUrlModel){
     let url:string = getQueryUrl(`${this.url}/get-tipos-documento/`,data);
     return this.http.get<PaginateModel<DF14TipoDocumentoModel>>(url);
+  }
+
+  getAprendices(data?:QueryUrlModel){
+    let url:string = getQueryUrl(`${this.url}/get-aprendices/`,data);
+    return this.http.get<PaginateModel<DF14AprendizModel>>(url);
   }
 }

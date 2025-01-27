@@ -27,3 +27,14 @@ export interface DF14TipoDocumentoModel{
     tipo_documento:string;
     descripcion:string;
 }
+
+export interface DF14AprendizModel {
+    nombre:string;
+    primer_apellido:string;
+    segundo_apellido:string;
+    numero_documento:number;
+    tipo_documento:string;
+    ficha:number;
+    programa:string;
+    estado_aprendiz:string;
+}

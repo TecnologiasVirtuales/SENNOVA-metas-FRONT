@@ -3,15 +3,32 @@
 @tailwind utilities;
 
 .container{
-    @apply flex flex-wrap w-full gap-2 p-3;
+    @apply flex flex-wrap w-full gap-2 p-3 min-h-[250px];
 }
 
 .apexcharts-canvas{
     @apply flex flex-wrap;
 }
 
+.chart-results,
+.chart-no-results{
+    @apply flex justify-center align-middle;
+}
+
+.no-results-title{
+    @apply my-auto text-3xl text-[var(--primary-green-color)];
+}
+
 .chart-container{
     @apply w-fit h-full flex justify-center;
+}
+
+.chart-container-f{
+    @apply w-[49%];
+}
+
+.chart-container-no-f{
+    @apply w-full;
 }
 
 .filter-container{

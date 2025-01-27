@@ -2,8 +2,55 @@
     nz-col
     [nzSpan]="24"
     [nzTitle]="pageTitle">
-    <app-pie-chart-aprentidices [mostrar_filtros]="true">
+    <app-pie-chart-aprentidices (filter)="onFilter($event)" [mostrar_filtros]="true">
     </app-pie-chart-aprentidices>
+    <div class="flex justify-between py-2">
+        <span class="text-lime-600 text-2xl">Aprendices sena {{numero_aprendices}}</span>
+        <nz-select [(ngModel)]="page_size" (ngModelChange)="sizeChange()">
+            <nz-option [nzLabel]="10" [nzValue]="10"></nz-option>
+            <nz-option [nzLabel]="20" [nzValue]="20"></nz-option>
+            <nz-option [nzLabel]="30" [nzValue]="30"></nz-option>
+            <nz-option [nzLabel]="40" [nzValue]="40"></nz-option>
+            <nz-option [nzLabel]="50" [nzValue]="50"></nz-option>
+            <nz-option [nzLabel]="60" [nzValue]="60"></nz-option>
+            <nz-option [nzLabel]="70" [nzValue]="70"></nz-option>
+            <nz-option [nzLabel]="80" [nzValue]="80"></nz-option>
+            <nz-option [nzLabel]="90" [nzValue]="90"></nz-option>
+            <nz-option [nzLabel]="100" [nzValue]="100"></nz-option>        
+        </nz-select>
+    </div>
+    <nz-table #aprendizTable [nzPageSize]="page_size" [nzData]="aprendices" [nzShowPagination]="false">
+        <thead>
+            <tr>
+                <th>Nombre del aprendiz</th>
+                <th>Numero de documento</th>
+                <th>Tipo de documento</th>
+                <th>Ficha</th>
+                <th>Programa</th>
+                <th>Estado del aprendiz</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (aprendiz of aprendizTable.data; track $index) {
+                <tr>
+                    <td>{{aprendiz.nombre}} {{aprendiz.primer_apellido}} {{aprendiz.segundo_apellido}}</td>
+                    <td>{{aprendiz.numero_documento}}</td>
+                    <td>{{aprendiz.tipo_documento}}</td>
+                    <td>{{aprendiz.ficha}}</td>
+                    <td>{{aprendiz.programa}}</td>
+                    <td>{{aprendiz.estado_aprendiz}}</td>
+                </tr>
+            }
+        </tbody>
+    </nz-table>
+    <div class="flex py-3 w-full justify-end">
+        <nz-pagination
+            (nzPageIndexChange)="changePage($event)" 
+            [nzPageIndex]="page_table" 
+            [nzTotal]="numero_aprendices"
+            [nzPageSize]="page_size">
+        </nz-pagination>
+    </div>
 </nz-card>
 <ng-template #pageTitle>
     <div class="page-title" nz-row nzAlign="middle" nzGutter="15">

@@ -518,7 +518,7 @@ export class PieChartAprentidicesComponent implements OnInit,OnDestroy{
       series:series,
       labels:labels,
       chart:{
-        width:500,
+        width:400,
         type:'pie',
       },
       legend:{
