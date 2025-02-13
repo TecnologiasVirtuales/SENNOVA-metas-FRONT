@@ -1,6 +1,6 @@
 <ul class="side-menu" nz-menu nzMode="inline">
     @for (opcion of opciones_menu; track $index) {
-        <li 
+        <!-- <li 
             class="side-menu_item"
             routerLinkActive="menu-item_active"
             nz-menu-item
@@ -19,6 +19,19 @@
                 </ng-template>
                 
             </a>
-        </li>
+        </li> -->
+        @if (opcion|hasChildren) {
+            <li>
+                <ul nz-submenu nzTitle="{{opcion.title}}">
+                    @for (child of opcion.children; track $index) {
+                        @if (child.title) {
+                            <li nz-menu-item>
+                                <a [routerLink]="['/dashboard', child.path]">{{child.title}}</a>
+                            </li>
+                        }
+                    }
+                </ul>
+            </li>
+        }
     }
 </ul>

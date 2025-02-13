@@ -8,6 +8,7 @@ import { heroAcademicCapSolid, heroHomeModernSolid, heroMapSolid, heroUserGroupS
 import { lucideSchool } from '@ng-icons/lucide';
 import { simpleLevelsdotfyi } from '@ng-icons/simple-icons';
 import { CanUseActionsDirective } from '@shared/directives/can-use-actions.directive';
+import { HasChildrenPipe } from '@shared/pipes/has-children.pipe';
 import { NzFlexModule } from 'ng-zorro-antd/flex';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
@@ -26,7 +27,8 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
     NzGridModule,
     NzTypographyModule,
     NzPopoverModule,
-    CanUseActionsDirective
+    CanUseActionsDirective,
+    HasChildrenPipe
   ],
   templateUrl: './sidebar-nav-bar.component.html',
   styleUrl: './sidebar-nav-bar.component.css',
