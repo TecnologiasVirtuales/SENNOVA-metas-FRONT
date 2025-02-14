@@ -58,7 +58,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.data_sub!.unsubscribe();
+    if(this.data_sub)this.data_sub!.unsubscribe();
   }
 
   configChart() {

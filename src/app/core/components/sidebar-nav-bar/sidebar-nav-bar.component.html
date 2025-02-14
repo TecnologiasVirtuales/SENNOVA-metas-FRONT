@@ -25,12 +25,50 @@
                 <ul nz-submenu nzTitle="{{opcion.title}}">
                     @for (child of opcion.children; track $index) {
                         @if (child.title) {
-                            <li nz-menu-item>
-                                <a [routerLink]="['/dashboard', child.path]">{{child.title}}</a>
+                            <li 
+                                class="side-menu_item"
+                                routerLinkActive="menu-item_active"
+                                nz-menu-item
+                                nzMatchRouter
+                                nz-popover
+                                [nzPopoverContent]="popOver"
+                                nzPopoverPlacement="right"
+                                *appCanUseActions>
+                                <a 
+                                    class="menu-item_anchor"
+                                    [routerLink]="['/dashboard',opcion.path,child.path]">
+                                    <ng-icon [name]="opcion.data?.['icon']"></ng-icon>
+                                    @if (!collapsed) {
+                                        <span nz-typography> {{child.title}}</span>
+                                    }
+                                    <ng-template #popOver>
+                                        <span>{{child.title}}</span>
+                                    </ng-template>
+                                </a>
                             </li>
                         }
                     }
                 </ul>
+            </li>
+        }@else {
+            <li 
+                class="side-menu_item"
+                routerLinkActive="menu-item_active"
+                nz-menu-item
+                nzMatchRouter
+                nz-popover
+                [nzPopoverContent]="popOver"
+                nzPopoverPlacement="right"
+                *appCanUseActions>
+                <a class="menu-item_anchor" [routerLink]="['/dashboard',opcion.path]">
+                    <ng-icon [name]="opcion.data?.['icon']"></ng-icon>
+                    @if (!collapsed) {
+                        <span nz-typography> {{opcion.title}}</span>
+                    }
+                    <ng-template #popOver>
+                        <span>{{opcion.title}}</span>
+                    </ng-template>
+                </a>            
             </li>
         }
     }
