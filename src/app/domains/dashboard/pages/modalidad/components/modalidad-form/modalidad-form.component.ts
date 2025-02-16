@@ -38,7 +38,7 @@ export class ModalidadFormComponent extends FormStyle implements OnInit {
   constructor(){
     super();
     this.form = this. form_builder.group({
-      nombre:new FormControl(null,[
+      modalidad:new FormControl(null,[
         Validators.required,
         Validators.maxLength(60),
         Validators.minLength(5),
@@ -50,7 +50,7 @@ export class ModalidadFormComponent extends FormStyle implements OnInit {
   ngOnInit(): void {
     this.modalidad = this.modal.getConfig().nzData.modalidad;
     if (this.modalidad) {
-      const {id,nombre} = this.modalidad;
+      const {id,modalidad: nombre} = this.modalidad;
       this.form.addControl('id',new FormControl(id));
       this.field_nombre.setValue(nombre);
     }
@@ -64,7 +64,7 @@ export class ModalidadFormComponent extends FormStyle implements OnInit {
   }
 
   get field_nombre(){
-    return this.form.get('nombre') as FormControl<string>;
+    return this.form.get('modalidad') as FormControl<string>;
   }
 
 }

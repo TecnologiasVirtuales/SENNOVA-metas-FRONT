@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzFlexModule } from 'ng-zorro-antd/flex';
 import { NzGridModule } from 'ng-zorro-antd/grid';
@@ -12,6 +12,8 @@ import { ModalidadService } from '@shared/services/modalidad.service';
 import { ModalidadModel } from '@shared/models/modalidad.model';
 import { SenaLoadingComponent } from '@shared/components/sena-loading/sena-loading.component';
 import { CanUseActionsDirective } from '@shared/directives/can-use-actions.directive';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-modalidad-page',
@@ -26,7 +28,8 @@ import { CanUseActionsDirective } from '@shared/directives/can-use-actions.direc
     NzTableModule,
     NzSkeletonModule,
     SenaLoadingComponent,
-    CanUseActionsDirective
+    CanUseActionsDirective,
+    NzPaginationModule
 ],
   templateUrl: './modalidad-page.component.html',
   styleUrl: './modalidad-page.component.css',
@@ -34,11 +37,20 @@ import { CanUseActionsDirective } from '@shared/directives/can-use-actions.direc
     heroAcademicCapSolid
   })]
 })
-export class ModalidadPageComponent implements OnInit{
+export class ModalidadPageComponent implements OnInit,OnDestroy{
 
   private modalidad_service = inject(ModalidadService);
 
+  private data_sub?:Subscription
+
   modalidades:ModalidadModel[] = [];
+
+  numero_modalidades:number = 0;
+
+  page:number = 1;
+  page_size:number = 10;
+
+  filters:{[key:string]:number|string} = {};
 
   loading:boolean = true;
 
@@ -46,21 +58,30 @@ export class ModalidadPageComponent implements OnInit{
     this.loadData();
   }
 
+  ngOnDestroy(): void {
+    this.resetDataSub();
+  }
+
+  private getData(){
+    return this.modalidad_service.getAll({filter:this.filters,page_number:this.page,page_size:this.page_size});
+  }
+
   private loadData(){
-    const dataSub = this.modalidad_service.getAll()
+    this.resetDataSub();
+    this.data_sub = this.getData()
       .subscribe({
-        next:(modalidades)=>{
-          this.modalidades = [...modalidades];
-        },
-        error:()=>{
-          this.loading = false;
-          dataSub.unsubscribe();
-        },
-        complete:()=>{
-          this.loading = false;
-          dataSub.unsubscribe();
+        next:(p_modalidades)=>{
+          let {results,count} = p_modalidades;
+          this.modalidades = [...results];
+          this.numero_modalidades = count;
+          this.onLoad(false);
         }
       })
+  }
+
+  changePage(page:number){
+    this.page = page;
+    this.loadData();
   }
 
   onCreate(modalidad:ModalidadModel){
@@ -81,5 +102,9 @@ export class ModalidadPageComponent implements OnInit{
 
   onLoad(loadStatus:boolean){    
     this.loading = loadStatus;
+  }
+
+  resetDataSub(){
+    if(this.data_sub) this.data_sub.unsubscribe();
   }
 }
