@@ -17,29 +17,6 @@
             </nz-input-group>
         </nz-form-control> 
     </nz-form-item>
-    <nz-form-item nz-col nzSpan="20">
-        <nz-form-control [nzErrorTip]="departamentoErrors">
-            <nz-form-label nzFor="departamento" class="form-label" nzRequired>
-                <span class="form-label_text" nz-typography>Departamento</span>
-            </nz-form-label>
-            <nz-input-group class="form-group">
-                <nz-select
-                    class="form-select"
-                    id="departamento"
-                    [formControl]="field_departamento"
-                    [nzLoading]="loading_departamentos"
-                    nzShowSearch
-                    nzAllowClear
-                    [nzDisabled]="loading_departamentos"
-                    nzPlaceHolder="Seleccione el departamento">
-                    @for (departamento of departamentos; track $index) {
-                        <nz-option [nzLabel]="departamento.nombre" [nzValue]="departamento.id">
-                        </nz-option>
-                    }
-                </nz-select>
-            </nz-input-group>
-        </nz-form-control> 
-    </nz-form-item>
 </form>
 
 <ng-template #nombreErrors>
@@ -56,14 +33,6 @@
     @if (field_nombre.hasError('minlength')) {
         <div nz-col nzSpan="24">
             <span nz-typography nzType="danger">El nombre de la regional debe tener minimo 5 caracteres</span>
-        </div>
-    }
-</ng-template>
-
-<ng-template #departamentoErrors>
-    @if (field_departamento.hasError('required')) {
-        <div nz-col nzSpan="24">
-            <span nz-typography nzType="danger">Por favor elija un departamento</span>
         </div>
     }
 </ng-template>

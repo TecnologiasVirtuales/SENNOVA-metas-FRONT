@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { SenaLoadingComponent } from '@shared/components/sena-loading/sena-loading.component';
 import { CanUseActionsDirective } from '@shared/directives/can-use-actions.directive';
@@ -13,6 +13,8 @@ import { RegionalModel } from '@shared/models/regional.model';
 import { RegionalService } from '@shared/services/regional.service';
 import { RegionalActionsComponent } from '../components/regional-actions/regional-actions.component';
 import { RouterModule } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 
 @Component({
   selector: 'app-regional-page',
@@ -28,7 +30,8 @@ import { RouterModule } from '@angular/router';
     SenaLoadingComponent,
     CanUseActionsDirective,
     RegionalActionsComponent,
-    RouterModule
+    RouterModule,
+    NzPaginationModule
   ],
   templateUrl: './regional-page.component.html',
   styleUrl: './regional-page.component.css',
@@ -36,11 +39,20 @@ import { RouterModule } from '@angular/router';
     heroMapSolid
   })]
 })
-export class RegionalPageComponent implements OnInit {
+export class RegionalPageComponent implements OnInit,OnDestroy {
 
   private regional_service = inject(RegionalService);
 
+  private data_sub?:Subscription;
+
   regionales:RegionalModel[] = [];
+
+  numero_regionales:number = 0;
+
+  page:number = 1;
+  page_size:number = 10;
+
+  filters:{[key:string]:number|string} = {};
 
   loading:boolean = true;
 
@@ -48,21 +60,30 @@ export class RegionalPageComponent implements OnInit {
     this.loadData();
   }
 
+  ngOnDestroy(): void {
+    this.resetDataSub();
+  }
+
+  private getData(){
+    return this.regional_service.getAll({filter:this.filters,page_number:this.page,page_size:this.page_size});
+  }
+
   private loadData(){
-    const dataSub = this.regional_service.getAll()
+    this.resetDataSub();
+    this.data_sub = this.getData()
       .subscribe({
-        next:(regionales)=>{
-          this.regionales = [...regionales];
+        next:(p_regionales)=>{
+          let {results,count} = p_regionales;
+          this.regionales = [...results];
+          this.numero_regionales = count;
+          this.onLoad(false);
         },
-        error:()=>{
-          this.loading = false;
-          dataSub.unsubscribe();
-        },
-        complete:()=>{
-          this.loading = false;
-          dataSub.unsubscribe();
-        }
       })
+  }
+
+  changePage(page:number){
+    this.page = page;
+    this.loadData();
   }
 
   onCreate(regional:RegionalModel){
@@ -83,6 +104,10 @@ export class RegionalPageComponent implements OnInit {
 
   onLoad(loadStatus:boolean){    
     this.loading = loadStatus;
+  }
+
+  resetDataSub(){
+    if(this.data_sub) this.data_sub.unsubscribe();
   }
 
 }

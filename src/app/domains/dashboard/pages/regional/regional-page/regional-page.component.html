@@ -16,8 +16,6 @@
             <tr>
                 <th>Código</th>
                 <th>Nombre</th>
-                <th>Departamento</th>
-                <th>Centros de formación</th>
                 <th *appCanUseActions class="regional-table_actions">Actions</th>
             </tr>
         </thead>
@@ -25,16 +23,10 @@
             @for (regional of regionalTable.data; track $index) {
                 <tr>
                     <td>
-                        {{regional.codigo}}
+                        {{regional.id}}
                     </td>
                     <td>
-                        {{regional.nombre}}
-                    </td>
-                    <td>
-                        {{regional.departamento.nombre}}
-                    </td>
-                    <td>
-                        <a [routerLink]="[regional.slug, 'centros-formacion']">Ver centros</a>                    
+                        {{regional.regional}}
                     </td>
                     <td *appCanUseActions>
                         <app-regional-actions 
@@ -50,6 +42,14 @@
             }
         </tbody>
     </nz-table>
+    <div class="flex py-3 w-full justify-end">
+        <nz-pagination
+            (nzPageIndexChange)="changePage($event)"
+            [nzPageIndex]="page"
+            [nzTotal]="numero_regionales"
+            [nzPageSize]="page_size">
+        </nz-pagination>
+    </div>
 </nz-card>
 <ng-template #loadingImg>
     <app-sena-loading [loading]="loading"></app-sena-loading>
@@ -60,7 +60,7 @@
             <ng-icon name="heroMapSolid"></ng-icon>
         </div>
         <div nz-col>
-            <h1>regionales</h1>
+            <h1>Regionales</h1>
         </div>
     </div>
 </ng-template>

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Renderer2 } from '@angular/core';
+import { Component, inject, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DepartamentoModel } from '@shared/models/departamento.model';
 import { RegionalModel } from '@shared/models/regional.model';
@@ -31,75 +31,51 @@ import { forkJoin } from 'rxjs';
     '../../../../../../shared/styles/forms.style.css'
   ]
 })
-export class RegionalFormComponent extends FormStyle {
+export class RegionalFormComponent extends FormStyle implements OnInit {
 
   private form_builder = inject(FormBuilder);
   private modal = inject(NzModalRef);
-  private departamento_service = inject(DepartamentoService);
-
-  loading_departamentos:boolean = true;;
 
   form:FormGroup;
 
   regional?:RegionalModel;
-  departamentos:DepartamentoModel[] = [];
 
   constructor(){
     super();
     this.form = this. form_builder.group({
-      nombre:new FormControl(null,[
+      regional:new FormControl(null,[
         Validators.required,
         Validators.maxLength(60),
         Validators.minLength(5),
         noWhiteSpaceValidator()
       ]),
-      departamento_id: new FormControl(null,[Validators.required])
     });
   }
 
   ngOnInit(): void {
-    this.loadData();
+    this.configForm();
   }
 
   configForm(){
     this.regional = this.modal.getConfig().nzData.regional;
     if (this.regional) {
-      const {codigo,nombre,departamento_id} = this.regional;
-      this.form.addControl('id',new FormControl(codigo));
-      this.field_departamento.setValue(departamento_id);
+      const {id,regional: nombre} = this.regional;
+      this.form.addControl('id',new FormControl(id));
       this.field_nombre.setValue(nombre);
     }
-    this.loading_departamentos = false;
-  }
-
-  loadData(){
-    const data_sub = forkJoin([
-      this.departamento_service.getAll()
-    ]).subscribe({
-      next:([departamentos])=>{
-        this.departamentos = [...departamentos];
-      },
-      complete:()=>{
-        this.configForm();
-        data_sub.unsubscribe()
-      },
-      error:()=>data_sub.unsubscribe()
-    });
   }
 
   submitForm(){    
     if(this.form.valid){
+      this.field_nombre.setValue(this.field_nombre.value.toUpperCase());
       const {value} = this.form;
       this.modal.close({form:value});
     }
   }
 
   get field_nombre(){
-    return this.form.get('nombre') as FormControl<string>;
+    return this.form.get('regional') as FormControl<string>;
   }
 
-  get field_departamento(){
-    return this.form.get('departamento_id') as FormControl<number>;
-  }
 
 }

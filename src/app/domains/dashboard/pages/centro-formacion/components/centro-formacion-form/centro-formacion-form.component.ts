@@ -64,27 +64,26 @@ export class CentroFormacionFormComponent extends FormStyle{
   configForm(){
     this.centro_formacion = this.modal.getConfig().nzData.centro_formacion;
     if (this.centro_formacion) {
-      const {codigo,nombre,regional_id} = this.centro_formacion;
+      const {codigo,nombre} = this.centro_formacion;
       this.form.addControl('codigo',new FormControl(codigo));
-      this.field_regional.setValue(regional_id);
       this.field_nombre.setValue(nombre);
     }
     this.loading_regionales = false;
   }
 
   loadData(){
-    const data_sub = forkJoin([
-      this.regional_service.getAll()
-    ]).subscribe({
-      next:([departamentos])=>{
-        this.regionales = [...departamentos];
-      },
-      complete:()=>{
-        this.configForm();
-        data_sub.unsubscribe()
-      },
-      error:()=>data_sub.unsubscribe()
-    });
+    // const data_sub = forkJoin([
+    //   this.regional_service.getAll()
+    // ]).subscribe({
+    //   next:([departamentos])=>{
+    //     this.regionales = [...departamentos];
+    //   },
+    //   complete:()=>{
+    //     this.configForm();
+    //     data_sub.unsubscribe()
+    //   },
+    //   error:()=>data_sub.unsubscribe()
+    // });
   }
 
   submitForm(){    

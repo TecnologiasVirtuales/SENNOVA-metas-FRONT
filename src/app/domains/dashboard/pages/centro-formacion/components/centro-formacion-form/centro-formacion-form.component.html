@@ -17,29 +17,6 @@
             </nz-input-group>
         </nz-form-control> 
     </nz-form-item>
-    <nz-form-item nz-col nzSpan="20">
-        <nz-form-control [nzErrorTip]="regionalErrors">
-            <nz-form-label nzFor="regional" class="form-label" nzRequired>
-                <span class="form-label_text" nz-typography>Regional</span>
-            </nz-form-label>
-            <nz-input-group class="form-group">
-                <nz-select
-                    class="form-select"
-                    id="regional"
-                    [formControl]="field_regional"
-                    [nzLoading]="loading_regionales"
-                    nzShowSearch
-                    nzAllowClear
-                    [nzDisabled]="loading_regionales"
-                    nzPlaceHolder="Seleccione la regional">
-                    @for (regional of regionales; track $index) {
-                        <nz-option [nzLabel]="regional.nombre" [nzValue]="regional.codigo">
-                        </nz-option>
-                    }
-                </nz-select>
-            </nz-input-group>
-        </nz-form-control> 
-    </nz-form-item>
 </form>
 
 <ng-template #nombreErrors>
