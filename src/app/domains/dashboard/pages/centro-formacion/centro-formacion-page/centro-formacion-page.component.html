@@ -11,12 +11,11 @@
         [nzLoading]="loading" 
         [nzLoadingIndicator]="loadingImg"
         [nzShowPagination]="false"
-        nzBordered="">
+        nzBordered>
         <thead>
             <tr>
                 <th>Código</th>
                 <th>Nombre</th>
-                <th>Regional</th>
                 <th *appCanUseActions class="centro-table_actions">Actions</th>
             </tr>
         </thead>
@@ -24,10 +23,10 @@
             @for (centro_formacion of centroTable.data; track $index) {
                 <tr>
                     <td>
-                        {{centro_formacion.codigo}}
+                        {{centro_formacion.id}}
                     </td>
                     <td>
-                        {{centro_formacion.nombre}}
+                        {{centro_formacion.centro_de_formacion}}
                     </td>
                     <td *appCanUseActions>
                         <app-centro-formacion-actions 
@@ -43,6 +42,14 @@
             }
         </tbody>
     </nz-table>
+    <div class="flex py-3 w-full justify-end">
+        <nz-pagination
+            (nzPageIndexChange)="changePage($event)"
+            [nzPageIndex]="page"
+            [nzTotal]="numero_centros"
+            [nzPageSize]="page_size">
+        </nz-pagination>
+    </div>
 </nz-card>
 <ng-template #loadingImg>
     <app-sena-loading [loading]="loading"></app-sena-loading>

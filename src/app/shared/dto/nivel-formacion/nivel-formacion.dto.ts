@@ -1,3 +1,3 @@
 export interface NivelFormacionDto {
-    nombre:string;
+    nivel_formacion:string;
 }

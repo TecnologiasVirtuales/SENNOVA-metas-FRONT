@@ -12,6 +12,7 @@ import { NivelFormacionModel } from '@shared/models/nivel-formacion.model';
 import { NivelFormacionService } from '@shared/services/nivel-formacion.service';
 import { ModalidadFormComponent } from '@domains/dashboard/pages/modalidad/components/modalidad-form/modalidad-form.component';
 import { ModalidadDto } from '@shared/dto/modalidad/modalidad.dto';
+import { NivelFormacionDto } from '@shared/dto/nivel-formacion/nivel-formacion.dto';
 
 @Component({
   selector: 'app-nivel-formacion-actions',
@@ -155,7 +156,7 @@ export class NivelFormacionActionsComponent implements OnInit,OnDestroy{
       });
   }
 
-  editarNivelFormacion(form:ModalidadDto,id:number){
+  editarNivelFormacion(form:NivelFormacionDto,id:number){
     this.loadingStatus(true);
     const editSub = this.nivel_formacion_service.update(form,id)
       .subscribe({
@@ -173,7 +174,7 @@ export class NivelFormacionActionsComponent implements OnInit,OnDestroy{
       });
   }
 
-  crearNivelFormacion(form: ModalidadDto) {
+  crearNivelFormacion(form: NivelFormacionDto) {
     this.loadingStatus(true);
     const createSub = this.nivel_formacion_service.create(form)
       .subscribe({

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import {lucideSchool} from '@ng-icons/lucide';
 import { SenaLoadingComponent } from '@shared/components/sena-loading/sena-loading.component';
@@ -12,6 +12,8 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { CentroFormacionActionsComponent } from '../components/centro-formacion-actions/centro-formacion-actions.component';
 import { CentroFormacionService } from '@shared/services/centro-formacion.service';
 import { CentroFormacionModel } from '@shared/models/centro-formacion.model';
+import { Subscription } from 'rxjs';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 
 @Component({
   selector: 'app-centro-formacion-page',
@@ -26,7 +28,8 @@ import { CentroFormacionModel } from '@shared/models/centro-formacion.model';
     NzSkeletonModule,
     SenaLoadingComponent,
     CanUseActionsDirective,
-    CentroFormacionActionsComponent
+    CentroFormacionActionsComponent,
+    NzPaginationModule
   ],
   templateUrl: './centro-formacion-page.component.html',
   styleUrl: './centro-formacion-page.component.css',
@@ -34,13 +37,20 @@ import { CentroFormacionModel } from '@shared/models/centro-formacion.model';
     lucideSchool
   })]
 })
-export class CentroFormacionPageComponent implements OnInit{
-
-  @Input() slug_regional?:string;
+export class CentroFormacionPageComponent implements OnInit,OnDestroy{
 
   private centro_formacion_service = inject(CentroFormacionService);
 
+  private data_sub?:Subscription
+
+  numero_centros:number = 0;
+
   centros_formacion:CentroFormacionModel[] = [];
+
+  page:number = 1;
+  page_size:number = 10;
+
+  filters:{[key:string]:number|string} = {};
 
   loading:boolean = true;
 
@@ -48,42 +58,34 @@ export class CentroFormacionPageComponent implements OnInit{
     this.loadData();
   }
 
-  private loadData(){
-    if (this.slug_regional) {
-      const dataSub = this.centro_formacion_service.getAllByRegional(this.slug_regional)
-      .subscribe({
-        next:(centros_formacion)=>{
-          this.centros_formacion = [...centros_formacion];
-        },
-        error:()=>{
-          this.loading = false;
-          dataSub.unsubscribe();
-        },
-        complete:()=>{
-          this.loading = false;
-          dataSub.unsubscribe();
-        }
-      })
-      return;
-    }
-    const dataSub = this.centro_formacion_service.getAll()
-      .subscribe({
-        next:(centros_formacion)=>{
-          this.centros_formacion = [...centros_formacion];
-        },
-        error:()=>{
-          this.loading = false;
-          dataSub.unsubscribe();
-        },
-        complete:()=>{
-          this.loading = false;
-          dataSub.unsubscribe();
-        }
-      })
+  ngOnDestroy(): void {
+    this.resetDataSub();
   }
 
-  onCreate(regional:CentroFormacionModel){
-    this.centros_formacion = [...this.centros_formacion,regional];
+  private getData(){
+    return this.centro_formacion_service.getAll({filter:this.filters,page_number:this.page,page_size:this.page_size});
+  }
+
+  private loadData(){
+    this.resetDataSub();
+    this.data_sub = this.getData()
+      .subscribe({
+        next:(p_centros)=>{
+          let {results,count} = p_centros;
+          this.centros_formacion = [...results];
+          this.numero_centros = count;
+          this.onLoad(false);
+        }
+      });
+  }
+
+  changePage(page:number){
+    this.page = page;
+    this.loadData();
+  }
+
+  onCreate(centro:CentroFormacionModel){
+    this.centros_formacion = [...this.centros_formacion,centro];
   }
 
   onUpdate(data:{index:number,centro_formacion:CentroFormacionModel}){    
@@ -100,5 +102,9 @@ export class CentroFormacionPageComponent implements OnInit{
 
   onLoad(loadStatus:boolean){    
     this.loading = loadStatus;
+  }
+
+  resetDataSub(){
+    if(this.data_sub) this.data_sub.unsubscribe();
   }
 }

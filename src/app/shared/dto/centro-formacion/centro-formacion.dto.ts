@@ -1,4 +1,3 @@
 export interface CentroFormacionDto {
-    nombre:string;
-    regional_id:number;
+    centro_de_formacion:string;
 }

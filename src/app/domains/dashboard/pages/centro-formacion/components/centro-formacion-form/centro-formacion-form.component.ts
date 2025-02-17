@@ -47,57 +47,38 @@ export class CentroFormacionFormComponent extends FormStyle{
   constructor(){
     super();
     this.form = this. form_builder.group({
-      nombre:new FormControl(null,[
+      centro_de_formacion:new FormControl(null,[
         Validators.required,
         Validators.maxLength(60),
         Validators.minLength(5),
         noWhiteSpaceValidator()
       ]),
-      regional_id: new FormControl(null,[Validators.required])
     });
   }
 
   ngOnInit(): void {
-    this.loadData();
+    this.configForm();
   }
 
   configForm(){
     this.centro_formacion = this.modal.getConfig().nzData.centro_formacion;
     if (this.centro_formacion) {
-      const {codigo,nombre} = this.centro_formacion;
-      this.form.addControl('codigo',new FormControl(codigo));
-      this.field_nombre.setValue(nombre);
+      const {id: codigo,centro_de_formacion} = this.centro_formacion;
+      this.form.addControl('id',new FormControl(codigo));
+      this.field_nombre.setValue(centro_de_formacion);
     }
     this.loading_regionales = false;
   }
 
-  loadData(){
-    // const data_sub = forkJoin([
-    //   this.regional_service.getAll()
-    // ]).subscribe({
-    //   next:([departamentos])=>{
-    //     this.regionales = [...departamentos];
-    //   },
-    //   complete:()=>{
-    //     this.configForm();
-    //     data_sub.unsubscribe()
-    //   },
-    //   error:()=>data_sub.unsubscribe()
-    // });
-  }
-
   submitForm(){    
     if(this.form.valid){
+      this.field_nombre.setValue(this.field_nombre.value.toUpperCase());
       const {value} = this.form;
       this.modal.close({form:value});
     }
   }
 
   get field_nombre(){
-    return this.form.get('nombre') as FormControl<string>;
-  }
-
-  get field_regional(){
-    return this.form.get('regional_id') as FormControl<number>;
+    return this.form.get('centro_de_formacion') as FormControl<string>;
   }
 }

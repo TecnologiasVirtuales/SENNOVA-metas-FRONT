@@ -1,3 +1,3 @@
 export interface ModalidadDto {
-    nombre:string;
+    regional:string;
 }

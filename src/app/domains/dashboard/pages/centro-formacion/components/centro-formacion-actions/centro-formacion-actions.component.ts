@@ -92,7 +92,7 @@ export class CentroFormacionActionsComponent {
           const {form} = response;
           if(!form) return;
           this.instance!.centro_formacion
-            ? this.editarCentroFormacion(form,this.centro_formacion!.codigo)
+            ? this.editarCentroFormacion(form,this.centro_formacion!.id)
             : this.crearCentroFormacion(form)
         },
         error:()=>{
@@ -134,7 +134,7 @@ export class CentroFormacionActionsComponent {
 
   eliminarCentroFormacion(){
     this.loadingStatus(true);
-    const {codigo} = this.centro_formacion!;
+    const {id: codigo} = this.centro_formacion!;
     const deleteSub = this.centro_formacion_service.delete(codigo)
       .subscribe({
         next:()=>{
