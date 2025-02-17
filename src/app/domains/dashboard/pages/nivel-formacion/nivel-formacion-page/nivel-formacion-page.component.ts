@@ -14,6 +14,7 @@ import { NivelFormacionModel } from '@shared/models/nivel-formacion.model';
 import {simpleLevelsdotfyi} from '@ng-icons/simple-icons'
 import { NivelFormacionActionsComponent } from '../components/nivel-formacion-actions/nivel-formacion-actions.component';
 import { filter, Subscription } from 'rxjs';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 
 @Component({
   selector: 'app-nivel-formacion-page',
@@ -28,7 +29,8 @@ import { filter, Subscription } from 'rxjs';
     NzTableModule,
     NzSkeletonModule,
     SenaLoadingComponent,
-    CanUseActionsDirective
+    CanUseActionsDirective,
+    NzPaginationModule
   ],
   templateUrl: './nivel-formacion-page.component.html',
   styleUrl: './nivel-formacion-page.component.css',
@@ -78,6 +80,11 @@ export class NivelFormacionPageComponent implements OnInit,OnDestroy{
           this.onLoad(false);
         }
       })
+  }
+
+  changePage(page:number){
+    this.page = page;
+    this.loadData();
   }
 
   onCreate(nivel_formacion:NivelFormacionModel){

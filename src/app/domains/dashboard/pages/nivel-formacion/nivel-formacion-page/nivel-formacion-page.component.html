@@ -42,6 +42,14 @@
             }
         </tbody>
     </nz-table>
+    <div class="flex py-3 w-full justify-end">
+        <nz-pagination
+            (nzPageIndexChange)="changePage($event)"
+            [nzPageIndex]="page"
+            [nzTotal]="numero_niveles"
+            [nzPageSize]="page_size">
+        </nz-pagination>
+    </div>
 </nz-card>
 <ng-template #loadingImg>
     <app-sena-loading [loading]="loading"></app-sena-loading>
