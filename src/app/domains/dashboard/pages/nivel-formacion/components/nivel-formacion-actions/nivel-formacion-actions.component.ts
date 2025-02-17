@@ -75,7 +75,7 @@ export class NivelFormacionActionsComponent implements OnInit,OnDestroy{
   openForm() {
     this.modal = this.modal_service.create({
       nzTitle:this.title,
-      nzContent:ModalidadFormComponent,
+      nzContent:NivelFormacionFormComponent,
       nzViewContainerRef:this.view_container_ref,
       nzData:{nivel_formacion:this.nivel_formacion},
       nzFooter:this.footerSaveTemplate,
@@ -84,6 +84,9 @@ export class NivelFormacionActionsComponent implements OnInit,OnDestroy{
       nzMaskClosable:false,
       nzClosable:false
     });
+
+    console.log(this.nivel_formacion);
+    
 
     this.instance = this.modal.getContentComponent();    
 

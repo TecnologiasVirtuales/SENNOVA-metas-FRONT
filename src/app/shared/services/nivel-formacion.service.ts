@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { NivelFormacionDto } from '@shared/dto/nivel-formacion/nivel-formacion.dto';
+import { getQueryUrl } from '@shared/functions/url.functions';
 import { NivelFormacionModel } from '@shared/models/nivel-formacion.model';
+import { PaginateModel } from '@shared/models/paginate.model';
+import { QueryUrlModel } from '@shared/models/query-url.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,29 +13,26 @@ export class NivelFormacionService {
 
   private http = inject(HttpClient);
 
-  private url = 'niveles_formacion';
+  private url = 'niveles_formacion/';
 
-  getAll(){
-    return this.http.get<NivelFormacionModel[]>(this.url);
+  getAll(data?:QueryUrlModel){
+    let url:string = getQueryUrl(this.url,data);
+    return this.http.get<PaginateModel<NivelFormacionModel>>(url);
   }
 
   getOneById(id:number){
-    return this.http.get<NivelFormacionModel>(`${this.url}/${id}/`);
-  }
-
-  getOneByCodigo(codigo:string){
-    return this.http.get<NivelFormacionModel>(`${this.url}/codigo/${codigo}/`);
+    return this.http.get<NivelFormacionModel>(`${this.url}${id}/`);
   }
 
   create(form:NivelFormacionDto){
-    return this.http.post<NivelFormacionModel>(`${this.url}/`,form);
+    return this.http.post<NivelFormacionModel>(`${this.url}`,form);
   }
 
   update(form:NivelFormacionDto,id:number){
-    return this.http.put<NivelFormacionModel>(`${this.url}/${id}/`,form);
+    return this.http.put<NivelFormacionModel>(`${this.url}${id}/`,form);
   }
 
   delete(id:number){
-    return this.http.delete(`${this.url}/${id}/`);
+    return this.http.delete(`${this.url}${id}/`);
   }
 }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { SenaLoadingComponent } from '@shared/components/sena-loading/sena-loading.component';
 import { CanUseActionsDirective } from '@shared/directives/can-use-actions.directive';
@@ -13,6 +13,7 @@ import { NivelFormacionService } from '@shared/services/nivel-formacion.service'
 import { NivelFormacionModel } from '@shared/models/nivel-formacion.model';
 import {simpleLevelsdotfyi} from '@ng-icons/simple-icons'
 import { NivelFormacionActionsComponent } from '../components/nivel-formacion-actions/nivel-formacion-actions.component';
+import { filter, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-nivel-formacion-page',
@@ -35,12 +36,22 @@ import { NivelFormacionActionsComponent } from '../components/nivel-formacion-ac
     simpleLevelsdotfyi
   })]
 })
-export class NivelFormacionPageComponent implements OnInit{
+export class NivelFormacionPageComponent implements OnInit,OnDestroy{
 
   
   private nivel_formacion_service = inject(NivelFormacionService);
 
+  private data_sub?:Subscription
+  
+
   niveles_formacion:NivelFormacionModel[] = [];
+
+  numero_niveles:number = 0;
+
+  page:number = 1;
+  page_size:number = 10;
+
+  filters:{[key:string]:number|string} = {};
 
   loading:boolean = true;
 
@@ -48,19 +59,23 @@ export class NivelFormacionPageComponent implements OnInit{
     this.loadData();
   }
 
+  ngOnDestroy(): void {
+    this.resetDataSub();
+  }
+
+  private getData(){
+    return this.nivel_formacion_service.getAll({filter:this.filters,page_number:this.page,page_size:this.page_size});
+  }
+
   private loadData(){
-    const dataSub = this.nivel_formacion_service.getAll()
+    this.resetDataSub();
+    this.data_sub = this.getData()
       .subscribe({
-        next:(niveles_formacion)=>{
-          this.niveles_formacion = [...niveles_formacion];
-        },
-        error:()=>{
-          this.loading = false;
-          dataSub.unsubscribe();
-        },
-        complete:()=>{
-          this.loading = false;
-          dataSub.unsubscribe();
+        next:(p_niveles)=>{
+          let {results,count} = p_niveles;
+          this.niveles_formacion = [...results];
+          this.numero_niveles = count;
+          this.onLoad(false);
         }
       })
   }
@@ -83,5 +98,9 @@ export class NivelFormacionPageComponent implements OnInit{
 
   onLoad(loadStatus:boolean){    
     this.loading = loadStatus;
+  }
+
+  resetDataSub(){
+    if(this.data_sub) this.data_sub.unsubscribe();
   }
 }

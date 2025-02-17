@@ -1,5 +1,4 @@
 export interface NivelFormacionModel {
     id:number;
-    nombre:string;
-    codigo:string;
+    nivel_formacion:string;
 }

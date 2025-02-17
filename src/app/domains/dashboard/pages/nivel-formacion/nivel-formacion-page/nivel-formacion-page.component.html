@@ -23,10 +23,10 @@
             @for (nivel_formacion of nivelTable.data; track $index) {
                 <tr>
                     <td>
-                        {{nivel_formacion.codigo}}
+                        {{nivel_formacion.id}}
                     </td>
                     <td>
-                        {{nivel_formacion.nombre}}
+                        {{nivel_formacion.nivel_formacion}}
                     </td>
                     <td *appCanUseActions>
                         <app-nivel-formacion-actions 

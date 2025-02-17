@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Renderer2 } from '@angular/core';
+import { Component, inject, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NivelFormacionModel } from '@shared/models/nivel-formacion.model';
 import { FormStyle } from '@shared/style-clases/focus.style';
@@ -26,7 +26,7 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
     '../../../../../../shared/styles/forms.style.css'
   ]
 })
-export class NivelFormacionFormComponent extends FormStyle{
+export class NivelFormacionFormComponent extends FormStyle implements OnInit{
   private form_builder = inject(FormBuilder);
   private modal = inject(NzModalRef);
 
@@ -37,7 +37,7 @@ export class NivelFormacionFormComponent extends FormStyle{
   constructor(){
     super();
     this.form = this. form_builder.group({
-      nombre:new FormControl(null,[
+      nivel_formacion:new FormControl(null,[
         Validators.required,
         Validators.maxLength(60),
         Validators.minLength(5),
@@ -47,23 +47,25 @@ export class NivelFormacionFormComponent extends FormStyle{
   }
 
   ngOnInit(): void {
-    this.nivel_formacion = this.modal.getConfig().nzData.modalidad;
+    this.nivel_formacion = this.modal.getConfig().nzData.nivel_formacion;    
     if (this.nivel_formacion) {
-      const {id,nombre} = this.nivel_formacion;
+      const {id,nivel_formacion} = this.nivel_formacion;
       this.form.addControl('id',new FormControl(id));
-      this.field_nombre.setValue(nombre);
+      this.field_nombre.setValue(nivel_formacion);
     }
   }
 
-  submitForm(){    
+  submitForm(){   
+    console.log(this.form.value);
     if(this.form.valid){
+      this.field_nombre.setValue(this.field_nombre.value.toUpperCase());
       const {value} = this.form;
       this.modal.close({form:value});
     }
   }
 
   get field_nombre(){
-    return this.form.get('nombre') as FormControl<string>;
+    return this.form.get('nivel_formacion') as FormControl<string>;
   }
 
 }
