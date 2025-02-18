@@ -33,25 +33,19 @@ export const side_routes:Routes = [
                 path:'regionales',
                 title:'Gestión de Regionales',
                 data:{breadcrumb:'Gestión de regionales',icon:'heroMapSolid'},
-                loadComponent:()=>import('@domains/dashboard/pages/regional/regional-layout/regional-layout.component').then(c=>c.RegionalLayoutComponent),
-                children:[
-                    {
-                        path:'',
-                        data:{breadcrumb:'Gestión de regionales',icon:'heroMapSolid'},
-                        loadComponent:()=>import('@domains/dashboard/pages/regional/regional-page/regional-page.component').then(c=>c.RegionalPageComponent),
-                    },
-                    {
-                        path:':codigo_regional/centros-formacion',
-                        data:{breadcrumb:'Gestión Centros de formación',icon:'lucideSchool'},
-                        loadComponent:()=>import('@domains/dashboard/pages/centro-formacion/centro-formacion-page/centro-formacion-page.component').then(c=>c.CentroFormacionPageComponent)
-                    }
-                ]
+                loadComponent:()=>import('@domains/dashboard/pages/regional/regional-page/regional-page.component').then(c=>c.RegionalPageComponent),
             },
             {
                 path:'centros-formacion',
                 title:'Gestión Centros de formación',
                 data:{breadcrumb:'Gestión Centros de formación',icon:'lucideSchool'},
                 loadComponent:()=>import('@domains/dashboard/pages/centro-formacion/centro-formacion-page/centro-formacion-page.component').then(c=>c.CentroFormacionPageComponent)
+            },
+            {
+                path:'bilinguismo',
+                title:'Gestión Programas Bilingüismo',
+                data:{breadcrumb:'Gestión Programas Bilingüismo',icon:'heroLanguage'},
+                loadComponent:()=>import('@domains/dashboard/pages/bilinguismo/bilinguismo-page/bilinguismo-page.component').then(c=>c.BilinguismoPageComponent)
             },
             {
                 path:'niveles-formacion',

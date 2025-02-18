@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { NgIconComponent } from '@ng-icons/core';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { heroLanguage } from '@ng-icons/heroicons/outline';
 import { SenaLoadingComponent } from '@shared/components/sena-loading/sena-loading.component';
 import { CanUseActionsDirective } from '@shared/directives/can-use-actions.directive';
 import { BilinguismoModel } from '@shared/models/bilinguismo.model';
@@ -27,7 +28,10 @@ import { Subscription } from 'rxjs';
     NzPaginationModule
   ],
   templateUrl: './bilinguismo-page.component.html',
-  styleUrl: './bilinguismo-page.component.css'
+  styleUrl: './bilinguismo-page.component.css',
+  viewProviders: [provideIcons({ 
+    heroLanguage
+  })]
 })
 export class BilinguismoPageComponent implements OnInit, OnDestroy {
   private bilinguismo_service = inject(BilinguismoService);

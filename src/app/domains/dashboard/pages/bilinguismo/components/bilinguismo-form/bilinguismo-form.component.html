@@ -1,1 +1,100 @@
-<p>bilinguismo-form works!</p>
+<form class="form-container" nz-form [formGroup]="form">
+    <nz-form-item nz-col nzSpan="20">
+        <nz-form-control 
+            [nzErrorTip]="erroresPrograma">
+            <nz-form-label 
+                nzFor="nombre" 
+                class="form-label"
+                nzRequired>
+                <span 
+                    class="form-label_text" 
+                    nz-typography>
+                    Nombre
+                </span>
+            </nz-form-label>
+            <nz-input-group 
+                class="form-group">
+                <input 
+                    class="form-input" 
+                    (focus)="onFocus($event)" 
+                    (blur)="onBlur($event)" 
+                    type="text" 
+                    nz-input 
+                    [formControl]="field_programa"
+                    placeholder="Escriba su documento de identidad" 
+                    id="nombre" 
+                    nz-typography/>
+            </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+
+</form>
+<ng-template #erroresCodigo>
+    @if (field_codigo.hasError('required')||field_codigo.hasError('whitespace')) {
+        <div nz-col nzSpan="24">
+            <span nz-typography nzType="danger">El codigo del programa es obligatorio</span>
+        </div>
+    }
+    @if (field_codigo.hasError('maxlength')) {
+        <div nz-col nzSpan="24">
+            <span nz-typography nzType="danger">El codigo del programa debe tener maximo 10 caracteres</span>
+        </div>
+    }
+    @if (field_codigo.hasError('minlength')) {
+        <div nz-col nzSpan="24">
+            <span nz-typography nzType="danger">El codigo del programa debe tener minimo 5 caracteres</span>
+        </div>
+    }
+</ng-template>
+
+<ng-template #erroresPrograma>
+    @if (field_programa.hasError('required') || field_programa.hasError('whitespace')) {
+        <div nz-col nzSpan="24">
+            <span nz-typography nzType="danger">El nombre del programa es obligatorio</span>
+        </div>
+    }
+    @if (field_programa.hasError('maxlength')) {
+        <div nz-col nzSpan="24">
+            <span nz-typography nzType="danger">El nombre del programa debe tener máximo 60 caracteres</span>
+        </div>
+    }
+    @if (field_programa.hasError('minlength')) {
+        <div nz-col nzSpan="24">
+            <span nz-typography nzType="danger">El nombre del programa debe tener mínimo 5 caracteres</span>
+        </div>
+    }
+</ng-template>
+
+<ng-template #erroresDuracion>
+    @if (field_duracion.hasError('required')) {
+        <div nz-col nzSpan="24">
+            <span nz-typography nzType="danger">La duración del programa es obligatoria</span>
+        </div>
+    }
+    @if (field_duracion.hasError('min')) {
+        <div nz-col nzSpan="24">
+            <span nz-typography nzType="danger">La duración del programa debe ser al menos 1</span>
+        </div>
+    }
+</ng-template>
+
+<ng-template #erroresModalidad>
+    @if (field_modalidad.hasError('required')) {
+        <div nz-col nzSpan="24">
+            <span nz-typography nzType="danger">La modalidad es obligatoria</span>
+        </div>
+    }
+</ng-template>
+
+<ng-template #erroresVersion>
+    @if (field_version.hasError('required')) {
+        <div nz-col nzSpan="24">
+            <span nz-typography nzType="danger">La versión del programa es obligatoria</span>
+        </div>
+    }
+    @if (field_version.hasError('min')) {
+        <div nz-col nzSpan="24">
+            <span nz-typography nzType="danger">La versión del programa debe ser al menos 1</span>
+        </div>
+    }
+</ng-template>

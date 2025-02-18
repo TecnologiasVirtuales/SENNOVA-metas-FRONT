@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { heroChartPie } from '@ng-icons/heroicons/outline';
+import { heroChartPie, heroLanguage } from '@ng-icons/heroicons/outline';
 import { heroAcademicCapSolid, heroHomeModernSolid, heroMapSolid, heroUserGroupSolid } from '@ng-icons/heroicons/solid';
 import { lucideSchool } from '@ng-icons/lucide';
 import { simpleLevelsdotfyi } from '@ng-icons/simple-icons';
@@ -34,7 +34,8 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
     heroChartPie,
     lucideSchool,
     simpleLevelsdotfyi,
-    heroUserGroupSolid
+    heroUserGroupSolid,
+    heroLanguage
   })]
 })
 export class MenuItemComponent implements OnInit{

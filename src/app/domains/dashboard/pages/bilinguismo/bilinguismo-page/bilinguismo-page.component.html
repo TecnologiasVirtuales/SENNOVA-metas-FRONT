@@ -1,1 +1,70 @@
-<p>bilinguismo-page works!</p>
+<nz-card
+    nz-col
+    [nzSpan]="24"
+    [nzTitle]="pageTitle"
+    nzBorderless>
+    <nz-table
+        class="bilinguismo-table"
+        #bilinguismoTable
+        [nzData]="lista_bilinguismo"
+        [nzLoading]="loading"
+        [nzLoadingIndicator]="loadingImg"
+        [nzShowPagination]="false"
+        nzBordered>
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Versión</th>
+                <th>Modalidad</th>
+                <th>Programa</th>
+                <th>Duración</th>
+                <th *appCanUseActions class="bilinguismo-table_actions">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (programa of bilinguismoTable.data; track $index) {
+                <tr>
+                    <td>
+                        {{programa.bil_codigo}}
+                    </td>
+                    <td>
+                        {{programa.bil_version}}
+                    </td>
+                    <td>
+                        {{programa.modalidad.modalidad}}
+                    </td>
+                    <td>
+                        {{programa.bil_programa}}
+                    </td>
+                    <td>
+                        {{programa.bil_duracion}}
+                    </td>
+                    <td>
+                        aqui van los botonesa
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </nz-table>
+    <div class="flex py-3 w-full justify-end">
+        <nz-pagination
+            (nzPageIndexChange)="changePage($event)"
+            [nzPageIndex]="page"
+            [nzTotal]="numero_bilinguismo"
+            [nzPageSize]="page_size">
+        </nz-pagination>
+    </div>
+</nz-card>
+<ng-template #pageTitle>
+    <div class="page-title" nz-row nzAlign="middle" nzGutter="15">
+        <div nz-col>
+            <ng-icon name="heroLanguage"></ng-icon>
+        </div>
+        <div nz-col>
+            <h1>Gestión Programas de Bilingüismo</h1>
+        </div>
+    </div>
+</ng-template>
+<ng-template #loadingImg>
+    <app-sena-loading [loading]="loading"></app-sena-loading>
+</ng-template>
