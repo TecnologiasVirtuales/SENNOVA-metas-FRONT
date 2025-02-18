@@ -7,7 +7,6 @@ import { ModalidadActionsComponent } from "../components/modalidad-actions/modal
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { heroAcademicCapSolid } from '@ng-icons/heroicons/solid';
 import {NzTableModule} from 'ng-zorro-antd/table';
-import {NzSkeletonModule} from 'ng-zorro-antd/skeleton';
 import { ModalidadService } from '@shared/services/modalidad.service';
 import { ModalidadModel } from '@shared/models/modalidad.model';
 import { SenaLoadingComponent } from '@shared/components/sena-loading/sena-loading.component';
@@ -26,7 +25,6 @@ import { Subscription } from 'rxjs';
     ModalidadActionsComponent,
     NgIconComponent,
     NzTableModule,
-    NzSkeletonModule,
     SenaLoadingComponent,
     CanUseActionsDirective,
     NzPaginationModule
