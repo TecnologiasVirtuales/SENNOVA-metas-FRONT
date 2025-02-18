@@ -1,0 +1,36 @@
+@if(route|hasChildren){
+    <ul class="sub-menu" nz-submenu [nzTitle]="title">
+        @for (option of route.children; track $index) {
+            <li>
+                <app-menu-item [route]="option" [path]="path" [collapsed]="collapsed"></app-menu-item>
+            </li>
+        }
+    </ul>
+    
+}@else if(route.title){
+    <a 
+        class="menu-item"
+        routerLinkActive="menu-item__active"
+        nz-menu-item
+        nzMatchRouter
+        nz-popover
+        [nzPopoverContent]="popOver"
+        [routerLink]="path"
+        *appCanUseActions>
+        <ng-icon [name]="route.data?.['icon']"></ng-icon>
+        @if (!collapsed) {
+            <span nz-typography> {{route.title}}</span>
+        }
+    </a>
+}
+<ng-template #title>
+    <div class="flex gap-2 justify-between items-center">
+        <ng-icon [name]="route.data?.['icon']"></ng-icon>
+        @if (!collapsed) {
+            <span nz-typography> {{route.title}}</span>
+        }
+    </div>
+</ng-template>
+<ng-template #popOver>
+    <span>{{route.title}}</span>
+</ng-template>
