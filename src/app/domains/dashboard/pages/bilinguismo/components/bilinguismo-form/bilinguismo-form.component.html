@@ -1,6 +1,62 @@
 <form class="form-container" nz-form [formGroup]="form">
     <nz-form-item nz-col nzSpan="20">
         <nz-form-control 
+            [nzErrorTip]="erroresCodigo">
+            <nz-form-label 
+                nzFor="codigo" 
+                class="form-label"
+                nzRequired>
+                <span 
+                    class="form-label_text" 
+                    nz-typography>
+                    Código
+                </span>
+            </nz-form-label>
+            <nz-input-group 
+                class="form-group">
+                <input 
+                    class="form-input" 
+                    (focus)="onFocus($event)" 
+                    (blur)="onBlur($event)" 
+                    type="number" 
+                    nz-input 
+                    [formControl]="field_codigo"
+                    placeholder="Escriba el código del programa" 
+                    id="codigo" 
+                    nz-typography/>
+            </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item nz-col nzSpan="20">
+        <nz-form-control 
+            [nzErrorTip]="erroresCodigo">
+            <nz-form-label 
+                nzFor="version" 
+                class="form-label"
+                nzRequired>
+                <span 
+                    class="form-label_text" 
+                    nz-typography>
+                    Versión
+                </span>
+            </nz-form-label>
+            <nz-input-group 
+                class="form-group">
+                <input 
+                    class="form-input" 
+                    (focus)="onFocus($event)" 
+                    (blur)="onBlur($event)" 
+                    type="number" 
+                    nz-input 
+                    [formControl]="field_version"
+                    placeholder="Escriba la version del programa" 
+                    id="version" 
+                    nz-typography/>
+            </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item nz-col nzSpan="20">
+        <nz-form-control 
             [nzErrorTip]="erroresPrograma">
             <nz-form-label 
                 nzFor="nombre" 
@@ -21,13 +77,68 @@
                     type="text" 
                     nz-input 
                     [formControl]="field_programa"
-                    placeholder="Escriba su documento de identidad" 
+                    placeholder="Escriba el nombre del programa" 
                     id="nombre" 
                     nz-typography/>
             </nz-input-group>
         </nz-form-control>
     </nz-form-item>
-
+    <nz-form-item nz-col nzSpan="20">
+        <nz-form-control [nzErrorTip]="erroresModalidad">
+            <nz-form-label nzFor="modalidad" class="form-label" nzRequired>
+                <span class="form-label_text" nz-typography>Modalidad</span>
+            </nz-form-label>
+            <nz-input-group class="form-group">
+                <nz-select
+                    id="modalidad"
+                    [formControl]="field_modalidad"
+                    (nzScrollToBottom)="onScrollModalidad()"
+                    (nzOnSearch)="onSearchModalidad($event)"
+                    [nzAllowClear]="true"
+                    [nzShowSearch]="true"
+                    [nzServerSearch]="true"
+                    [nzDropdownRender]="loadingModalidad"
+                    [nzLoading]="is_loading_modalidad"
+                    nzPlaceHolder="Filtrar por nivel de formación">
+                    @for (nivel_formacion_item of modalidades; track $index) {
+                        <nz-option [nzLabel]="nivel_formacion_item.modalidad" [nzValue]="nivel_formacion_item.id"></nz-option>
+                    }
+                </nz-select>
+                <ng-template #loadingModalidad>
+                    <nz-spin [nzSpinning]="is_loading_modalidad">
+                    </nz-spin>
+                </ng-template>
+            </nz-input-group>
+        </nz-form-control> 
+    </nz-form-item>
+    <nz-form-item nz-col nzSpan="20">
+        <nz-form-control 
+            [nzErrorTip]="erroresCodigo">
+            <nz-form-label 
+                nzFor="duracion" 
+                class="form-label"
+                nzRequired>
+                <span 
+                    class="form-label_text" 
+                    nz-typography>
+                    Duración
+                </span>
+            </nz-form-label>
+            <nz-input-group 
+                class="form-group">
+                <input 
+                    class="form-input" 
+                    (focus)="onFocus($event)" 
+                    (blur)="onBlur($event)" 
+                    type="number" 
+                    nz-input 
+                    [formControl]="field_duracion"
+                    placeholder="Escriba el código del programa" 
+                    id="duracion" 
+                    nz-typography/>
+            </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
 </form>
 <ng-template #erroresCodigo>
     @if (field_codigo.hasError('required')||field_codigo.hasError('whitespace')) {

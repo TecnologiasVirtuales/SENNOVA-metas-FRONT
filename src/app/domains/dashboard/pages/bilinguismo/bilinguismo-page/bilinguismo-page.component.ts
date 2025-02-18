@@ -12,6 +12,7 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { Subscription } from 'rxjs';
+import { BilinguismoFormComponent } from '../components/bilinguismo-form/bilinguismo-form.component';
 
 @Component({
   selector: 'app-bilinguismo-page',
@@ -25,7 +26,8 @@ import { Subscription } from 'rxjs';
     NzTableModule,
     SenaLoadingComponent,
     CanUseActionsDirective,
-    NzPaginationModule
+    NzPaginationModule,
+    BilinguismoFormComponent
   ],
   templateUrl: './bilinguismo-page.component.html',
   styleUrl: './bilinguismo-page.component.css',

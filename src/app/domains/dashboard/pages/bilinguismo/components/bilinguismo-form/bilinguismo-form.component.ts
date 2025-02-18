@@ -9,6 +9,8 @@ import { noWhiteSpaceValidator } from '@shared/validators/no-wite-space.validato
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzModalRef } from 'ng-zorro-antd/modal';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { BehaviorSubject, debounceTime, skip, Subscription } from 'rxjs';
 
@@ -22,6 +24,8 @@ import { BehaviorSubject, debounceTime, skip, Subscription } from 'rxjs';
     NzInputModule,
     NzFormModule,
     NzTypographyModule,
+    NzSelectModule,
+    NzSpinModule
   ],
   templateUrl: './bilinguismo-form.component.html',
   styleUrls:[
@@ -33,14 +37,15 @@ export class BilinguismoFormComponent extends FormStyle implements OnInit,OnDest
 
   private form_builder = inject(FormBuilder);
   private modalidad_service = inject(ModalidadService);
-  private modal = inject(NzModalRef);
+  // private modal = inject(NzModalRef);
 
   form:FormGroup;
 
   bilinguismo?:BilinguismoModel;
 
   modalidades:ModalidadModel[] = [];
-  is_loading_modalidad:boolean = false;
+  is_loading_modalidad:boolean = true;
+  field_modalidad_sub?:Subscription;
   page_modalidad:number =1;
   num_modalidad:number = 10;
   search_modalidad:string = '';
@@ -79,23 +84,32 @@ export class BilinguismoFormComponent extends FormStyle implements OnInit,OnDest
 
   ngOnInit(): void {
     this.startSearch();
-    this.bilinguismo = this.modal.getConfig().nzData.bilinguismo;
-    if (this.bilinguismo) {
-      const {bil_codigo,bil_programa} = this.bilinguismo;
-      this.field_programa.setValue(bil_programa);
-    }
+    this.data_sub = this.getModalidad()
+      .subscribe({
+        next:(p_modalidad)=>{
+          let {results} = p_modalidad;
+          this.modalidades = [...this.modalidades,...results];
+          this.is_loading_modalidad = false;
+        }
+      })
+    // this.bilinguismo = this.modal.getConfig().nzData.bilinguismo;
+    // if (this.bilinguismo) {
+    //   const {bil_codigo,bil_programa} = this.bilinguismo;
+    //   this.field_programa.setValue(bil_programa);
+    // }
   }
 
   ngOnDestroy(): void {
     this.resetDataSub();
     this.resetSearch();
+    if(this.field_modalidad_sub) this.field_modalidad_sub.unsubscribe();
   }
 
   submitForm(){    
     const {value,valid} = this.form;
     if(valid){
       this.field_programa.setValue(this.field_programa.value.trim().toUpperCase());
-      this.modal.close({form:value});
+      // this.modal.close({form:value});
     }
   }
 
@@ -116,12 +130,12 @@ export class BilinguismoFormComponent extends FormStyle implements OnInit,OnDest
   }
 
   get field_modalidad(){
-    return this.form.get('modalidad_id') as FormControl<number>;
+    return this.form.get('modalidad_id') as FormControl<string>;
   }
 
   getModalidad(){
     let filters:{[key:string]:string|number} = {};    
-    if(this.search_modalidad.length > 0) filters['modalidad'] = this.search_modalidad;
+    if(this.search_modalidad.trim().length > 0) filters['modalidad'] = this.search_modalidad;
     return this.modalidad_service.getAll({filter:filters,page_number:this.page_modalidad});
   }
 
@@ -129,7 +143,7 @@ export class BilinguismoFormComponent extends FormStyle implements OnInit,OnDest
     if(this.num_modalidad <= this.modalidades.length) return;
     this.resetDataSub();
     this.is_loading_modalidad = true;
-    this.page_modalidad++;
+    this.page_modalidad = this.page_modalidad + 1;
     this.data_sub = this.getModalidad()
       .subscribe({
         next:(p_modalidad)=>{
@@ -141,7 +155,7 @@ export class BilinguismoFormComponent extends FormStyle implements OnInit,OnDest
   }
 
   onSearchModalidad(search:string){
-    this.is_loading_modalidad = true;
+    this.is_loading_modalidad = true;    
     this.search_modalidad_subject.next(search);
   }
 
@@ -151,6 +165,8 @@ export class BilinguismoFormComponent extends FormStyle implements OnInit,OnDest
     this.data_sub = this.getModalidad().subscribe({
       next:(p_modalidad)=>{
         let {results,count} = p_modalidad;
+        console.log(this.modalidades);
+        
         this.modalidades = [...results];
         this.num_modalidad = count;
         this.is_loading_modalidad = false;
@@ -168,6 +184,8 @@ export class BilinguismoFormComponent extends FormStyle implements OnInit,OnDest
         debounceTime(search_wait)
       ).subscribe({
         next:(search)=>{
+          console.log(this.search_modalidad);
+          
           this.search_modalidad = search;
           this.executeSearchModalidad();
         }

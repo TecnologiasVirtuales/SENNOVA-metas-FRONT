@@ -3,6 +3,7 @@
     [nzSpan]="24"
     [nzTitle]="pageTitle"
     nzBorderless>
+    <app-bilinguismo-form></app-bilinguismo-form>
     <nz-table
         class="bilinguismo-table"
         #bilinguismoTable
@@ -31,7 +32,7 @@
                         {{programa.bil_version}}
                     </td>
                     <td>
-                        {{programa.modalidad.modalidad}}
+                        {{programa.modalidad!.modalidad}}
                     </td>
                     <td>
                         {{programa.bil_programa}}

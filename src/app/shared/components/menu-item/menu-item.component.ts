@@ -47,7 +47,6 @@ export class MenuItemComponent implements OnInit{
     let {path} = this.route;
     if(path && !this.path.some((p)=>p === path)){ 
       this.path = [...this.path,path!];
-      console.log(this.path);
     }
   }
 }
