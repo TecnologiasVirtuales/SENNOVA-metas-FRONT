@@ -29,7 +29,6 @@ import { AuthLayoutComponent } from "../../../../auth/auth-layout/auth-layout.co
     CanUseActionsDirective,
     NzPaginationModule,
     BilinguismoActionsComponent,
-    AuthLayoutComponent
 ],
   templateUrl: './bilinguismo-page.component.html',
   styleUrl: './bilinguismo-page.component.css',

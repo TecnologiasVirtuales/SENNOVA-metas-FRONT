@@ -53,6 +53,19 @@ export const side_routes:Routes = [
                 data:{breadcrumb:'Gestión niveles de formación',icon:'simpleLevelsdotfyi'},
                 loadComponent:()=>import('@domains/dashboard/pages/nivel-formacion/nivel-formacion-page/nivel-formacion-page.component').then(c=>c.NivelFormacionPageComponent)
             },
+            {
+                path:'metas',
+                title:'Gestión de Metas',
+                data:{breadcrumb:'Metas',icon:'lucideGoal'},
+                children:[
+                    {
+                        path:'',
+                        title:'Metas',
+                        data:{breadcrumb:'Metas',icon:'lucideGoal'},
+                        loadComponent:()=>import('@domains/dashboard/pages/metas/metas-page/metas-page.component').then(c=>c.MetasPageComponent)
+                    }
+                ]
+            }
         ]
     },
     {

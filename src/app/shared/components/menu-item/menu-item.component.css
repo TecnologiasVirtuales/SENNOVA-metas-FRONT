@@ -1,3 +1,10 @@
-.menu-item,.sub-menu {
-    padding: 5% !important;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.menu-item {
+    padding: 1em !important;
+}
+::ng-deep .ant-menu-submenu-title{
+    padding-left: 1em !important;
 }

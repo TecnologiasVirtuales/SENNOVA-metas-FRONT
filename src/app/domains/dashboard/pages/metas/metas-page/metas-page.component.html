@@ -1,0 +1,82 @@
+<nz-card
+    nz-col
+    [nzSpan]="24"
+    [nzTitle]="pageTitle"
+    [nzExtra]="actionButton"
+    nzBorderless>
+    <nz-table
+        class="bilinguismo-table"
+        #metasTable
+        [nzData]="metas"
+        [nzLoading]="loading"
+        [nzLoadingIndicator]="loadingImg"
+        [nzShowPagination]="false"
+        nzBordered>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Código</th>
+                <th>Año</th>
+                <th>Fechas</th>
+                <th>Victimas</th>
+                <th>Desplazados por violencia</th>
+                <th>Hechos victimizantes</th>
+                <th>Formación titulada</th>
+                <th>Formación complementaria</th>
+                <th>Duración</th>
+                <th *appCanUseActions class="bilinguismo-table_actions">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (meta of metasTable.data; track $index) {
+                <!-- <tr>
+                    <td>
+                        {{meta.}}
+                    </td>
+                    <td>
+                        {{meta.bil_version}}
+                    </td>
+                    <td>
+                        {{meta.modalidad!.modalidad}}
+                    </td>
+                    <td>
+                        {{meta.bil_programa}}
+                    </td>
+                    <td>
+                        {{meta.bil_duracion}}
+                    </td>
+                    <td>
+                        <app-metas-actions>
+                        </app-metas-actions>
+                    </td>
+                </tr> -->
+            }
+        </tbody>
+    </nz-table>
+    <div class="flex py-3 w-full justify-end">
+        <nz-pagination
+            (nzPageIndexChange)="changePage($event)"
+            [nzPageIndex]="page"
+            [nzTotal]="numero_metas"
+            [nzPageSize]="page_size">
+        </nz-pagination>
+    </div>
+</nz-card>
+<ng-template #pageTitle>
+    <div class="page-title" nz-row nzAlign="middle" nzGutter="15">
+        <div nz-col>
+            <ng-icon name="heroLanguage"></ng-icon>
+        </div>
+        <div nz-col>
+            <h1>Gestión Programas de Bilingüismo</h1>
+        </div>
+    </div>
+</ng-template>
+<ng-template #loadingImg>
+    <app-sena-loading [loading]="loading"></app-sena-loading>
+</ng-template>
+<ng-template #actionButton>
+    <app-metas-actions
+        *appCanUseActions>
+    </app-metas-actions>
+</ng-template>

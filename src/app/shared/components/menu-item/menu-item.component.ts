@@ -5,7 +5,7 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { heroChartPie, heroLanguage } from '@ng-icons/heroicons/outline';
 import { heroAcademicCapSolid, heroHomeModernSolid, heroMapSolid, heroUserGroupSolid } from '@ng-icons/heroicons/solid';
-import { lucideSchool } from '@ng-icons/lucide';
+import { lucideGoal, lucideSchool } from '@ng-icons/lucide';
 import { simpleLevelsdotfyi } from '@ng-icons/simple-icons';
 import { HasChildrenPipe } from '@shared/pipes/has-children.pipe';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
@@ -35,7 +35,8 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
     lucideSchool,
     simpleLevelsdotfyi,
     heroUserGroupSolid,
-    heroLanguage
+    heroLanguage,
+    lucideGoal
   })]
 })
 export class MenuItemComponent implements OnInit{
