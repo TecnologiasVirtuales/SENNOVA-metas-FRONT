@@ -1,0 +1,49 @@
+.create-button,
+.delete-button,
+.update-button{
+    height: 40px;
+    border-radius: 5px;
+}
+
+.create-button {
+    background-color: var(--primary-green-color);
+    border: none;
+}
+
+.create-button:hover{
+    background-color: var(--tertiary-green-color);
+}
+
+.create-button:active{
+    background-color: var(--secondary-green-color);
+}
+
+.update-button{
+    border-color: var(--primary-green-color);
+    transition: none;
+}
+
+.update-button:hover,
+.update-button:hover span{
+    background-color: var(--primary-green-color);
+    color: var(--primary-white-color);
+}
+
+.delete-button{
+    border-color: var(--primary-red-color);
+    transition: none;
+}
+
+.delete-button:hover,
+.delete-button:hover span{
+    background-color: var(--primary-red-color);
+    color: var(--primary-white-color);
+}
+
+.create-button span{
+    color: var(--primary-white-color);
+}
+
+.delete-button span{
+    color: var(--primary-red-color);
+}

@@ -2,8 +2,8 @@
     nz-col
     [nzSpan]="24"
     [nzTitle]="pageTitle"
+    [nzExtra]="actionButton"
     nzBorderless>
-    <app-bilinguismo-form></app-bilinguismo-form>
     <nz-table
         class="bilinguismo-table"
         #bilinguismoTable
@@ -41,7 +41,14 @@
                         {{programa.bil_duracion}}
                     </td>
                     <td>
-                        aqui van los botonesa
+                        <app-bilinguismo-actions
+                            [programa]="programa"
+                            [index]="$index"
+                            type_actions="buttons"
+                            (delete)="onDelete($event)"
+                            (update)="onUpdate($event)"
+                            (setLoading)="onLoad($event)">
+                        </app-bilinguismo-actions>
                     </td>
                 </tr>
             }
@@ -68,4 +75,11 @@
 </ng-template>
 <ng-template #loadingImg>
     <app-sena-loading [loading]="loading"></app-sena-loading>
+</ng-template>
+<ng-template #actionButton>
+    <app-bilinguismo-actions
+        *appCanUseActions
+        (create)="onCreate($event)" 
+        (setLoading)="onLoad($event)">
+    </app-bilinguismo-actions>
 </ng-template>

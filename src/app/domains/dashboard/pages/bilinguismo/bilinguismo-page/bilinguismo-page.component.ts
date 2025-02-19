@@ -12,7 +12,8 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { Subscription } from 'rxjs';
-import { BilinguismoFormComponent } from '../components/bilinguismo-form/bilinguismo-form.component';
+import { BilinguismoActionsComponent } from '../components/bilinguismo-actions/bilinguismo-actions.component';
+import { AuthLayoutComponent } from "../../../../auth/auth-layout/auth-layout.component";
 
 @Component({
   selector: 'app-bilinguismo-page',
@@ -27,8 +28,9 @@ import { BilinguismoFormComponent } from '../components/bilinguismo-form/bilingu
     SenaLoadingComponent,
     CanUseActionsDirective,
     NzPaginationModule,
-    BilinguismoFormComponent
-  ],
+    BilinguismoActionsComponent,
+    AuthLayoutComponent
+],
   templateUrl: './bilinguismo-page.component.html',
   styleUrl: './bilinguismo-page.component.css',
   viewProviders: [provideIcons({ 
@@ -86,6 +88,20 @@ export class BilinguismoPageComponent implements OnInit, OnDestroy {
   onCreate(bil:BilinguismoModel){
     this.lista_bilinguismo = [...this.lista_bilinguismo,bil];
   }
+
+  onUpdate(data:{bilinguismo:BilinguismoModel,index:number}){
+    let {bilinguismo: bil,index} = data;
+    let lista_bilinguismo = [...this.lista_bilinguismo];
+    lista_bilinguismo[index] = bil;
+    this.lista_bilinguismo = [...lista_bilinguismo];
+  }
+
+  onDelete(index:number){
+    let lista_bilinguismo = [...this.lista_bilinguismo];
+    lista_bilinguismo.splice(index,1);
+    this.lista_bilinguismo = lista_bilinguismo;
+  }
+
 
   resetDataSub(){
     if(this.data_sub) this.data_sub.unsubscribe();

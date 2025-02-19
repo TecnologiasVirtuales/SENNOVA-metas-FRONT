@@ -99,9 +99,9 @@
                     [nzServerSearch]="true"
                     [nzDropdownRender]="loadingModalidad"
                     [nzLoading]="is_loading_modalidad"
-                    nzPlaceHolder="Filtrar por nivel de formación">
-                    @for (nivel_formacion_item of modalidades; track $index) {
-                        <nz-option [nzLabel]="nivel_formacion_item.modalidad" [nzValue]="nivel_formacion_item.id"></nz-option>
+                    nzPlaceHolder="Elija la modalidad del programa">
+                    @for (modalidad of modalidades; track $index) {
+                        <nz-option [nzLabel]="modalidad.modalidad" [nzValue]="modalidad.id"></nz-option>
                     }
                 </nz-select>
                 <ng-template #loadingModalidad>

@@ -37,7 +37,7 @@ export class BilinguismoFormComponent extends FormStyle implements OnInit,OnDest
 
   private form_builder = inject(FormBuilder);
   private modalidad_service = inject(ModalidadService);
-  // private modal = inject(NzModalRef);
+  private modal = inject(NzModalRef);
 
   form:FormGroup;
 
@@ -45,7 +45,6 @@ export class BilinguismoFormComponent extends FormStyle implements OnInit,OnDest
 
   modalidades:ModalidadModel[] = [];
   is_loading_modalidad:boolean = true;
-  field_modalidad_sub?:Subscription;
   page_modalidad:number =1;
   num_modalidad:number = 10;
   search_modalidad:string = '';
@@ -60,7 +59,6 @@ export class BilinguismoFormComponent extends FormStyle implements OnInit,OnDest
         Validators.required,
         Validators.maxLength(10),
         Validators.minLength(5),
-        noWhiteSpaceValidator()
       ]),
       bil_programa:new FormControl(null,[
         Validators.required,
@@ -91,30 +89,34 @@ export class BilinguismoFormComponent extends FormStyle implements OnInit,OnDest
           this.modalidades = [...this.modalidades,...results];
           this.is_loading_modalidad = false;
         }
-      })
-    // this.bilinguismo = this.modal.getConfig().nzData.bilinguismo;
-    // if (this.bilinguismo) {
-    //   const {bil_codigo,bil_programa} = this.bilinguismo;
-    //   this.field_programa.setValue(bil_programa);
-    // }
+      });
+    this.bilinguismo = this.modal.getConfig().nzData.programa;
+    if (this.bilinguismo) {
+      const {bil_codigo,bil_programa,modalidad,bil_duracion,bil_version} = this.bilinguismo;
+      const {id} = modalidad!;
+      this.field_codigo.setValue(bil_codigo);
+      this.field_programa.setValue(bil_programa);
+      this.field_modalidad.setValue(id);
+      this.field_duracion.setValue(bil_duracion);
+      this.field_version.setValue(bil_version);
+    }
   }
 
   ngOnDestroy(): void {
     this.resetDataSub();
     this.resetSearch();
-    if(this.field_modalidad_sub) this.field_modalidad_sub.unsubscribe();
   }
 
   submitForm(){    
-    const {value,valid} = this.form;
+    const {value,valid} = this.form;    
     if(valid){
       this.field_programa.setValue(this.field_programa.value.trim().toUpperCase());
-      // this.modal.close({form:value});
+      this.modal.close({form:value});
     }
   }
 
   get field_codigo(){
-    return this.form.get('bil_codigo') as FormControl<string>;
+    return this.form.get('bil_codigo') as FormControl<number>;
   }
 
   get field_programa(){
@@ -126,11 +128,11 @@ export class BilinguismoFormComponent extends FormStyle implements OnInit,OnDest
   }
 
   get field_duracion(){
-    return this.form.get('bil_duracion') as FormControl<number>;
+    return this.form.get('bil_duracion') as FormControl<string>;
   }
 
   get field_modalidad(){
-    return this.form.get('modalidad_id') as FormControl<string>;
+    return this.form.get('modalidad_id') as FormControl<number>;
   }
 
   getModalidad(){
@@ -164,9 +166,7 @@ export class BilinguismoFormComponent extends FormStyle implements OnInit,OnDest
     this.page_modalidad = 1;
     this.data_sub = this.getModalidad().subscribe({
       next:(p_modalidad)=>{
-        let {results,count} = p_modalidad;
-        console.log(this.modalidades);
-        
+        let {results,count} = p_modalidad;        
         this.modalidades = [...results];
         this.num_modalidad = count;
         this.is_loading_modalidad = false;
@@ -183,9 +183,7 @@ export class BilinguismoFormComponent extends FormStyle implements OnInit,OnDest
         skip(search_skip),
         debounceTime(search_wait)
       ).subscribe({
-        next:(search)=>{
-          console.log(this.search_modalidad);
-          
+        next:(search)=>{          
           this.search_modalidad = search;
           this.executeSearchModalidad();
         }
