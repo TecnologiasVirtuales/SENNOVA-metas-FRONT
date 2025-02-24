@@ -1,0 +1,393 @@
+<form class="form-container" nz-form [formGroup]="form">
+    <!-- Campo: Código -->
+    <nz-form-item nz-col nzSpan="20">
+      <nz-form-control [nzErrorTip]="erroresMetCodigo">
+        <nz-form-label nzFor="met_codigo" class="form-label" nzRequired>
+          <span class="form-label_text" nz-typography>Código</span>
+        </nz-form-label>
+        <nz-input-group class="form-group">
+          <input
+            class="form-input"
+            (focus)="onFocus($event)"
+            (blur)="onBlur($event)"
+            type="text"
+            nz-input
+            [formControl]="field_codigo"
+            placeholder="Escriba el código"
+            id="met_codigo"
+            nz-typography />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Campo: Fecha de Inicio -->
+    <nz-form-item nz-col nzSpan="20">
+      <nz-form-control [nzErrorTip]="erroresMetFechaInicio">
+        <nz-form-label nzFor="met_fecha_inicio" class="form-label" nzRequired>
+          <span class="form-label_text" nz-typography>Fecha de Inicio</span>
+        </nz-form-label>
+        <nz-input-group class="form-group">
+          <input
+            class="form-input"
+            (focus)="onFocus($event)"
+            (blur)="onBlur($event)"
+            type="date"
+            nz-input
+            [formControl]="field_fecha_inicio"
+            placeholder="Seleccione la fecha de inicio"
+            id="met_fecha_inicio"
+            nz-typography />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Campo: Fecha de Fin -->
+    <nz-form-item nz-col nzSpan="20">
+      <nz-form-control [nzErrorTip]="erroresMetFechaFin">
+        <nz-form-label nzFor="met_fecha_fin" class="form-label" nzRequired>
+          <span class="form-label_text" nz-typography>Fecha de Fin</span>
+        </nz-form-label>
+        <nz-input-group class="form-group">
+          <input
+            class="form-input"
+            (focus)="onFocus($event)"
+            (blur)="onBlur($event)"
+            type="date"
+            nz-input
+            [formControl]="field_fecha_fin"
+            placeholder="Seleccione la fecha de fin"
+            id="met_fecha_fin"
+            nz-typography />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Campo: Año -->
+    <nz-form-item nz-col nzSpan="20">
+      <nz-form-control [nzErrorTip]="erroresMetAnio">
+        <nz-form-label nzFor="met_anio" class="form-label" nzRequired>
+          <span class="form-label_text" nz-typography>Año</span>
+        </nz-form-label>
+        <nz-input-group class="form-group">
+          <input
+            class="form-input"
+            (focus)="onFocus($event)"
+            (blur)="onBlur($event)"
+            type="text"
+            nz-input
+            [formControl]="field_anio"
+            placeholder="Escriba el año (4 dígitos)"
+            id="met_anio"
+            nz-typography />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Campo: Total Otras Poblaciones -->
+    <nz-form-item nz-col nzSpan="20">
+      <nz-form-control [nzErrorTip]="erroresTotalOtrasPoblaciones">
+        <nz-form-label nzFor="met_total_otras_poblaciones" class="form-label" nzRequired>
+          <span class="form-label_text" nz-typography>Total Otras Poblaciones</span>
+        </nz-form-label>
+        <nz-input-group class="form-group">
+          <input
+            class="form-input"
+            (focus)="onFocus($event)"
+            (blur)="onBlur($event)"
+            type="number"
+            nz-input
+            [formControl]="field_total_otras_poblaciones"
+            placeholder="Ingrese el total de otras poblaciones"
+            id="met_total_otras_poblaciones"
+            nz-typography />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Campo: Total Víctimas -->
+    <nz-form-item nz-col nzSpan="20">
+      <nz-form-control [nzErrorTip]="erroresTotalVictimas">
+        <nz-form-label nzFor="met_total_victimas" class="form-label" nzRequired>
+          <span class="form-label_text" nz-typography>Total Víctimas</span>
+        </nz-form-label>
+        <nz-input-group class="form-group">
+          <input
+            class="form-input"
+            (focus)="onFocus($event)"
+            (blur)="onBlur($event)"
+            type="number"
+            nz-input
+            [formControl]="field_total_victimas"
+            placeholder="Ingrese el total de víctimas"
+            id="met_total_victimas"
+            nz-typography />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Campo: Total Desplazados por Violencia -->
+    <nz-form-item nz-col nzSpan="20">
+      <nz-form-control [nzErrorTip]="erroresTotalDesplazadosViolencia">
+        <nz-form-label nzFor="met_total_desplazados_violencia" class="form-label" nzRequired>
+          <span class="form-label_text" nz-typography>Total Desplazados por Violencia</span>
+        </nz-form-label>
+        <nz-input-group class="form-group">
+          <input
+            class="form-input"
+            (focus)="onFocus($event)"
+            (blur)="onBlur($event)"
+            type="number"
+            nz-input
+            [formControl]="field_total_desplazados_violencia"
+            placeholder="Ingrese el total de desplazados por violencia"
+            id="met_total_desplazados_violencia"
+            nz-typography />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Campo: Total Hechos Victimizantes -->
+    <nz-form-item nz-col nzSpan="20">
+      <nz-form-control [nzErrorTip]="erroresTotalHechosVictimizantes">
+        <nz-form-label nzFor="met_total_hechos_victimizantes" class="form-label" nzRequired>
+          <span class="form-label_text" nz-typography>Total Hechos Victimizantes</span>
+        </nz-form-label>
+        <nz-input-group class="form-group">
+          <input
+            class="form-input"
+            (focus)="onFocus($event)"
+            (blur)="onBlur($event)"
+            type="number"
+            nz-input
+            [formControl]="field_total_hechos_victimizantes"
+            placeholder="Ingrese el total de hechos victimizantes"
+            id="met_total_hechos_victimizantes"
+            nz-typography />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Campo: Total Titulada -->
+    <nz-form-item nz-col nzSpan="20">
+      <nz-form-control [nzErrorTip]="erroresTotalTitulada">
+        <nz-form-label nzFor="met_total_titulada" class="form-label" nzRequired>
+          <span class="form-label_text" nz-typography>Total Titulada</span>
+        </nz-form-label>
+        <nz-input-group class="form-group">
+          <input
+            class="form-input"
+            (focus)="onFocus($event)"
+            (blur)="onBlur($event)"
+            type="number"
+            nz-input
+            [formControl]="field_total_titulada"
+            placeholder="Ingrese el total titulada"
+            id="met_total_titulada"
+            nz-typography />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Campo: Total Complementaria -->
+    <nz-form-item nz-col nzSpan="20">
+      <nz-form-control [nzErrorTip]="erroresTotalComplementaria">
+        <nz-form-label nzFor="met_total_complementaria" class="form-label" nzRequired>
+          <span class="form-label_text" nz-typography>Total Complementaria</span>
+        </nz-form-label>
+        <nz-input-group class="form-group">
+          <input
+            class="form-input"
+            (focus)="onFocus($event)"
+            (blur)="onBlur($event)"
+            type="number"
+            nz-input
+            [formControl]="field_total_complementaria"
+            placeholder="Ingrese el total complementaria"
+            id="met_total_complementaria"
+            nz-typography />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Campo: Total Población Vulnerable -->
+    <nz-form-item nz-col nzSpan="20">
+      <nz-form-control [nzErrorTip]="erroresTotalPoblacionVulnerable">
+        <nz-form-label nzFor="met_total_poblacion_vulnerable" class="form-label" nzRequired>
+          <span class="form-label_text" nz-typography>Total Población Vulnerable</span>
+        </nz-form-label>
+        <nz-input-group class="form-group">
+          <input
+            class="form-input"
+            (focus)="onFocus($event)"
+            (blur)="onBlur($event)"
+            type="number"
+            nz-input
+            [formControl]="field_total_poblacion_vulnerable"
+            placeholder="Ingrese el total de población vulnerable"
+            id="met_total_poblacion_vulnerable"
+            nz-typography />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Campo: Documento (opcional) -->
+    <nz-form-item nz-col nzSpan="20">
+      <nz-form-control>
+        <nz-form-label nzFor="per_documento" class="form-label">
+          <span class="form-label_text" nz-typography>Documento</span>
+        </nz-form-label>
+        <nz-input-group class="form-group">
+          <input
+            class="form-input"
+            (focus)="onFocus($event)"
+            (blur)="onBlur($event)"
+            type="number"
+            nz-input
+            [formControl]="field_per_documento"
+            placeholder="Ingrese el documento"
+            id="per_documento"
+            nz-typography />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+  
+  <!-- Template de errores para cada campo -->
+  
+  <ng-template #erroresMetCodigo>
+    @if (field_codigo.hasError('required') || field_codigo.hasError('whitespace')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">El código es obligatorio</span>
+      </div>
+    }
+    @if (field_codigo.hasError('maxlength')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">El código debe tener máximo 10 caracteres</span>
+      </div>
+    }
+    @if (field_codigo.hasError('minlength')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">El código debe tener mínimo 5 caracteres</span>
+      </div>
+    }
+  </ng-template>
+  
+  <ng-template #erroresMetFechaInicio>
+    @if (field_fecha_inicio.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La fecha de inicio es obligatoria</span>
+      </div>
+    }
+  </ng-template>
+  
+  <ng-template #erroresMetFechaFin>
+    @if (field_fecha_fin.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La fecha de fin es obligatoria</span>
+      </div>
+    }
+  </ng-template>
+  
+  <ng-template #erroresMetAnio>
+    @if (field_anio.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">El año es obligatorio</span>
+      </div>
+    }
+    @if (field_anio.hasError('maxlength') || field_anio.hasError('minlength')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">El año debe tener 4 dígitos</span>
+      </div>
+    }
+  </ng-template>
+  
+  <ng-template #erroresTotalOtrasPoblaciones>
+    @if (field_total_otras_poblaciones.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">El total de otras poblaciones es obligatorio</span>
+      </div>
+    }
+    @if (field_total_otras_poblaciones.hasError('min')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">El total de otras poblaciones debe ser al menos 1</span>
+      </div>
+    }
+  </ng-template>
+  
+  <ng-template #erroresTotalVictimas>
+    @if (field_total_victimas.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">El total de víctimas es obligatorio</span>
+      </div>
+    }
+    @if (field_total_victimas.hasError('min')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">El total de víctimas debe ser al menos 1</span>
+      </div>
+    }
+  </ng-template>
+  
+  <ng-template #erroresTotalDesplazadosViolencia>
+    @if (field_total_desplazados_violencia.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">El total de desplazados por violencia es obligatorio</span>
+      </div>
+    }
+    @if (field_total_desplazados_violencia.hasError('min')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">El total de desplazados por violencia debe ser al menos 1</span>
+      </div>
+    }
+  </ng-template>
+  
+  <ng-template #erroresTotalHechosVictimizantes>
+    @if (field_total_hechos_victimizantes.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">El total de hechos victimizantes es obligatorio</span>
+      </div>
+    }
+    @if (field_total_hechos_victimizantes.hasError('min')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">El total de hechos victimizantes debe ser al menos 1</span>
+      </div>
+    }
+  </ng-template>
+  
+  <ng-template #erroresTotalTitulada>
+    @if (field_total_titulada.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">El total titulada es obligatorio</span>
+      </div>
+    }
+    @if (field_total_titulada.hasError('min')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">El total titulada debe ser al menos 1</span>
+      </div>
+    }
+  </ng-template>
+  
+  <ng-template #erroresTotalComplementaria>
+    @if (field_total_complementaria.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">El total complementaria es obligatorio</span>
+      </div>
+    }
+    @if (field_total_complementaria.hasError('min')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">El total complementaria debe ser al menos 1</span>
+      </div>
+    }
+  </ng-template>
+  
+  <ng-template #erroresTotalPoblacionVulnerable>
+    @if (field_total_poblacion_vulnerable.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">El total de población vulnerable es obligatorio</span>
+      </div>
+    }
+    @if (field_total_poblacion_vulnerable.hasError('min')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">El total de población vulnerable debe ser al menos 1</span>
+      </div>
+    }
+  </ng-template>  

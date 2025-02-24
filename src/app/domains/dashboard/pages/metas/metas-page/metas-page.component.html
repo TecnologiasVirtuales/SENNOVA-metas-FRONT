@@ -4,9 +4,11 @@
     [nzTitle]="pageTitle"
     [nzExtra]="actionButton"
     nzBorderless>
+    <ng-container *ngTemplateOutlet="pagination"></ng-container>
+    <h2 class="text-2xl text-lime-700">Poblaciones</h2>
     <nz-table
-        class="bilinguismo-table"
-        #metasTable
+        class="poblaciones-table"
+        #poblacionesTable
         [nzData]="metas"
         [nzLoading]="loading"
         [nzLoadingIndicator]="loadingImg"
@@ -21,38 +23,67 @@
                 <th>Victimas</th>
                 <th>Desplazados por violencia</th>
                 <th>Hechos victimizantes</th>
-                <th>Formación titulada</th>
-                <th>Formación complementaria</th>
-                <th>Duración</th>
+                <th>Otras poblaciones</th>
                 <th *appCanUseActions class="bilinguismo-table_actions">Acciones</th>
             </tr>
         </thead>
         <tbody>
-            @for (meta of metasTable.data; track $index) {
-                <!-- <tr>
-                    <td>
-                        {{meta.}}
+            @for (meta of poblacionesTable.data; track $index) {
+                <tr>
+                    <td>{{meta.met_id}}</td>
+                    <td>{{meta.met_codigo}}</td>
+                    <td>{{meta.met_anio}}</td>
+                    <td>{{meta.met_fecha_inicio}} / {{meta.met_fecha_fin}}</td>
+                    <td>{{meta.met_total_victimas}}</td>
+                    <td>{{meta.met_total_desplazados_violencia}}</td>
+                    <td>{{meta.met_total_hechos_victimizantes}}</td>
+                    <td>{{meta.met_total_otras_poblaciones}}</td>
+                    <td *appCanUseActions>
+                        <ng-container *ngTemplateOutlet="updateDelete; context:{meta,$index}"></ng-container>
                     </td>
-                    <td>
-                        {{meta.bil_version}}
-                    </td>
-                    <td>
-                        {{meta.modalidad!.modalidad}}
-                    </td>
-                    <td>
-                        {{meta.bil_programa}}
-                    </td>
-                    <td>
-                        {{meta.bil_duracion}}
-                    </td>
-                    <td>
-                        <app-metas-actions>
-                        </app-metas-actions>
-                    </td>
-                </tr> -->
+                </tr>
             }
         </tbody>
     </nz-table>
+    <h2 class="text-2xl text-lime-700">Formación</h2>
+    <nz-table
+    class="poblaciones-table"
+        #formacionTable
+        [nzData]="metas"
+        [nzLoading]="loading"
+        [nzLoadingIndicator]="loadingImg"
+        [nzShowPagination]="false"
+        nzBordered>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Código</th>
+                <th>Año</th>
+                <th>Fechas</th>
+                <th>Titulada</th>
+                <th>Complementaria</th>
+                <th *appCanUseActions class="bilinguismo-table_actions">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (meta of poblacionesTable.data; track $index) {
+                <tr>
+                    <td>{{meta.met_id}}</td>
+                    <td>{{meta.met_codigo}}</td>
+                    <td>{{meta.met_anio}}</td>
+                    <td>{{meta.met_fecha_inicio}} / {{meta.met_fecha_fin}}</td>
+                    <td>{{meta.met_total_titulada}}</td>
+                    <td>{{meta.met_total_complementaria}}</td>
+                    <td *appCanUseActions>
+                        <ng-container *ngTemplateOutlet="updateDelete; context:{meta,$index}"></ng-container>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </nz-table>
+    <ng-container *ngTemplateOutlet="pagination"></ng-container>
+</nz-card>
+<ng-template #pagination>
     <div class="flex py-3 w-full justify-end">
         <nz-pagination
             (nzPageIndexChange)="changePage($event)"
@@ -61,7 +92,7 @@
             [nzPageSize]="page_size">
         </nz-pagination>
     </div>
-</nz-card>
+</ng-template>
 <ng-template #pageTitle>
     <div class="page-title" nz-row nzAlign="middle" nzGutter="15">
         <div nz-col>
@@ -75,8 +106,20 @@
 <ng-template #loadingImg>
     <app-sena-loading [loading]="loading"></app-sena-loading>
 </ng-template>
+<ng-template #updateDelete let-meta="meta" let-i="index">
+    <app-metas-actions
+        [meta]="meta"
+        [index]="i"
+        type_actions="buttons"
+        (delete)="onDelete($event)"
+        (update)="onUpdate($event)"
+        (setLoading)="onLoad($event)">
+    </app-metas-actions>
+</ng-template>
 <ng-template #actionButton>
     <app-metas-actions
+        (create)="onCreate($event)"
+        (setLoading)="onLoad($event)"
         *appCanUseActions>
     </app-metas-actions>
 </ng-template>

@@ -9,7 +9,7 @@ import { NzFlexModule } from 'ng-zorro-antd/flex';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzTableModule } from 'ng-zorro-antd/table';
-import { MetasActionsComponent } from '../componentes/metas-actions/metas-actions.component';
+import { MetasActionsComponent } from '../components/metas-actions/metas-actions.component';
 import { MetasService } from '@shared/services/metas.service';
 import { MetaModel } from '@shared/models/metas.model';
 import { Subscription } from 'rxjs';

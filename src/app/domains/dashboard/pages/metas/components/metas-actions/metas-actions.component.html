@@ -1,6 +1,6 @@
 @switch (type_actions) {
     @case ('create') {
-        <button (click)="openForm()" class="create-button" nz-button><span>Crear programa</span></button>
+        <button (click)="openForm()" class="create-button" nz-button><span>Crear meta</span></button>
     }
     @case ('icons') {
         <div nz-flex nzJustify="space-evenly" nzAlign="center">
@@ -33,7 +33,7 @@
 <ng-template #alertContent>
     <nz-alert 
         nzType="warning" 
-        nzMessage="Eliminar programa" 
+        nzMessage="Eliminar meta" 
         nzDescription="Esta acción no puede revertirse"
         nzShowIcon>
     </nz-alert>
@@ -41,5 +41,5 @@
 
 
 <ng-template #alertFooter>
-    <app-modal-footer type="alert" [loading]="save_loading" (ok)="eliminarPrograma()" (cancel)="handleCancelar()"></app-modal-footer>
+    <app-modal-footer type="alert" [loading]="save_loading" (ok)="eliminarMeta()" (cancel)="handleCancelar()"></app-modal-footer>
 </ng-template>

@@ -1,5 +1,5 @@
 export interface MetaModel{
-    meta_id:number;
+    met_id:number;
     met_codigo:string;
     met_fecha_inicio:Date;
     met_fecha_fin:Date;

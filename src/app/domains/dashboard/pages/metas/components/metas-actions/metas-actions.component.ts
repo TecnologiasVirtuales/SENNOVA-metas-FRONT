@@ -2,17 +2,18 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { ModalFooterComponent } from '@shared/components/modal-footer/modal-footer.component';
 import { BilinguismoModel } from '@shared/models/bilinguismo.model';
-import { BilinguismoService } from '@shared/services/bilinguismo.service';
-import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { MetaModel } from '@shared/models/metas.model';
+import { MetasService } from '@shared/services/metas.service';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzFlexModule } from 'ng-zorro-antd/flex';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzModalModule, NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { Subscription } from 'rxjs';
-import { BilinguismoFormComponent } from '../bilinguismo-form/bilinguismo-form.component';
+import { MetasFormComponent } from '../metas-form/metas-form.component';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
 
 @Component({
-  selector: 'app-bilinguismo-actions',
+  selector: 'app-metas-actions',
   standalone: true,
   imports: [
     CommonModule,
@@ -23,10 +24,10 @@ import { BilinguismoFormComponent } from '../bilinguismo-form/bilinguismo-form.c
     ModalFooterComponent,
     NzAlertModule
   ],
-  templateUrl: './bilinguismo-actions.component.html',
-  styleUrl: './bilinguismo-actions.component.css'
+  templateUrl: './metas-actions.component.html',
+  styleUrl: './metas-actions.component.css'
 })
-export class BilinguismoActionsComponent implements OnInit,OnDestroy{
+export class MetasActionsComponent implements OnInit,OnDestroy{
 
   @ViewChild('saveFooter', { static: true }) footerSaveTemplate!: TemplateRef<any>;
   @ViewChild('alertFooter', { static: true }) footerAlertTemplate!: TemplateRef<any>;
@@ -34,18 +35,18 @@ export class BilinguismoActionsComponent implements OnInit,OnDestroy{
 
   private modal_service = inject(NzModalService);
   private view_container_ref = inject(ViewContainerRef);
-  private bilinguismo_service = inject(BilinguismoService);
-
+  private metas_service = inject(MetasService);
+  
   @Input() type_actions:'icons'|'buttons'|'create' = 'create';
-  @Input() programa?:BilinguismoModel;
+  @Input() meta?:MetaModel;
   @Input() index?:number;
 
-  @Output() create:EventEmitter<BilinguismoModel> = new EventEmitter();
-  @Output() update:EventEmitter<{bilinguismo:BilinguismoModel,index:number}> = new EventEmitter();
+  @Output() create:EventEmitter<MetaModel> = new EventEmitter();
+  @Output() update:EventEmitter<{meta:MetaModel,index:number}> = new EventEmitter();
   @Output() delete:EventEmitter<number> = new EventEmitter();
   @Output() setLoading:EventEmitter<boolean> = new EventEmitter();
-
-  title: 'Crear programa'|'Editar programa' = 'Crear programa';
+  
+  title: 'Crear meta'|'Editar meta' = 'Crear meta';
   icon: 'plus'|'edit' = 'plus';
   save_loading:boolean = false;
 
@@ -54,46 +55,20 @@ export class BilinguismoActionsComponent implements OnInit,OnDestroy{
   modal_sub?:Subscription;
   disabled:boolean = true;
 
-  instance?:BilinguismoFormComponent;
+  instance?:MetasFormComponent;
   modal?: NzModalRef;
 
   ngOnInit(): void {
-    if (this.programa) {      
-      this.title = 'Editar programa';
+    if(this.meta){
+      this.title = 'Editar meta';
       this.icon = 'edit';
     }
   }
 
   ngOnDestroy(): void {
-    this.closeValidSub();
     this.resetDataSub();
-  }
-
-  startValidSub(){
-    if(!this.instance)return;
-    this.valid_sub = this.instance!.form.valueChanges
-    .subscribe({
-      next:()=>{
-        const {form} = this.instance!;
-        this.disabled = form.invalid;    
-      }
-    });
-  }
-
-  startModalSub(){
-    if(!this.instance)return;
-    this.modal_sub = this.modal!.afterClose
-    .subscribe({
-      next:(response)=>{
-        if(!response)return this.loadingStatus(false);
-        const {form} = response;
-        if(!form) return this.loadingStatus(false);
-        this.instance!.bilinguismo
-          ? this.editarPrograma(form,this.programa!.bil_codigo)
-          : this.crearPrograma(form);
-        return this.loadingStatus(false);
-      }
-    });
+    this.closeValidSub();
+    this.closeModalSub();
   }
 
   closeValidSub(){
@@ -113,10 +88,10 @@ export class BilinguismoActionsComponent implements OnInit,OnDestroy{
     this.setLoading.emit(status);
   }
 
-  crearPrograma(form:BilinguismoModel){
+  crearMeta(form:MetaModel){
     this.loadingStatus(true);
     this.resetDataSub();
-    this.data_sub = this.bilinguismo_service.create(form)
+    this.data_sub = this.metas_service.create(form)
       .subscribe({
         next:(response)=>{
           this.create.emit(response);
@@ -125,22 +100,22 @@ export class BilinguismoActionsComponent implements OnInit,OnDestroy{
       });
   }
 
-  editarPrograma(form:BilinguismoModel,id:number){
+  editarMeta(form:MetaModel,id:number){
     this.loadingStatus(true);
     this.resetDataSub();
-    this.data_sub = this.bilinguismo_service.update(form,id)
+    this.data_sub = this.metas_service.update(form,id)
       .subscribe({
         next:(response)=>{
-          this.update.emit({bilinguismo:response,index:this.index!});
+          this.update.emit({meta:response,index:this.index!});
           this.loadingStatus(false);
         }
       });
   }
 
-  eliminarPrograma(){
+  eliminarMeta(){
     this.loadingStatus(true);
     this.resetDataSub();
-    this.data_sub = this.bilinguismo_service.delete(this.programa!.bil_codigo)
+    this.data_sub = this.metas_service.delete(this.meta!.met_id)
       .subscribe({
         next:()=>{
           this.delete.emit(this.index!);
@@ -150,12 +125,39 @@ export class BilinguismoActionsComponent implements OnInit,OnDestroy{
       });
   }
 
+  startModalSub(){
+    if(!this.instance)return;
+    this.modal_sub = this.modal!.afterClose
+    .subscribe({
+      next:(response)=>{
+        if(!response)return this.loadingStatus(false);
+        const {form} = response;
+        if(!form) return this.loadingStatus(false);
+        this.instance!.meta
+          ? this.editarMeta(form,this.meta!.met_id)
+          : this.crearMeta(form);
+        return this.loadingStatus(false);
+      }
+    });
+  }
+
+  startValidSub(){
+    if(!this.instance)return;
+    this.valid_sub = this.instance!.form.valueChanges
+    .subscribe({
+      next:()=>{
+        const {form} = this.instance!;
+        this.disabled = form.invalid;    
+      }
+    });
+  }
+
   openForm() {
     this.modal = this.modal_service.create({
       nzTitle:this.title,
-      nzContent:BilinguismoFormComponent,
+      nzContent:MetasFormComponent,
       nzViewContainerRef:this.view_container_ref,
-      nzData:{programa:this.programa},
+      nzData:{meta:this.meta},
       nzFooter:this.footerSaveTemplate,
       nzWidth:'500px',
       nzDraggable:true,
@@ -188,5 +190,4 @@ export class BilinguismoActionsComponent implements OnInit,OnDestroy{
   handleCancelar(){
     this.modal?.destroy({form:null});
   }
-
 }
