@@ -57,6 +57,7 @@
     <div class="flex py-3 w-full justify-end">
         <nz-pagination
             (nzPageIndexChange)="changePage($event)"
+            [nzHideOnSinglePage]="true"
             [nzPageIndex]="page"
             [nzTotal]="numero_bilinguismo"
             [nzPageSize]="page_size">

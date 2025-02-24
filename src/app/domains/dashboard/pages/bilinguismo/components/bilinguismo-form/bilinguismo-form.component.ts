@@ -92,11 +92,10 @@ export class BilinguismoFormComponent extends FormStyle implements OnInit,OnDest
       });
     this.bilinguismo = this.modal.getConfig().nzData.programa;
     if (this.bilinguismo) {
-      const {bil_codigo,bil_programa,modalidad,bil_duracion,bil_version} = this.bilinguismo;
-      const {id} = modalidad!;
+      const {bil_codigo,bil_programa,modalidad_id,bil_duracion,bil_version} = this.bilinguismo;
       this.field_codigo.setValue(bil_codigo);
       this.field_programa.setValue(bil_programa);
-      this.field_modalidad.setValue(id);
+      this.field_modalidad.setValue(modalidad_id);
       this.field_duracion.setValue(bil_duracion);
       this.field_version.setValue(bil_version);
     }

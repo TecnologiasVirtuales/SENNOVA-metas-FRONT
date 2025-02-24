@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { getQueryUrl } from '@shared/functions/url.functions';
-import { MetaModel } from '@shared/models/metas.model';
+import { MetaModel } from '@shared/models/meta.model';
 import { PaginateModel } from '@shared/models/paginate.model';
 import { QueryUrlModel } from '@shared/models/query-url.model';
 

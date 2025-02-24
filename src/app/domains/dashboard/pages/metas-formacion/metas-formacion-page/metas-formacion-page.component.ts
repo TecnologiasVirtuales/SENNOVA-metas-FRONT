@@ -1,21 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { lucideGoal } from '@ng-icons/lucide';
+import { NgIconComponent } from '@ng-icons/core';
 import { SenaLoadingComponent } from '@shared/components/sena-loading/sena-loading.component';
 import { CanUseActionsDirective } from '@shared/directives/can-use-actions.directive';
+import { MetaFormacionModel } from '@shared/models/meta-formacion.model';
+import { MetasFormacionService } from '@shared/services/metas-formacion.service';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzFlexModule } from 'ng-zorro-antd/flex';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzTableModule } from 'ng-zorro-antd/table';
-import { MetasActionsComponent } from '../components/metas-actions/metas-actions.component';
-import { MetasService } from '@shared/services/metas.service';
-import { MetaModel } from '@shared/models/meta.model';
 import { Subscription } from 'rxjs';
+import { MetasFormacionActionsComponent } from "../components/metas-formacion-actions/metas-formacion-actions.component";
 
 @Component({
-  selector: 'app-metas-page',
+  selector: 'app-metas-formacion-page',
   standalone: true,
   imports: [
     CommonModule,
@@ -27,20 +26,17 @@ import { Subscription } from 'rxjs';
     SenaLoadingComponent,
     CanUseActionsDirective,
     NzPaginationModule,
-    MetasActionsComponent
-  ],
-  templateUrl: './metas-page.component.html',
-  styleUrl: './metas-page.component.css',
-  viewProviders: [provideIcons({ 
-    lucideGoal
-  })]
+    MetasFormacionActionsComponent
+],
+  templateUrl: './metas-formacion-page.component.html',
+  styleUrl: './metas-formacion-page.component.css'
 })
-export class MetasPageComponent implements OnInit, OnDestroy {
-  private meta_service = inject(MetasService);
+export class MetasFormacionPageComponent implements OnInit,OnDestroy{
 
+  private meta_formacion_service = inject(MetasFormacionService);
   private data_sub?: Subscription;
 
-  metas:MetaModel[] = [];
+  metas_formacion:MetaFormacionModel[] = [];
 
   numero_metas:number = 0;
 
@@ -54,35 +50,29 @@ export class MetasPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loadData();
   }
-
   ngOnDestroy(): void {
     this.resetDataSub();
   }
 
   private getData(){
-    return this.meta_service.getAll({page_number: this.page, page_size: this.page_size, filter:this.filters});
+    return this.meta_formacion_service.getAll({page_number:this.page,page_size:this.page_size,filter:this.filters});
   }
 
-  private loadData() {
+  private loadData(){
     this.loading = true;
     this.resetDataSub();
-    this.data_sub = this.getData()
-    .subscribe({
+    this.data_sub = this.getData().subscribe({
       next:(p_metas)=>{
+        console.log(p_metas);
+        
         let {results,count} = p_metas;
-        this.metas = [...results];
+        this.metas_formacion = results;
         this.numero_metas = count;
         this.onLoad(false);
-      }
+      } 
     });
   }
 
-  resetDataSub() {
-    if (this.data_sub) {
-      this.data_sub.unsubscribe();
-    }
-  }
-  
   changePage(p_page:number){
     this.page = p_page;
     this.loadData();
@@ -92,21 +82,26 @@ export class MetasPageComponent implements OnInit, OnDestroy {
     this.loading = loadStatus;
   }
 
-  onCreate(meta:MetaModel) {
-    this.metas = [...this.metas,meta];
+  resetDataSub(){
+    if(this.data_sub){
+      this.data_sub.unsubscribe();
+    }
   }
 
-  onUpdate(data:{meta:MetaModel, index:number}) {    
-    let {meta,index} = data;
-    let metas = [...this.metas];
-    metas[index] = meta;
-    this.metas = [...metas];
+  onCreate(meta:MetaFormacionModel) {
+    this.metas_formacion = [...this.metas_formacion,meta];
+  }
+
+  onUpdate(data:{metaFormacion:MetaFormacionModel, index:number}) {    
+    let {metaFormacion,index} = data;
+    let metas = [...this.metas_formacion];
+    metas[index] = metaFormacion;
+    this.metas_formacion = [...metas];
   }
 
   onDelete(index:number) {
-    let metas = [...this.metas];
+    let metas = [...this.metas_formacion];
     metas.splice(index,1);
-    this.metas = [...metas];
+    this.metas_formacion = [...metas];
   }
-
 }

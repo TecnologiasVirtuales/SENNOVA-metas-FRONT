@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { ModalFooterComponent } from '@shared/components/modal-footer/modal-footer.component';
 import { BilinguismoModel } from '@shared/models/bilinguismo.model';
-import { MetaModel } from '@shared/models/metas.model';
+import { MetaModel } from '@shared/models/meta.model';
 import { MetasService } from '@shared/services/metas.service';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzFlexModule } from 'ng-zorro-antd/flex';

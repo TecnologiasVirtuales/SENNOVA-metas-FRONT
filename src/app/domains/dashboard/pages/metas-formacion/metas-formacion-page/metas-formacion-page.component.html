@@ -1,0 +1,99 @@
+<nz-card
+    nz-col
+    [nzSpan]="24"
+    [nzTitle]="pageTitle"
+    [nzExtra]="actionButton"
+    nzBorderless>
+    <nz-table
+        class="poblaciones-table"
+        #metasTable
+        [nzData]="metas_formacion"
+        [nzLoading]="loading"
+        [nzLoadingIndicator]="loadingImg"
+        [nzShowPagination]="false"
+        nzBordered>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Año</th>
+                <th>Fechas</th>
+                <th>Centro de formación</th>
+                <th>Modalidad</th>
+                <th>Operarios</th>
+                <th>Auxiliares</th>
+                <th>Tecnicos</th>
+                <th>Tecnologos</th>
+                <th>Eventos</th>
+                <th>Profundicación tecnica</th>
+                <th>Con Bilingüismo</th>
+                <th>Sin Bilingüismo</th>
+                <th *appCanUseActions class="bilinguismo-table_actions">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (meta of metasTable.data; track $index) {
+                <tr>
+                    <td>{{meta.metd_id}}</td>
+                    <td>{{meta.meta!.met_anio}}</td>
+                    <td>{{meta.meta!.met_fecha_inicio}} / {{meta.meta!.met_fecha_fin}}</td>
+                    <td>{{meta.centro_de_formacion!.centro_de_formacion}}</td>
+                    <td>{{meta.modalidad!.modalidad}}</td>
+                    <td>{{meta.met_formacion_operario}}</td>
+                    <td>{{meta.met_formacion_auxiliar}}</td>
+                    <td>{{meta.met_formacion_tecnico}}</td>
+                    <td>{{meta.met_formacion_tecnologo}}</td>
+                    <td>{{meta.met_formacion_evento}}</td>
+                    <td>{{meta.met_formacion_profundizacion_tecnica}}</td>
+                    <td>{{meta.met_formacion_bilinguismo}}</td>
+                    <td>{{meta.met_formacion_sin_bilinguismo}}</td>
+                    <td *appCanUseActions>
+                        <ng-container *ngTemplateOutlet="updateDelete; context:{meta,$index}"></ng-container>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </nz-table>
+    <ng-container *ngTemplateOutlet="pagination"></ng-container>
+</nz-card>
+<ng-template #pagination>
+    <div class="flex py-3 w-full justify-end">
+        <nz-pagination
+            (nzPageIndexChange)="changePage($event)"
+            [nzHideOnSinglePage]="true"
+            [nzPageIndex]="page"
+            [nzTotal]="numero_metas"
+            [nzPageSize]="page_size">
+        </nz-pagination>
+    </div>
+</ng-template>
+<ng-template #pageTitle>
+    <div class="page-title" nz-row nzAlign="middle" nzGutter="15">
+        <div nz-col>
+            <ng-icon name="lucideGoal"></ng-icon>
+        </div>
+        <div nz-col>
+            <h1>Gestión Programas de Metas</h1>
+        </div>
+    </div>
+</ng-template>
+<ng-template #loadingImg>
+    <app-sena-loading [loading]="loading"></app-sena-loading>
+</ng-template>
+<ng-template #updateDelete let-meta="meta" let-i="index">
+    <app-metas-formacion-actions
+        [metaFormacion]="meta"
+        [index]="i"
+        type_actions="buttons"
+        (delete)="onDelete($event)"
+        (update)="onUpdate($event)"
+        (setLoading)="onLoad($event)">
+    </app-metas-formacion-actions>
+</ng-template>
+<ng-template #actionButton>
+    <app-metas-formacion-actions
+        (create)="onCreate($event)"
+        (setLoading)="onLoad($event)"
+        *appCanUseActions>
+    </app-metas-formacion-actions>
+</ng-template>
+

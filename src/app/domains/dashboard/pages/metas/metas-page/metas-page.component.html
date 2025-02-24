@@ -75,7 +75,7 @@
                     <td>{{meta.met_total_titulada}}</td>
                     <td>{{meta.met_total_complementaria}}</td>
                     <td *appCanUseActions>
-                        <ng-container *ngTemplateOutlet="updateDelete; context:{meta,$index}"></ng-container>
+                        <ng-container *ngTemplateOutlet="updateDelete; context:{meta,index:$index}"></ng-container>
                     </td>
                 </tr>
             }
@@ -87,6 +87,7 @@
     <div class="flex py-3 w-full justify-end">
         <nz-pagination
             (nzPageIndexChange)="changePage($event)"
+            [nzHideOnSinglePage]="true"
             [nzPageIndex]="page"
             [nzTotal]="numero_metas"
             [nzPageSize]="page_size">
@@ -96,10 +97,10 @@
 <ng-template #pageTitle>
     <div class="page-title" nz-row nzAlign="middle" nzGutter="15">
         <div nz-col>
-            <ng-icon name="heroLanguage"></ng-icon>
+            <ng-icon name="lucideGoal"></ng-icon>
         </div>
         <div nz-col>
-            <h1>Gestión Programas de Bilingüismo</h1>
+            <h1>Gestión de Metas</h1>
         </div>
     </div>
 </ng-template>

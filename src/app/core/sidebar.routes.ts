@@ -60,10 +60,21 @@ export const side_routes:Routes = [
                 children:[
                     {
                         path:'',
+                        pathMatch:'full',
+                        redirectTo:'gestion-metas'
+                    },
+                    {
+                        path:'gestion-metas',
                         title:'Metas',
-                        data:{breadcrumb:'Metas',icon:'lucideGoal'},
+                        data:{breadcrumb:'Gestión de metas',icon:'lucideGoal'},
                         loadComponent:()=>import('@domains/dashboard/pages/metas/metas-page/metas-page.component').then(c=>c.MetasPageComponent)
-                    }
+                    },
+                    {
+                        path:'formacion-regular',
+                        title:'Formación regular',
+                        data:{breadcrumb:'Formación regular',icon:'lucideGoal'},
+                        loadComponent:()=>import('@domains/dashboard/pages/metas-formacion/metas-formacion-page/metas-formacion-page.component').then(c=>c.MetasFormacionPageComponent)
+                    },
                 ]
             }
         ]
