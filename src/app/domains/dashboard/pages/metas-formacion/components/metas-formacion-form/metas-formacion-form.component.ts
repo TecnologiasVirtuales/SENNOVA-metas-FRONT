@@ -86,39 +86,39 @@ export class MetasFormacionFormComponent extends FormStyle implements OnInit, On
       ]),
       met_formacion_operario: new FormControl(null, [
         Validators.required,
-        Validators.min(100)
+        Validators.min(0)
       ]),
       met_formacion_auxiliar: new FormControl(null, [
         Validators.required,
-        Validators.min(100)
+        Validators.min(0)
       ]),
       met_formacion_tecnico: new FormControl(null, [
         Validators.required,
-        Validators.min(100)
+        Validators.min(0)
       ]),
       met_formacion_profundizacion_tecnica: new FormControl(null, [
         Validators.required,
-        Validators.min(100)
+        Validators.min(0)
       ]),
       met_formacion_tecnologo: new FormControl(null, [
         Validators.required,
-        Validators.min(100)
+        Validators.min(0)
       ]),
       met_formacion_evento: new FormControl(null, [
         Validators.required,
-        Validators.min(100)
+        Validators.min(0)
       ]),
       met_formacion_curso_especial: new FormControl(null, [
         Validators.required,
-        Validators.min(100)
+        Validators.min(0)
       ]),
       met_formacion_bilinguismo: new FormControl(null, [
         Validators.required,
-        Validators.min(100)
+        Validators.min(0)
       ]),
       met_formacion_sin_bilinguismo: new FormControl(null, [
         Validators.required,
-        Validators.min(100)
+        Validators.min(0)
       ])
     });
   }
@@ -140,12 +140,46 @@ export class MetasFormacionFormComponent extends FormStyle implements OnInit, On
         this.is_loading_modalidad = false;
         this.is_loading_meta = false;
         this.is_loading_centro = false;
+        this.configForm();
       }
     });
   }
 
   ngOnDestroy(): void {
     this.resetDataSub();
+    this.resetSearchSub();
+  }
+
+  private configForm(){
+    this.meta_formacion = this.modal.getConfig().nzData.meta_formacion;
+    if(this.meta_formacion){
+      let {
+        modalidad_id,
+        meta_id,
+        centro_de_formacion_id,
+        met_formacion_operario,
+        met_formacion_auxiliar,
+        met_formacion_tecnico,
+        met_formacion_profundizacion_tecnica,
+        met_formacion_tecnologo,
+        met_formacion_evento,
+        met_formacion_curso_especial,
+        met_formacion_bilinguismo,
+        met_formacion_sin_bilinguismo
+      } = this.meta_formacion;
+      this.field_modalidad.setValue(modalidad_id);
+      this.field_meta.setValue(meta_id);
+      this.field_centro_de_formacion.setValue(centro_de_formacion_id);
+      this.field_met_formacion_operario.setValue(met_formacion_operario);
+      this.field_met_formacion_auxiliar.setValue(met_formacion_auxiliar);
+      this.field_met_formacion_tecnico.setValue(met_formacion_tecnico);
+      this.field_met_formacion_profundizacion_tecnica.setValue(met_formacion_profundizacion_tecnica);
+      this.field_met_formacion_tecnologo.setValue(met_formacion_tecnologo);
+      this.field_met_formacion_evento.setValue(met_formacion_evento);
+      this.field_met_formacion_curso_especial.setValue(met_formacion_curso_especial);
+      this.field_met_formacion_bilinguismo.setValue(met_formacion_bilinguismo);
+      this.field_met_formacion_sin_bilinguismo.setValue(met_formacion_sin_bilinguismo);
+    }
   }
 
   private getModalidad(){

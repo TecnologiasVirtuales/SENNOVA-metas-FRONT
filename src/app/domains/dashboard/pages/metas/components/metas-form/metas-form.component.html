@@ -27,17 +27,15 @@
           <span class="form-label_text" nz-typography>Fecha de Inicio</span>
         </nz-form-label>
         <nz-input-group class="form-group">
-          <input
-            class="form-input"
-            (focus)="onFocus($event)"
-            (blur)="onBlur($event)"
-            type="date"
-            nz-input
+          <nz-date-picker
+            class="w-full"
+            nzId="met_fecha_inicio"
+            nzFormat="yyyy-MM-dd"
             [formControl]="field_fecha_inicio"
-            placeholder="Seleccione la fecha de inicio"
-            id="met_fecha_inicio"
-            nz-typography />
+            >
+          </nz-date-picker>
         </nz-input-group>
+
       </nz-form-control>
     </nz-form-item>
   
@@ -48,16 +46,13 @@
           <span class="form-label_text" nz-typography>Fecha de Fin</span>
         </nz-form-label>
         <nz-input-group class="form-group">
-          <input
-            class="form-input"
-            (focus)="onFocus($event)"
-            (blur)="onBlur($event)"
-            type="date"
-            nz-input
-            [formControl]="field_fecha_fin"
-            placeholder="Seleccione la fecha de fin"
-            id="met_fecha_fin"
-            nz-typography />
+            <nz-date-picker
+                class="w-full"
+                nzId="met_fecha_fin"
+                nzFormat="yyyy-MM-dd"
+                [formControl]="field_fecha_fin"
+              >
+            </nz-date-picker>
         </nz-input-group>
       </nz-form-control>
     </nz-form-item>
@@ -225,27 +220,6 @@
             [formControl]="field_total_poblacion_vulnerable"
             placeholder="Ingrese el total de población vulnerable"
             id="met_total_poblacion_vulnerable"
-            nz-typography />
-        </nz-input-group>
-      </nz-form-control>
-    </nz-form-item>
-  
-    <!-- Campo: Documento (opcional) -->
-    <nz-form-item nz-col nzSpan="20">
-      <nz-form-control>
-        <nz-form-label nzFor="per_documento" class="form-label">
-          <span class="form-label_text" nz-typography>Documento</span>
-        </nz-form-label>
-        <nz-input-group class="form-group">
-          <input
-            class="form-input"
-            (focus)="onFocus($event)"
-            (blur)="onBlur($event)"
-            type="number"
-            nz-input
-            [formControl]="field_per_documento"
-            placeholder="Ingrese el documento"
-            id="per_documento"
             nz-typography />
         </nz-input-group>
       </nz-form-control>

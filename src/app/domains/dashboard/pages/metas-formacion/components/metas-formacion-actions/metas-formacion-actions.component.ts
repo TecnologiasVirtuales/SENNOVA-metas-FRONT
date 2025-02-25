@@ -154,7 +154,7 @@ export class MetasFormacionActionsComponent implements OnInit, OnDestroy {
       nzTitle: this.title,
       nzContent: MetasFormacionFormComponent,
       nzViewContainerRef: this.view_container_ref,
-      nzData: { metaFormacion: this.metaFormacion },
+      nzData: { meta_formacion: this.metaFormacion },
       nzFooter: this.footerSaveTemplate,
       nzWidth: '500px',
       nzDraggable: true,

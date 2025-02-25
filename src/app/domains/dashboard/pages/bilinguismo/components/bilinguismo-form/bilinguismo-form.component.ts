@@ -88,8 +88,17 @@ export class BilinguismoFormComponent extends FormStyle implements OnInit,OnDest
           let {results} = p_modalidad;
           this.modalidades = [...this.modalidades,...results];
           this.is_loading_modalidad = false;
+          this.configForm();
         }
       });
+  }
+
+  ngOnDestroy(): void {
+    this.resetDataSub();
+    this.resetSearch();
+  }
+
+  configForm(){
     this.bilinguismo = this.modal.getConfig().nzData.programa;
     if (this.bilinguismo) {
       const {bil_codigo,bil_programa,modalidad_id,bil_duracion,bil_version} = this.bilinguismo;
@@ -99,11 +108,6 @@ export class BilinguismoFormComponent extends FormStyle implements OnInit,OnDest
       this.field_duracion.setValue(bil_duracion);
       this.field_version.setValue(bil_version);
     }
-  }
-
-  ngOnDestroy(): void {
-    this.resetDataSub();
-    this.resetSearch();
   }
 
   submitForm(){    

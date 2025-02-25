@@ -1,0 +1,396 @@
+<form class="form-container" nz-form [formGroup]="form">
+    <nz-form-item nz-col nzSpan="20">
+        <nz-form-control [nzErrorTip]="erroresModalidad">
+            <nz-form-label nzFor="modalidad" class="form-label" nzRequired>
+                <span class="form-label_text" nz-typography>Modalidad</span>
+            </nz-form-label>
+            <nz-input-group class="form-group">
+                <nz-select
+                    nzId="modalidad"
+                    [formControl]="field_modalidad"
+                    (nzScrollToBottom)="onScrollModalidad()"
+                    (nzOnSearch)="onSearchModalidad($event)"
+                    [nzAllowClear]="true"
+                    [nzShowSearch]="true"
+                    [nzServerSearch]="true"
+                    [nzDropdownRender]="loadingModalidad"
+                    [nzLoading]="is_loading_modalidad"
+                    nzPlaceHolder="Elija la modalidad de la meta">
+                    @for (modalidad of modalidades; track $index) {
+                        <nz-option [nzLabel]="modalidad.modalidad" [nzValue]="modalidad.id"></nz-option>
+                    }
+                </nz-select>
+                <ng-template #loadingModalidad>
+                    <nz-spin [nzSpinning]="is_loading_modalidad">
+                    </nz-spin>
+                </ng-template>
+            </nz-input-group>
+        </nz-form-control> 
+    </nz-form-item>
+    <nz-form-item nz-col nzSpan="20">
+        <nz-form-control [nzErrorTip]="erroresMeta">
+            <nz-form-label nzFor="meta" class="form-label" nzRequired>
+                <span class="form-label_text" nz-typography>Meta</span>
+            </nz-form-label>
+            <nz-input-group class="form-group">
+                <nz-select
+                    nzId="meta"
+                    [formControl]="field_meta"
+                    (nzScrollToBottom)="onScrollMeta()"
+                    (nzOnSearch)="onSearchMeta($event)"
+                    [nzAllowClear]="true"
+                    [nzShowSearch]="true"
+                    [nzServerSearch]="true"
+                    [nzDropdownRender]="loadingMeta"
+                    [nzLoading]="is_loading_meta"
+                    nzPlaceHolder="Elija el año de la meta">
+                    @for (meta of metas; track $index) {
+                        <nz-option [nzLabel]="meta.met_anio" [nzValue]="meta.met_id"></nz-option>
+                    }
+                </nz-select>
+                <ng-template #loadingMeta>
+                    <nz-spin [nzSpinning]="is_loading_meta">
+                    </nz-spin>
+                </ng-template>
+            </nz-input-group>
+        </nz-form-control> 
+    </nz-form-item>
+    <nz-form-item nz-col nzSpan="20">
+        <nz-form-control [nzErrorTip]="erroresCentro">
+            <nz-form-label nzFor="centro" class="form-label" nzRequired>
+                <span class="form-label_text" nz-typography>Centro de Formación</span>
+            </nz-form-label>
+            <nz-input-group class="form-group">
+                <nz-select
+                    nzId="centro"
+                    [formControl]="field_centro_de_formacion"
+                    (nzScrollToBottom)="onScrollCentro()"
+                    (nzOnSearch)="onSearchCentro($event)"
+                    [nzAllowClear]="true"
+                    [nzShowSearch]="true"
+                    [nzServerSearch]="true"
+                    [nzDropdownRender]="loadingCentro"
+                    [nzLoading]="is_loading_centro"
+                    nzPlaceHolder="Elija el centro de formación">
+                    @for (centro of centros; track $index) {
+                        <nz-option [nzLabel]="centro.centro_de_formacion" [nzValue]="centro.id"></nz-option>
+                    }
+                </nz-select>
+                <ng-template #loadingCentro>
+                    <nz-spin [nzSpinning]="is_loading_centro">
+                    </nz-spin>
+                </ng-template>
+            </nz-input-group>
+        </nz-form-control> 
+    </nz-form-item>
+    <nz-form-item nz-col nzSpan="20">
+        <nz-form-control 
+            [nzErrorTip]="erroresOperario">
+            <nz-form-label 
+                nzFor="duracion" 
+                class="form-label"
+                nzRequired>
+                <span 
+                    class="form-label_text" 
+                    nz-typography>
+                    Operarios
+                </span>
+            </nz-form-label>
+            <nz-input-group 
+                class="form-group">
+                <input 
+                    class="form-input" 
+                    (focus)="onFocus($event)" 
+                    (blur)="onBlur($event)" 
+                    type="number" 
+                    nz-input 
+                    [formControl]="field_met_formacion_operario"
+                    placeholder="Escriba la meta de operarios" 
+                    id="duracion" 
+                    nz-typography/>
+            </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item nz-col nzSpan="20">
+        <nz-form-control [nzErrorTip]="erroresAuxiliar">
+          <nz-form-label nzFor="auxiliar" class="form-label" nzRequired>
+            <span class="form-label_text" nz-typography>Auxiliares</span>
+          </nz-form-label>
+          <nz-input-group class="form-group">
+            <input 
+              class="form-input"
+              (focus)="onFocus($event)" 
+              (blur)="onBlur($event)" 
+              type="number" 
+              nz-input 
+              [formControl]="field_met_formacion_auxiliar"
+              placeholder="Escriba la meta de auxiliares" 
+              id="auxiliar" 
+              nz-typography/>
+          </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item nz-col nzSpan="20">
+        <nz-form-control [nzErrorTip]="erroresTecnico">
+          <nz-form-label nzFor="tecnico" class="form-label" nzRequired>
+            <span class="form-label_text" nz-typography>Técnicos</span>
+          </nz-form-label>
+          <nz-input-group class="form-group">
+            <input 
+              class="form-input"
+              (focus)="onFocus($event)" 
+              (blur)="onBlur($event)" 
+              type="number" 
+              nz-input 
+              [formControl]="field_met_formacion_tecnico"
+              placeholder="Escriba la meta de técnicos" 
+              id="tecnico" 
+              nz-typography/>
+          </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item nz-col nzSpan="20">
+        <nz-form-control [nzErrorTip]="erroresProfundizacion">
+          <nz-form-label nzFor="profundizacion" class="form-label" nzRequired>
+            <span class="form-label_text" nz-typography>Profundización Técnica</span>
+          </nz-form-label>
+          <nz-input-group class="form-group">
+            <input 
+              class="form-input"
+              (focus)="onFocus($event)" 
+              (blur)="onBlur($event)" 
+              type="number" 
+              nz-input 
+              [formControl]="field_met_formacion_profundizacion_tecnica"
+              placeholder="Escriba la meta de profundización técnica" 
+              id="profundizacion" 
+              nz-typography/>
+          </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item nz-col nzSpan="20">
+        <nz-form-control [nzErrorTip]="erroresTecnologo">
+            <nz-form-label nzFor="tecnologo" class="form-label" nzRequired>
+            <span class="form-label_text" nz-typography>Tecnólogos</span>
+            </nz-form-label>
+            <nz-input-group class="form-group">
+            <input 
+                class="form-input"
+                (focus)="onFocus($event)" 
+                (blur)="onBlur($event)" 
+                type="number" 
+                nz-input 
+                [formControl]="field_met_formacion_tecnologo"
+                placeholder="Escriba la meta de tecnólogos" 
+                id="tecnologo" 
+                nz-typography/>
+            </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item nz-col nzSpan="20">
+        <nz-form-control [nzErrorTip]="erroresEvento">
+          <nz-form-label nzFor="evento" class="form-label" nzRequired>
+            <span class="form-label_text" nz-typography>Eventos</span>
+          </nz-form-label>
+          <nz-input-group class="form-group">
+            <input 
+              class="form-input"
+              (focus)="onFocus($event)" 
+              (blur)="onBlur($event)" 
+              type="number" 
+              nz-input 
+              [formControl]="field_met_formacion_evento"
+              placeholder="Escriba la meta de eventos" 
+              id="evento" 
+              nz-typography/>
+          </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item nz-col nzSpan="20">
+        <nz-form-control [nzErrorTip]="erroresCursoEspecial">
+          <nz-form-label nzFor="cursoEspecial" class="form-label" nzRequired>
+            <span class="form-label_text" nz-typography>Curso Especial</span>
+          </nz-form-label>
+          <nz-input-group class="form-group">
+            <input 
+              class="form-input"
+              (focus)="onFocus($event)" 
+              (blur)="onBlur($event)" 
+              type="number" 
+              nz-input 
+              [formControl]="field_met_formacion_curso_especial"
+              placeholder="Escriba la meta de curso especial" 
+              id="cursoEspecial" 
+              nz-typography/>
+          </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item nz-col nzSpan="20">
+        <nz-form-control [nzErrorTip]="erroresBilinguismo">
+          <nz-form-label nzFor="bilinguismo" class="form-label" nzRequired>
+            <span class="form-label_text" nz-typography>Bilingüismo</span>
+          </nz-form-label>
+          <nz-input-group class="form-group">
+            <input 
+              class="form-input"
+              (focus)="onFocus($event)" 
+              (blur)="onBlur($event)" 
+              type="number" 
+              nz-input 
+              [formControl]="field_met_formacion_bilinguismo"
+              placeholder="Escriba la meta de bilingüismo" 
+              id="bilinguismo" 
+              nz-typography/>
+          </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item nz-col nzSpan="20">
+        <nz-form-control [nzErrorTip]="erroresSinBilinguismo">
+          <nz-form-label nzFor="sinBilinguismo" class="form-label" nzRequired>
+            <span class="form-label_text" nz-typography>Sin Bilingüismo</span>
+          </nz-form-label>
+          <nz-input-group class="form-group">
+            <input 
+              class="form-input"
+              (focus)="onFocus($event)" 
+              (blur)="onBlur($event)" 
+              type="number" 
+              nz-input 
+              [formControl]="field_met_formacion_sin_bilinguismo"
+              placeholder="Escriba la meta sin bilingüismo" 
+              id="sinBilinguismo" 
+              nz-typography/>
+          </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+</form>
+
+<ng-template #erroresModalidad>
+    @if (field_modalidad.hasError('required')) {
+        <div nz-col nzSpan="24">
+            <span nz-typography nzType="danger">La modalidad es obligatoria</span>
+        </div>
+    }
+</ng-template>
+<ng-template #erroresMeta>
+    @if (field_modalidad.hasError('required')) {
+        <div nz-col nzSpan="24">
+            <span nz-typography nzType="danger">La meta es obligatoria</span>
+        </div>
+    }
+</ng-template>
+<ng-template #erroresCentro>
+    @if (field_modalidad.hasError('required')) {
+        <div nz-col nzSpan="24">
+            <span nz-typography nzType="danger">El centro de formación es obligatorio</span>
+        </div>
+    }
+</ng-template>
+<ng-template #erroresOperario>
+    @if (field_met_formacion_operario.hasError('required')) {
+        <div nz-col nzSpan="24">
+            <span nz-typography nzType="danger">La meta operarios es obligatoria</span>
+        </div>
+    }
+    @if (field_met_formacion_operario.hasError('min')) {
+        <div nz-col nzSpan="24">
+            <span nz-typography nzType="danger">La meta operarios debe ser mayor o igual a 0</span>
+        </div>
+    }
+</ng-template>
+<ng-template #erroresAuxiliar>
+    @if (field_met_formacion_auxiliar.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de auxiliares es obligatoria</span>
+      </div>
+    }
+    @if (field_met_formacion_auxiliar.hasError('min')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de auxiliares debe ser mayor o igual a 0</span>
+      </div>
+    }
+</ng-template>
+<ng-template #erroresTecnico>
+    @if (field_met_formacion_tecnico.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de técnicos es obligatoria</span>
+      </div>
+    }
+    @if (field_met_formacion_tecnico.hasError('min')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de técnicos debe ser mayor o igual a 0</span>
+      </div>
+    }
+</ng-template>
+<ng-template #erroresProfundizacion>
+    @if (field_met_formacion_profundizacion_tecnica.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de profundización técnica es obligatoria</span>
+      </div>
+    }
+    @if (field_met_formacion_profundizacion_tecnica.hasError('min')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de profundización técnica debe ser mayor o igual a 0</span>
+      </div>
+    }
+</ng-template>
+<ng-template #erroresTecnologo>
+    @if (field_met_formacion_tecnologo.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de tecnólogos es obligatoria</span>
+      </div>
+    }
+    @if (field_met_formacion_tecnologo.hasError('min')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de tecnólogos debe ser mayor o igual a 0</span>
+      </div>
+    }
+</ng-template>
+<ng-template #erroresEvento>
+    @if (field_met_formacion_evento.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de eventos es obligatoria</span>
+      </div>
+    }
+    @if (field_met_formacion_evento.hasError('min')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de eventos debe ser mayor o igual a 0</span>
+      </div>
+    }
+</ng-template>
+<ng-template #erroresCursoEspecial>
+    @if (field_met_formacion_curso_especial.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de curso especial es obligatoria</span>
+      </div>
+    }
+    @if (field_met_formacion_curso_especial.hasError('min')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de curso especial debe ser mayor o igual a 0</span>
+      </div>
+    }
+</ng-template>
+<ng-template #erroresBilinguismo>
+    @if (field_met_formacion_bilinguismo.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de bilingüismo es obligatoria</span>
+      </div>
+    }
+    @if (field_met_formacion_bilinguismo.hasError('min')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de bilingüismo debe ser mayor o igual a 0</span>
+      </div>
+    }
+</ng-template>
+<ng-template #erroresSinBilinguismo>
+    @if (field_met_formacion_sin_bilinguismo.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta sin bilingüismo es obligatoria</span>
+      </div>
+    }
+    @if (field_met_formacion_sin_bilinguismo.hasError('min')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta sin bilingüismo debe ser mayor o igual a 0</span>
+      </div>
+    }
+</ng-template>

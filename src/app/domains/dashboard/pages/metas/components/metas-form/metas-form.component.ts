@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MetaModel } from '@shared/models/meta.model';
@@ -10,8 +10,9 @@ import { NzModalModule, NzModalRef } from 'ng-zorro-antd/modal';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { Subscription } from 'rxjs';
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { DisabledTimeFn, NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { FormStyle } from '@shared/style-clases/focus.style';
+import { formatDateToString } from '@shared/functions/date.functions';
 
 @Component({
   selector: 'app-metas-form',
@@ -122,8 +123,8 @@ export class MetasFormComponent extends FormStyle implements OnInit, OnDestroy {
       } = this.meta; 
 
       this.field_codigo.setValue(met_codigo);
-      this.field_fecha_inicio.setValue(met_fecha_inicio);
-      this.field_fecha_fin.setValue(met_fecha_fin);
+      this.field_fecha_inicio.setValue(met_fecha_inicio.toString());
+      this.field_fecha_fin.setValue(met_fecha_fin.toString());
       this.field_anio.setValue(met_anio);
       this.field_total_otras_poblaciones.setValue(met_total_otras_poblaciones);
       this.field_total_victimas.setValue(met_total_victimas);
@@ -145,11 +146,11 @@ export class MetasFormComponent extends FormStyle implements OnInit, OnDestroy {
   }
 
   get field_fecha_inicio(){
-    return this.form.get('met_fecha_inicio') as FormControl<Date>;
+    return this.form.get('met_fecha_inicio') as FormControl<string>;
   }
 
   get field_fecha_fin(){
-    return this.form.get('met_fecha_fin') as FormControl<Date>;
+    return this.form.get('met_fecha_fin') as FormControl<string>;
   }
 
   get field_anio(){
@@ -191,7 +192,11 @@ export class MetasFormComponent extends FormStyle implements OnInit, OnDestroy {
   submitForm(){
     const {value,valid} = this.form;
     if(valid){
-      this.modal.close({form:value});
+      let {value:inicio} = this.field_fecha_inicio;
+      let {value:fin} = this.field_fecha_fin;
+      this.field_fecha_inicio.setValue(formatDateToString(new Date(inicio)));
+      this.field_fecha_fin.setValue(formatDateToString(new Date(fin)));      
+      this.modal.close({form:this.form.value});
     }
   }
 

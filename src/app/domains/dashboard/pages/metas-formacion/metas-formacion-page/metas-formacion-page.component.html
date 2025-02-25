@@ -4,6 +4,27 @@
     [nzTitle]="pageTitle"
     [nzExtra]="actionButton"
     nzBorderless>
+    <div class="flex justify-between">
+        <nz-select
+            [(ngModel)]="meta"
+            (ngModelChange)="onChangeMeta()"
+            (nzScrollToBottom)="onScrollMeta()"
+            (nzOnSearch)="onSearchMeta($event)"
+            [nzAllowClear]="true"
+            [nzShowSearch]="true"
+            [nzServerSearch]="true"
+            [nzDropdownRender]="loadingMeta"
+            [nzLoading]="is_loading_meta"
+            nzPlaceHolder="Año">
+            @for (meta of metas; track $index) {
+                <nz-option [nzLabel]="meta.met_anio" [nzValue]="meta.met_anio"></nz-option>
+            }
+            <ng-template #loadingMeta>
+                <nz-spin [nzSpinning]="is_loading_meta">
+                </nz-spin>
+            </ng-template>
+        </nz-select>
+    </div>
     <nz-table
         class="poblaciones-table"
         #metasTable
