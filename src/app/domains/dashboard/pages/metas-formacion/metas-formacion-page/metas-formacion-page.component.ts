@@ -24,6 +24,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { FormsModule } from '@angular/forms';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { formatDateToString } from '@shared/functions/date.functions';
 
 @Component({
   selector: 'app-metas-formacion-page',
@@ -43,7 +44,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
     NzInputModule,
     NzDatePickerModule,
     FormsModule,
-    NzSpinModule
+    NzSpinModule,
 ],
   templateUrl: './metas-formacion-page.component.html',
   styleUrl: './metas-formacion-page.component.css',
@@ -73,25 +74,31 @@ export class MetasFormacionPageComponent implements OnInit,OnDestroy{
   is_loading_meta:boolean = true;
   page_meta:number = 1;
   num_meta:number = 10;
-  search_meta:string = '';
+  search_meta?:string;
   search_meta_sub?:Subscription;
   search_meta_subject:BehaviorSubject<string> = new BehaviorSubject<string>('');
+  modalidad?:string;
   modalidades:ModalidadModel[] = [];
   is_loading_modalidad:boolean = true;
   page_modalidad:number = 1;
   num_modalidad:number = 10;
-  search_modalidad:string = '';
+  search_modalidad?:string;
   search_modalidad_sub?:Subscription;
   search_modalidad_subject:BehaviorSubject<string> = new BehaviorSubject<string>('');
+  centro?:string;
   centros:CentroFormacionModel[] = [];
   is_loading_centro:boolean = true;
   page_centro:number = 1;
   num_centro:number = 10;
-  search_centro:string = '';
+  search_centro?:string;
   search_centro_sub?:Subscription;
   search_centro_subject:BehaviorSubject<string> = new BehaviorSubject<string>('');
 
+  fecha_fin?:Date;
+  fecha_inicio?:Date;
+
   ngOnInit(): void {
+    this.startSearch();
     this.data_sub = forkJoin([
       this.getData(),
       this.getModalidad(),
@@ -126,10 +133,30 @@ export class MetasFormacionPageComponent implements OnInit,OnDestroy{
   get filters():{[key:string]:string|number}{
     let filters:{[key:string]:string|number} = {};
     if(this.meta) filters['meta.met_anio'] = this.meta;
+    if(this.modalidad) filters['modalidad.modalidad'] = this.modalidad;
+    if(this.centro) filters['centro_de_formacion.centro_de_formacion'] = this.centro;
+    if(this.fecha_inicio) filters['meta.met_fecha_inicio'] = formatDateToString(this.fecha_inicio);
+    if(this.fecha_fin) filters['meta.met_fecha_fin'] = formatDateToString(this.fecha_fin);
     return filters;
   }
 
   onChangeMeta(){
+    this.loadData();
+  }
+
+  onChangeModalidad(){
+    this.loadData();
+  }
+
+  onChangeCentro(){
+    this.loadData();
+  }
+
+  onChangeInicio(){
+    this.loadData();
+  }
+
+  onChangeFin(){
     this.loadData();
   }
 
@@ -152,7 +179,7 @@ export class MetasFormacionPageComponent implements OnInit,OnDestroy{
 
   private getModalidad(){
     let filters:{[key:string]:string|number} = {};    
-    if(this.search_modalidad.trim().length > 0) filters['modalidad'] = this.search_modalidad;
+    if(this.search_modalidad && this.search_modalidad.trim().length > 0) filters['modalidad'] = this.search_modalidad;
     return this.modalidad_service.getAll({filter:filters,page_number:this.page_modalidad});
   }
 
@@ -191,7 +218,7 @@ export class MetasFormacionPageComponent implements OnInit,OnDestroy{
 
   private getMeta(){
     let filters:{[key:string]:string|number} = {};    
-    if(this.search_meta.trim().length > 0) filters['met_anio'] = this.search_meta;
+    if(this.search_meta && this.search_meta.trim().length > 0) filters['met_anio'] = this.search_meta;
     return this.meta_service.getAll({filter:filters,page_number:this.page_meta});
   }
 
@@ -230,7 +257,7 @@ export class MetasFormacionPageComponent implements OnInit,OnDestroy{
 
   private getCentro(){
     let filters:{[key:string]:string|number} = {};    
-    if(this.search_centro.trim().length > 0) filters['centro_de_formacion'] = this.search_centro;
+    if(this.search_centro && this.search_centro.trim().length > 0) filters['centro_de_formacion'] = this.search_centro;
     return this.centro_service.getAll({filter:filters,page_number:this.page_centro});
   }
 
@@ -250,7 +277,7 @@ export class MetasFormacionPageComponent implements OnInit,OnDestroy{
   }
 
   onSearchCentro(search:string){
-    this.is_loading_modalidad = true;    
+    this.is_loading_centro = true;    
     this.search_centro_subject.next(search);
   }
 

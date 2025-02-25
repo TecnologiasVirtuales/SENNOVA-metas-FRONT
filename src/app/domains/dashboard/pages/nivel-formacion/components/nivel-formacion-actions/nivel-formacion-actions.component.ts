@@ -83,10 +83,7 @@ export class NivelFormacionActionsComponent implements OnInit,OnDestroy{
       nzDraggable:true,
       nzMaskClosable:false,
       nzClosable:false
-    });
-
-    console.log(this.nivel_formacion);
-    
+    });    
 
     this.instance = this.modal.getContentComponent();    
 

@@ -56,7 +56,6 @@ export class NivelFormacionFormComponent extends FormStyle implements OnInit{
   }
 
   submitForm(){   
-    console.log(this.form.value);
     if(this.form.valid){
       this.field_nombre.setValue(this.field_nombre.value.toUpperCase());
       const {value} = this.form;
