@@ -75,6 +75,12 @@ export const side_routes:Routes = [
                         data:{breadcrumb:'Formación regular',icon:'lucideGoal'},
                         loadComponent:()=>import('@domains/dashboard/pages/metas-formacion/metas-formacion-page/metas-formacion-page.component').then(c=>c.MetasFormacionPageComponent)
                     },
+                    {
+                        path:'estrategias-institucionales',
+                        title:'Estrategias institucionales',
+                        data:{breadcrumb:'Estrategias institucionales',icon:'lucideCheckCheck'},
+                        loadComponent:()=>import('@domains/dashboard/pages/estrategias/estrategias-page/estrategias-page.component').then(c=>c.EstrategiasPageComponent)
+                    },
                 ]
             }
         ]

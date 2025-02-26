@@ -12,6 +12,7 @@ export interface EstrategiaDetalleModel {
     meta?:MetaModel;
     estd_operario_meta:number;
     estd_auxiliar_meta:number;
+    estd_tecnico_meta:number;
     estd_profundizacion_tecnica_meta:number;
     estd_tecnologo:number;
     estd_evento:number;

@@ -45,26 +45,6 @@
                 </nz-spin>
             </ng-template>
         </nz-select>
-        <nz-select
-            class="w-1/6"
-            [(ngModel)]="centro"
-            (ngModelChange)="onChangeCentro()"
-            (nzScrollToBottom)="onScrollCentro()"
-            (nzOnSearch)="onSearchCentro($event)"
-            [nzAllowClear]="true"
-            [nzShowSearch]="true"
-            [nzServerSearch]="true"
-            [nzDropdownRender]="loadingCentro"
-            [nzLoading]="is_loading_centro"
-            nzPlaceHolder="Centro de formación">
-            @for (centro of centros; track $index) {
-                <nz-option [nzLabel]="centro.centro_de_formacion" [nzValue]="centro.centro_de_formacion"></nz-option>
-            }
-            <ng-template #loadingCentro>
-                <nz-spin [nzSpinning]="is_loading_centro">
-                </nz-spin>
-            </ng-template>
-        </nz-select>
         <nz-date-picker
             class="w-1/6"
             [(ngModel)]="fecha_inicio"
@@ -78,8 +58,8 @@
     </div>
     <nz-table
         class="poblaciones-table"
-        #metasTable
-        [nzData]="metas_formacion"
+        #detallesTable
+        [nzData]="estrategias_detalle"
         [nzLoading]="loading"
         [nzLoadingIndicator]="loadingImg"
         [nzShowPagination]="false"
@@ -89,8 +69,8 @@
                 <th>Id</th>
                 <th>Año</th>
                 <th>Fechas</th>
-                <th>Centro de formación</th>
                 <th>Modalidad</th>
+                <th>Estrategia</th>
                 <th>Operarios</th>
                 <th>Auxiliares</th>
                 <th>Tecnicos</th>
@@ -103,23 +83,23 @@
             </tr>
         </thead>
         <tbody>
-            @for (meta of metasTable.data; track $index) {
+            @for (detalle of detallesTable.data; track $index) {
                 <tr>
-                    <td>{{meta.metd_id}}</td>
-                    <td>{{meta.meta!.met_anio}}</td>
-                    <td>{{meta.meta!.met_fecha_inicio}} / {{meta.meta!.met_fecha_fin}}</td>
-                    <td>{{meta.centro_de_formacion!.centro_de_formacion}}</td>
-                    <td>{{meta.modalidad!.modalidad}}</td>
-                    <td>{{meta.met_formacion_operario}}</td>
-                    <td>{{meta.met_formacion_auxiliar}}</td>
-                    <td>{{meta.met_formacion_tecnico}}</td>
-                    <td>{{meta.met_formacion_tecnologo}}</td>
-                    <td>{{meta.met_formacion_evento}}</td>
-                    <td>{{meta.met_formacion_profundizacion_tecnica}}</td>
-                    <td>{{meta.met_formacion_bilinguismo}}</td>
-                    <td>{{meta.met_formacion_sin_bilinguismo}}</td>
+                    <td>{{detalle.estd_id}}</td>
+                    <td>{{detalle.meta!.met_anio}}</td>
+                    <td>{{detalle.meta!.met_fecha_inicio}} / {{detalle.meta!.met_fecha_fin}}</td>
+                    <td>{{detalle.modalidad!.modalidad}}</td>
+                    <td>{{detalle.estrategia!.est_nombre}}</td>
+                    <td>{{detalle.estd_operario_meta}}</td>
+                    <td>{{detalle.estd_auxiliar_meta}}</td>
+                    <td>{{detalle.estd_tecnico_meta}}</td>
+                    <td>{{detalle.estd_tecnologo}}</td>
+                    <td>{{detalle.estd_evento}}</td>
+                    <td>{{detalle.estd_profundizacion_tecnica_meta}}</td>
+                    <td>{{detalle.estd_bilinguismo}}</td>
+                    <td>{{detalle.estd_sin_bilinguismo}}</td>
                     <td *appCanUseActions>
-                        <ng-container *ngTemplateOutlet="updateDelete; context:{meta,$index}"></ng-container>
+                        <ng-container *ngTemplateOutlet="updateDelete; context:{detalle,$index}"></ng-container>
                     </td>
                 </tr>
             }
@@ -133,7 +113,7 @@
             (nzPageIndexChange)="changePage($event)"
             [nzHideOnSinglePage]="true"
             [nzPageIndex]="page"
-            [nzTotal]="numero_metas"
+            [nzTotal]="numero_detalles"
             [nzPageSize]="page_size">
         </nz-pagination>
     </div>
@@ -144,28 +124,21 @@
             <ng-icon name="lucideGoal"></ng-icon>
         </div>
         <div nz-col>
-            <h1>Gestión formacion regular</h1>
+            <h1>Gestión Programas de Metas</h1>
         </div>
     </div>
 </ng-template>
 <ng-template #loadingImg>
     <app-sena-loading [loading]="loading"></app-sena-loading>
 </ng-template>
-<ng-template #updateDelete let-meta="meta" let-i="index">
-    <app-metas-formacion-actions
-        [metaFormacion]="meta"
-        [index]="i"
-        type_actions="buttons"
-        (delete)="onDelete($event)"
-        (update)="onUpdate($event)"
-        (setLoading)="onLoad($event)">
-    </app-metas-formacion-actions>
+<ng-template #updateDelete let-estrategia="meta" let-i="index">
+    <app-estrategia-detalle-actions>
+    </app-estrategia-detalle-actions>
 </ng-template>
 <ng-template #actionButton>
-    <app-metas-formacion-actions
-        (create)="onCreate($event)"
-        (setLoading)="onLoad($event)"
-        *appCanUseActions>
-    </app-metas-formacion-actions>
+    <app-estrategia-actions>
+    </app-estrategia-actions>
+    <app-estrategia-detalle-actions>
+    </app-estrategia-detalle-actions>
 </ng-template>
 
