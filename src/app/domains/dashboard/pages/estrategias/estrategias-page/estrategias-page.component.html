@@ -56,6 +56,23 @@
             (ngModelChange)="onChangeFin()"
         ></nz-date-picker>
     </div>
+    <div class="flex justify-center gap-2 px-1 py-3">
+        @for (estrategia_item of estrategias; track $index) {
+            <app-estrategia-card 
+                (onSelect)="onChangeEstrategia($event)"
+                [estrategia]="estrategia_item" 
+                [seleccionada]="estrategia">
+            </app-estrategia-card>
+        }
+    </div>
+    <div class="w-full flex justify-end py-2">
+        <nz-pagination
+            (nzPageIndexChange)="changePage($event)"
+            [nzPageIndex]="page_estrategia"
+            [nzTotal]="num_estrategia"
+            [nzPageSize]="size_estrategia">
+        </nz-pagination>
+    </div>
     <nz-table
         class="poblaciones-table"
         #detallesTable
@@ -136,8 +153,9 @@
     </app-estrategia-detalle-actions>
 </ng-template>
 <ng-template #actionButton>
-    <app-estrategia-actions>
-    </app-estrategia-actions>
+    <!-- <app-estrategia-actions
+        [long_title]="true">
+    </app-estrategia-actions> -->
     <app-estrategia-detalle-actions>
     </app-estrategia-detalle-actions>
 </ng-template>

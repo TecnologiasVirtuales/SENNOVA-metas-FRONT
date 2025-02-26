@@ -26,7 +26,6 @@ import { MetaModel } from '@shared/models/meta.model';
 import { ModalidadModel } from '@shared/models/modalidad.model';
 import { EstrategiaModel } from '@shared/models/estrategia.model';
 import { formatDateToString } from '@shared/functions/date.functions';
-import { CentroFormacionModel } from '@shared/models/centro-formacion.model';
 import { CentroFormacionService } from '@shared/services/centro-formacion.service';
 
 @Component({
@@ -49,7 +48,7 @@ import { CentroFormacionService } from '@shared/services/centro-formacion.servic
     NzSpinModule,
     EstrategiaActionsComponent,
     EstrategiaCardComponent,
-    EstrategiaDetalleActionsComponent
+    EstrategiaDetalleActionsComponent,
   ],
   templateUrl: './estrategias-page.component.html',
   styleUrl: './estrategias-page.component.css'
@@ -88,6 +87,7 @@ export class EstrategiasPageComponent {
   search_modalidad?:string;
   search_modalidad_sub?:Subscription;
   search_modalidad_subject:BehaviorSubject<string> = new BehaviorSubject<string>('');
+  size_estrategia:number = 5;
   estrategia?:string;
   estrategias:EstrategiaModel[] = [];
   is_loading_estrategia:boolean = true;
@@ -159,7 +159,13 @@ export class EstrategiasPageComponent {
     this.loadData();
   }
 
-  onChangeEstrategia(){
+  onChangeEstrategia(estrategia:EstrategiaModel){
+    if(this.estrategia == estrategia.est_nombre){
+      this.estrategia = undefined;
+      this.loadData();
+      return;
+    }
+    this.estrategia = estrategia.est_nombre;
     this.loadData();
   }
 
@@ -261,7 +267,7 @@ export class EstrategiasPageComponent {
   private getEstrategia(){
     let filters:{[key:string]:string|number} = {};    
     if(this.search_estrategia && this.search_estrategia.trim().length > 0) filters['est_nombre'] = this.search_estrategia;
-    return this.estrategias_service.getAll({filter:filters,page_number:this.page_estrategia});
+    return this.estrategias_service.getAll({filter:filters,page_number:this.page_estrategia,page_size:this.size_estrategia});
   }
 
   onScrollEstrategia(){

@@ -13,7 +13,6 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { Subscription } from 'rxjs';
 import { BilinguismoActionsComponent } from '../components/bilinguismo-actions/bilinguismo-actions.component';
-import { AuthLayoutComponent } from "../../../../auth/auth-layout/auth-layout.component";
 
 @Component({
   selector: 'app-bilinguismo-page',

@@ -36,7 +36,7 @@ export class NivelFormacionFormComponent extends FormStyle implements OnInit{
 
   constructor(){
     super();
-    this.form = this. form_builder.group({
+    this.form = this.form_builder.group({
       nivel_formacion:new FormControl(null,[
         Validators.required,
         Validators.maxLength(60),
