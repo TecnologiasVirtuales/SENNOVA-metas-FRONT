@@ -15,14 +15,14 @@ export const side_routes:Routes = [
             {
                 path:'',
                 pathMatch:'full',
-                redirectTo:'usuarios'
+                redirectTo:'modalidades'
             },
-            {
-                path:'usuarios',
-                title:'Gestión de usuarios',
-                data:{breadcrumb:'Gestión de usuarios',icon:'heroUserGroupSolid'},
-                loadComponent:()=>import('@domains/dashboard/pages/usuario/usuario-page/usuario-page.component').then(c=>c.UsuarioPageComponent)
-            },
+            // {
+            //     path:'usuarios',
+            //     title:'Gestión de usuarios',
+            //     data:{breadcrumb:'Gestión de usuarios',icon:'heroUserGroupSolid'},
+            //     loadComponent:()=>import('@domains/dashboard/pages/usuario/usuario-page/usuario-page.component').then(c=>c.UsuarioPageComponent)
+            // },
             {
                 path:'modalidades',
                 title:'Gestión de Modalidades',
@@ -119,6 +119,12 @@ export const side_routes:Routes = [
                 title:'Retiros',
                 data:{breadcrumb:'Retiros', icon:'lucideTable2'},
                 loadComponent:()=>import('@domains/dashboard/pages/reportes/pages/reporte-retirados/reporte-retirados-page/reporte-retirados-page.component').then(c=>c.ReporteRetiradosPageComponent)
+            },
+            {
+                path:'programas',
+                title:'Programas',
+                data:{breadcrumb:'Programas', icon:'lucideTable2'},
+                loadComponent:()=>import('@domains/dashboard/pages/reportes/pages/reporte-programas/reporte-programas-page/reporte-programas-page.component').then(c=>c.ReporteProgramasPageComponent)
             }
         ]
     }

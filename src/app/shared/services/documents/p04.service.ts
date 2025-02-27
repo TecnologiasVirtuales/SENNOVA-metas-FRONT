@@ -4,6 +4,7 @@ import { getQueryUrl } from '@shared/functions/url.functions';
 import { P04CentroFormacionModel, P04DesercionesModel, P04FichaModel, P04JornadaModel, P04ModalidadModel, P04MunicipioModel, P04NivelModel, P04ProgramaModel, P04RegionalModel } from '@shared/models/p04.model';
 import { PaginateModel } from '@shared/models/paginate.model';
 import { QueryUrlModel } from '@shared/models/query-url.model';
+import { ReporteChartModel } from '@shared/models/reporte-chart.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,11 @@ export class P04Service {
 
   upload(form_data:FormData){
     return this.http.post(`${this.url}/upload/`,form_data);
+  }
+
+  countProgramasMunicipio(data?: QueryUrlModel) {
+    const url: string = getQueryUrl(`${this.url}/count-programas-municipio/`, data);
+    return this.http.get<ReporteChartModel>(url);
   }
 
   getDeserciones(data?: QueryUrlModel) {

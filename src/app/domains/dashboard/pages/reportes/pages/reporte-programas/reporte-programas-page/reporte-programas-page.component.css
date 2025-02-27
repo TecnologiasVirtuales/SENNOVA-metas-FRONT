@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.table{
+    @apply w-1/2 mx-auto;
+}
+
+::ng-deep .ant-table-container{
+    @apply overflow-y-scroll overflow-x-scroll;
+}
