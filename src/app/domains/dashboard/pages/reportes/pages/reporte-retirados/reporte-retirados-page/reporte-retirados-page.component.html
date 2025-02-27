@@ -1,0 +1,228 @@
+<nz-card
+    nz-col
+    [nzSpan]="24"
+    [nzTitle]="pageTitle">
+    <div class="flex justify-between py-2">
+        <div class="flex-col gap-3">
+            <h2 class="text-[--primary-green-color] font-semibold text-2xl">Aprendices Sena:</h2>
+            <div class="flex gap-3">
+                <div class="flex gap-2">
+                    <span class="font-semibold text-xl">Total:</span>
+                    <input class="flex p-2 w-fit text-center align-middle text-gray-600" 
+                        nz-input 
+                        [disabled]="true" 
+                        [value]="deserciones.total">
+                </div>
+                <div class="flex gap-2">
+                    <span class="font-semibold text-xl">Activos:</span>
+                    <input class="flex p-2 w-fit text-center align-middle text-gray-600" 
+                        nz-input 
+                        [disabled]="true" 
+                        [value]="deserciones.activos">
+                </div>
+                <div class="flex gap-2">
+                    <span class="font-semibold text-xl">Desertados:</span>
+                    <input class="flex p-2 w-fit text-center align-middle text-gray-600" 
+                        nz-input 
+                        [disabled]="true" 
+                        [value]="deserciones.desertados">
+                </div>
+            </div>
+        </div>
+        <nz-select [(ngModel)]="page_size" (ngModelChange)="sizeChange()">
+            <nz-option [nzLabel]="10" [nzValue]="10"></nz-option>
+            <nz-option [nzLabel]="20" [nzValue]="20"></nz-option>
+            <nz-option [nzLabel]="30" [nzValue]="30"></nz-option>
+            <nz-option [nzLabel]="40" [nzValue]="40"></nz-option>
+            <nz-option [nzLabel]="50" [nzValue]="50"></nz-option>
+            <nz-option [nzLabel]="60" [nzValue]="60"></nz-option>
+            <nz-option [nzLabel]="70" [nzValue]="70"></nz-option>
+            <nz-option [nzLabel]="80" [nzValue]="80"></nz-option>
+            <nz-option [nzLabel]="90" [nzValue]="90"></nz-option>
+            <nz-option [nzLabel]="100" [nzValue]="100"></nz-option>        
+        </nz-select>
+    </div>
+    <div class="flex gap-2 py-3 px-2">
+        <nz-date-picker
+            class="w-1/2"
+            [(ngModel)]="fecha_inicio"
+            (ngModelChange)="onChangeInicio()"
+            nzPlaceHolder="Fecha de inicio"
+        ></nz-date-picker>
+        <nz-date-picker
+            class="w-1/2"
+            [(ngModel)]="fecha_fin"
+            (ngModelChange)="onChangeFin()"
+            nzPlaceHolder="Fecha de terminación"
+        ></nz-date-picker>
+    </div>
+    <div class="flex gap-2 py-3 px-2">
+        <nz-select
+            class="w-1/3"
+            [(ngModel)]="regional"
+            (ngModelChange)="onChangeRegional()"
+            (nzScrollToBottom)="onScrollRegionales()"
+            (nzOnSearch)="onSearchRegional($event)"
+            [nzAllowClear]="true"
+            [nzShowSearch]="true"
+            [nzServerSearch]="true"
+            [nzDropdownRender]="loadingRegional"
+            [nzLoading]="is_loading_modalidad"
+            nzPlaceHolder="Regionales">
+            @for (regional of regionales; track $index) {
+                <nz-option [nzLabel]="regional.nombre_regional" [nzValue]="regional.nombre_regional"></nz-option>
+            }
+            <ng-template #loadingRegional>
+                <nz-spin [nzSpinning]="is_loading_regional">
+                </nz-spin>
+            </ng-template>
+        </nz-select>
+        <nz-select
+            class="w-1/3"
+            [(ngModel)]="centro_formacion"
+            (ngModelChange)="onChangeCentro()"
+            (nzScrollToBottom)="onScrollCentroFormacion()"
+            (nzOnSearch)="onSearchCentroFormacion($event)"
+            [nzAllowClear]="true"
+            [nzShowSearch]="true"
+            [nzServerSearch]="true"
+            [nzDropdownRender]="loadingCentro"
+            [nzLoading]="is_loading_centro_formacion"
+            [disabled]="!this.regional"
+            nzPlaceHolder="Centros de formación">
+            @for (centro of centros; track $index) {
+                <nz-option [nzLabel]="centro.nombre_centro" [nzValue]="centro.nombre_centro"></nz-option>
+            }
+            <ng-template #loadingCentro>
+                <nz-spin [nzSpinning]="is_loading_centro_formacion">
+                </nz-spin>
+            </ng-template>
+        </nz-select>
+        <nz-select
+            class="w-1/3"
+            [(ngModel)]="municipio"
+            (ngModelChange)="onChangeMunicipio()"
+            (nzScrollToBottom)="onScrollMunicipio()"
+            (nzOnSearch)="onSearchMunicipio($event)"
+            [nzAllowClear]="true"
+            [nzShowSearch]="true"
+            [nzServerSearch]="true"
+            [nzDropdownRender]="loadingMunicipio"
+            [nzLoading]="is_loading_municipio"
+            [disabled]="!this.regional"
+            nzPlaceHolder="Municipios">
+            @for (municipios of municipios; track $index) {
+                <nz-option [nzLabel]="municipios.nombre_municipio_curso" [nzValue]="municipios.nombre_municipio_curso"></nz-option>
+            }
+            <ng-template #loadingMunicipio>
+                <nz-spin [nzSpinning]="is_loading_municipio">
+                </nz-spin>
+            </ng-template>
+        </nz-select>
+    </div>
+    <div class="flex gap-2 py-3 px-2">
+        <nz-select
+            class="w-1/2"
+            [(ngModel)]="modalidad"
+            (ngModelChange)="onChangeModalidad()"
+            (nzScrollToBottom)="onScrollModalidad()"
+            (nzOnSearch)="onSearchModalidad($event)"
+            [nzAllowClear]="true"
+            [nzShowSearch]="true"
+            [nzServerSearch]="true"
+            [nzDropdownRender]="loadingModalidad"
+            [nzLoading]="is_loading_modalidad"
+            nzPlaceHolder="Modalidades">
+            @for (modalidad of modalidades; track $index) {
+                <nz-option [nzLabel]="modalidad.modalidad_formacion" [nzValue]="modalidad.modalidad_formacion"></nz-option>
+            }
+            <ng-template #loadingModalidad>
+                <nz-spin [nzSpinning]="is_loading_modalidad">
+                </nz-spin>
+            </ng-template>
+        </nz-select>
+        <nz-select
+            class="w-1/2"
+            [(ngModel)]="jornada"
+            (ngModelChange)="onChangeJornada()"
+            (nzScrollToBottom)="onScrollJornada()"
+            (nzOnSearch)="onSearchJornada($event)"
+            [nzAllowClear]="true"
+            [nzShowSearch]="true"
+            [nzServerSearch]="true"
+            [nzDropdownRender]="loadingJornada"
+            [nzLoading]="is_loading_jornada"
+            nzPlaceHolder="Jornadas">
+            @for (jornada of jornadas; track $index) {
+                <nz-option [nzLabel]="jornada.nombre_jornada" [nzValue]="jornada.nombre_jornada"></nz-option>
+            }
+            <ng-template #loadingJornada>
+                <nz-spin [nzSpinning]="is_loading_jornada">
+                </nz-spin>
+            </ng-template>
+        </nz-select>
+    </div>
+    <div class="fichas-table">
+        <nz-table
+            #fichaTable
+            [nzPageSize]="page_size"
+            [nzData]="fichas"
+            [nzShowPagination]="false">
+            <thead>
+                <tr>
+                    <th>N. Ficha</th>
+                    <th>Programa</th>
+                    <th>Fechas</th>
+                    <th>Estado</th>
+                    <th>Regional - Centro de formación</th>
+                    <th>Nivel de formación</th>
+                    <th>Jornada</th>
+                    <th>Departamento - Municipio</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (ficha of fichaTable.data; track $index) {
+                    <tr>
+                        <td>{{ficha.identificador_ficha}}</td>
+                        <td>{{ficha.nombre_programa_formacion}}</td>
+                        <td>{{ficha.fecha_inicio_ficha}} / {{ficha.fecha_terminacion_ficha}}</td>
+                        <td>{{ficha.estado_curso}}</td>
+                        <td>
+                            <div class="flex gap-1">
+                                <span>{{ficha.nombre_regional}}</span>
+                                <span>{{ficha.nombre_centro}}</span>
+                            </div>
+                        </td>
+                        <td>{{ficha.nivel_formacion}}</td>
+                        <td>{{ficha.nombre_jornada}}</td>
+                        <td>
+                            <div class="flex gap-1">
+                                <span class="w-full">{{ficha.nombre_departamento_curso}}</span>
+                                <span class="w-full">{{ficha.nombre_municipio_curso}}</span>    
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </nz-table>
+        <div class="flex py-3 w-full justify-end">
+            <nz-pagination
+                (nzPageIndexChange)="changePage($event)"
+                [nzHideOnSinglePage]="true"
+                [nzPageIndex]="page_table"
+                [nzTotal]="numero_fichas"
+                [nzPageSize]="page_size">
+            </nz-pagination>
+        </div>
+    </div>
+</nz-card>
+<ng-template #pageTitle>
+    <div class="page-title" nz-row nzAlign="middle" nzGutter="15">
+        <div nz-col>
+            <ng-icon name="lucideTable2"></ng-icon>
+        </div>
+        <div nz-col>
+            <h1>Estado de las fichas sena</h1>
+        </div>
+    </div>
+</ng-template>

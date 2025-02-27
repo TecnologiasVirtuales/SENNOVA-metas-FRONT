@@ -1,0 +1,11 @@
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::ng-deep .ant-modal-body {
+    @apply max-h-[500px];
+  }
+  
+::ng-deep .ant-modal-body > .ng-star-inserted {
+@apply overflow-y-auto h-full;
+} */

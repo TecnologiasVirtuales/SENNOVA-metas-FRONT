@@ -113,6 +113,12 @@ export const side_routes:Routes = [
                 title:'Estado de las fichas sena',
                 data:{breadcrumb:'Estado de las fichas sena', icon:'heroChartPie'},
                 loadComponent:()=>import('@domains/dashboard/pages/reportes/pages/reporte-fichas/reporte-fichas-page/reporte-fichas-page.component').then(c=>c.ReporteFichasPageComponent)
+            },
+            {
+                path:'retiros',
+                title:'Retiros',
+                data:{breadcrumb:'Retiros', icon:'lucideTable2'},
+                loadComponent:()=>import('@domains/dashboard/pages/reportes/pages/reporte-retirados/reporte-retirados-page/reporte-retirados-page.component').then(c=>c.ReporteRetiradosPageComponent)
             }
         ]
     }
