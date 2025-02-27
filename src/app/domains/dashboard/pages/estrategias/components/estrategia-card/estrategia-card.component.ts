@@ -20,7 +20,7 @@ import { EstrategiaActionsComponent } from '../estrategia-actions/estrategia-act
 export class EstrategiaCardComponent {
   @Input({required:true}) estrategia:EstrategiaModel = {} as EstrategiaModel;
   @Input() seleccionada?:string;
-
+  @Input({required:true}) index:number = 0;
 
   @Output() onSelect:EventEmitter<EstrategiaModel> = new EventEmitter();
 

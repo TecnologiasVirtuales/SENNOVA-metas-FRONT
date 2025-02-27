@@ -1,3 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.card{
+    @apply min-w-[125px] w-1/5 border rounded-md;
+    @apply border border-[--primary-green-color];
+}
+
+.card-button{
+    @apply w-full h-full p-4;
+}
+
+.card-button__title{
+    @apply font-semibold text-[--primary-green-color];
+}
+
+.card.selected{
+    @apply border-2;
+}
+
+::ng-deep .ant-card-actions.ng-star-inserted {
+    @apply rounded-b-md border-t border-[--primary-green-color];
+}
+
 ::ng-deep .ant-card-body{
-    padding:0;
+    @apply p-0;
 }

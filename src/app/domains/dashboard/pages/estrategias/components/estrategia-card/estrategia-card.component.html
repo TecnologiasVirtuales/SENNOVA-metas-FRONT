@@ -1,16 +1,16 @@
 <nz-card
-    [ngClass]="{'border-gray-900':seleccionada==estrategia.est_nombre}"
-    class="min-w-[100px] w-1/7 border rounded-md"
+    [ngClass]="{'selected':seleccionada==estrategia.est_nombre}"
+    class="card"
     [nzActions]="[ actionEdit, actionDelete]">
-    <div class="w-full h-full p-4" (click)="selectEstrategia()">
-        <span class="font-semibold">
+    <button class="card-button" (click)="selectEstrategia()">
+        <span class="card-button__title">
             {{estrategia.est_nombre|upperCase}}
         </span>
-    </div>
+    </button>
 </nz-card>
 <ng-template #actionEdit>
-    <!-- <app-estrategia-actions type_actions="actualizar"></app-estrategia-actions> -->
+    <app-estrategia-actions [estrategia]="estrategia" [index]="index" type_actions="actualizar" [show_title]="false"></app-estrategia-actions>
 </ng-template>
 <ng-template #actionDelete>
-    <!-- <app-estrategia-actions type_actions="eliminar"></app-estrategia-actions> -->
+    <app-estrategia-actions [estrategia]="estrategia" [index]="index" type_actions="eliminar" [show_title]="false"></app-estrategia-actions>
 </ng-template>

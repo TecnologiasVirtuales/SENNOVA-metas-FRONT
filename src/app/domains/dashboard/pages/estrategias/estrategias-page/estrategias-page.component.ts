@@ -58,7 +58,6 @@ export class EstrategiasPageComponent {
   private estrategia_detalle_service = inject(EstrategiasDetalleService);
   private modalidad_service = inject(ModalidadService);
   private meta_service = inject(MetasService);
-  private centro_service = inject(CentroFormacionService);
   private estrategias_service = inject(EstrategiasService);
   private data_sub?: Subscription;
 

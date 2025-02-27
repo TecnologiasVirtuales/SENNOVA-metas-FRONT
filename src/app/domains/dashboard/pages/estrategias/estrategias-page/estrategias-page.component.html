@@ -4,7 +4,7 @@
     [nzTitle]="pageTitle"
     [nzExtra]="actionButton"
     nzBorderless>
-    <div class="flex gap-2 py-3">
+    <div class="flex gap-2 py-3 px-2">
         <nz-select
             class="w-1/6"
             [(ngModel)]="meta"
@@ -61,7 +61,8 @@
             <app-estrategia-card 
                 (onSelect)="onChangeEstrategia($event)"
                 [estrategia]="estrategia_item" 
-                [seleccionada]="estrategia">
+                [seleccionada]="estrategia"
+                [index]="$index">
             </app-estrategia-card>
         }
     </div>
@@ -153,10 +154,12 @@
     </app-estrategia-detalle-actions>
 </ng-template>
 <ng-template #actionButton>
-    <!-- <app-estrategia-actions
-        [long_title]="true">
-    </app-estrategia-actions> -->
-    <app-estrategia-detalle-actions>
-    </app-estrategia-detalle-actions>
+    <div class="flex gap-2">
+        <app-estrategia-actions
+            [long_title]="true">
+        </app-estrategia-actions>
+        <app-estrategia-detalle-actions>
+        </app-estrategia-detalle-actions>
+    </div>
 </ng-template>
 

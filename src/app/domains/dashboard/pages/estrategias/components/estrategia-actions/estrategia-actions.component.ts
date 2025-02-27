@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
-import { NgIconsModule, provideIcons } from '@ng-icons/core';
-import { lucideDelete, lucidePlus, lucideSquarePen } from '@ng-icons/lucide';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { lucidePlus, lucideSquarePen, lucideTrash } from '@ng-icons/lucide';
 import { ModalFooterComponent } from '@shared/components/modal-footer/modal-footer.component';
 import { EstrategiaModel } from '@shared/models/estrategia.model';
 import { EstrategiasService } from '@shared/services/estrategias.service';
@@ -22,12 +22,12 @@ import { EstrategiaFormComponent } from '../estrategia-form/estrategia-form.comp
     NzFlexModule,
     ModalFooterComponent,
     NzAlertModule,
-    NgIconsModule
+    NgIconComponent,
   ],
   templateUrl: './estrategia-actions.component.html',
   styleUrl: './estrategia-actions.component.css',
   viewProviders: [provideIcons({ 
-    lucideDelete,
+    lucideTrash,
     lucidePlus,
     lucideSquarePen
   })]
@@ -72,14 +72,23 @@ export class EstrategiaActionsComponent implements OnInit,OnDestroy{
   }
 
   get icon(){
-    return '';
+    switch (this.type_actions) {
+      case 'actualizar':
+        return 'lucideSquarePen';
+      case 'crear':
+        return 'lucidePlus';
+      case 'eliminar':
+        return 'lucideTrash'
+    }
   }
 
   ngOnInit(): void {
   }
 
   ngOnDestroy(): void {
-    
+    this.closeValidSub();
+    this.closeModalSub();
+    this.resetDataSub();
   }
 
   private startValidSub(){
@@ -102,7 +111,7 @@ export class EstrategiaActionsComponent implements OnInit,OnDestroy{
         const {form} = response;
         if(!form) return this.loadingStatus(false);
         this.instance!.estrategia
-          ? this.editarEstrategia(form,this.estrategia!.id)
+          ? this.editarEstrategia(form,this.estrategia!.est_id)
           : this.crearEstrategia(form);
         return this.loadingStatus(false);
       }
@@ -139,6 +148,8 @@ export class EstrategiaActionsComponent implements OnInit,OnDestroy{
   }
 
   private editarEstrategia(form:EstrategiaModel,id:number){
+    console.log(this.estrategia);
+    
     this.loadingStatus(true);
     this.resetDataSub();
     this.data_sub = this.estrategia_service.update(form,id)
@@ -153,7 +164,7 @@ export class EstrategiaActionsComponent implements OnInit,OnDestroy{
   eliminarEstrategia(){
     this.loadingStatus(true);
     this.resetDataSub();
-    this.data_sub = this.estrategia_service.delete(this.estrategia!.id)
+    this.data_sub = this.estrategia_service.delete(this.estrategia!.est_id)
       .subscribe({
         next:()=>{
           this.delete.emit(this.index!);
