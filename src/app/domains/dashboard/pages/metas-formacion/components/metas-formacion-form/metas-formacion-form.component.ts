@@ -34,7 +34,6 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
   styleUrls: [
     './metas-formacion-form.component.css',
     '../../../../../../shared/styles/forms.style.css'
-
   ]
 })
 export class MetasFormacionFormComponent extends FormStyle implements OnInit, OnDestroy {

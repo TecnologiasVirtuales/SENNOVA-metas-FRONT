@@ -1,1 +1,46 @@
-<p>estrategia-detalle-actions works!</p>
+@switch (type_actions) {
+    @case ('crear') {
+        <button [ngClass]="{'no-title':!show_title}" class="create-button button" (click)="openForm()">
+            <ng-container *ngTemplateOutlet="titleTemplate" ></ng-container>
+        </button>
+    }
+    @case ('actualizar') {
+        <button [ngClass]="{'no-title':!show_title}" class="update-button button" (click)="openForm()">
+            <ng-container *ngTemplateOutlet="titleTemplate" ></ng-container>
+        </button>
+    }
+    @case ('eliminar') {
+        <button [ngClass]="{'no-title':!show_title}" class="delete-button button" (click)="onDelete()">
+            <ng-container *ngTemplateOutlet="titleTemplate" ></ng-container>
+        </button>
+    }
+    
+}
+
+<ng-template #titleTemplate>
+    <div class="title-container">
+        @if (icons||!show_title) {
+            <ng-icon [name]="icon"></ng-icon>
+        }
+        @if(show_title){
+            <span>{{title}}</span>
+        }
+    </div>
+</ng-template>
+
+<ng-template #alertContent>
+    <nz-alert 
+        nzType="warning" 
+        nzMessage="Eliminar meta de la estrategia" 
+        nzDescription="Esta acción no puede revertirse"
+        nzShowIcon>
+    </nz-alert>
+</ng-template>
+
+<ng-template #alertFooter>
+    <app-modal-footer type="alert" [loading]="save_loading" (ok)="eliminarDetalle()" (cancel)="handleCancelar()"></app-modal-footer>
+</ng-template>
+
+<ng-template #saveFooter>
+    <app-modal-footer type="save" [saveDisabled]="disabled" [loading]="save_loading" (save)="handleGuardar()" (cancel)="handleCancelar()"></app-modal-footer>
+</ng-template>

@@ -55,11 +55,21 @@
             [(ngModel)]="fecha_fin"
             (ngModelChange)="onChangeFin()"
         ></nz-date-picker>
+        <input
+            class="w-1/6"
+            nz-input 
+            type="text" 
+            [(ngModel)]="search_estrategia"
+            (ngModelChange)="onSearchEstrategia($event)"
+            placeholder="buscar estrategia">
     </div>
-    <div class="flex justify-center gap-2 px-1 py-3">
+    <div class="flex gap-2 px-1 py-3">
         @for (estrategia_item of estrategias; track $index) {
             <app-estrategia-card 
                 (onSelect)="onChangeEstrategia($event)"
+                (setLoading)="onLoad($event)"
+                (update)="onUpdateEstrategia($event)"
+                (delete)="onDeleteEstrategia($event)"
                 [estrategia]="estrategia_item" 
                 [seleccionada]="estrategia"
                 [index]="$index">
@@ -69,61 +79,63 @@
     <div class="w-full flex justify-end py-2">
         <nz-pagination
             (nzPageIndexChange)="changePage($event)"
+            [nzHideOnSinglePage]="true"
             [nzPageIndex]="page_estrategia"
             [nzTotal]="num_estrategia"
             [nzPageSize]="size_estrategia">
         </nz-pagination>
     </div>
-    <nz-table
-        class="poblaciones-table"
-        #detallesTable
-        [nzData]="estrategias_detalle"
-        [nzLoading]="loading"
-        [nzLoadingIndicator]="loadingImg"
-        [nzShowPagination]="false"
-        nzBordered>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Año</th>
-                <th>Fechas</th>
-                <th>Modalidad</th>
-                <th>Estrategia</th>
-                <th>Operarios</th>
-                <th>Auxiliares</th>
-                <th>Tecnicos</th>
-                <th>Tecnologos</th>
-                <th>Eventos</th>
-                <th>Profundicación tecnica</th>
-                <th>Con Bilingüismo</th>
-                <th>Sin Bilingüismo</th>
-                <th *appCanUseActions class="bilinguismo-table_actions">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (detalle of detallesTable.data; track $index) {
+    <div class="detalles-table">
+        <nz-table
+            #detallesTable
+            [nzData]="estrategias_detalle"
+            [nzLoading]="loading"
+            [nzLoadingIndicator]="loadingImg"
+            [nzShowPagination]="false"
+            nzBordered>
+            <thead>
                 <tr>
-                    <td>{{detalle.estd_id}}</td>
-                    <td>{{detalle.meta!.met_anio}}</td>
-                    <td>{{detalle.meta!.met_fecha_inicio}} / {{detalle.meta!.met_fecha_fin}}</td>
-                    <td>{{detalle.modalidad!.modalidad}}</td>
-                    <td>{{detalle.estrategia!.est_nombre}}</td>
-                    <td>{{detalle.estd_operario_meta}}</td>
-                    <td>{{detalle.estd_auxiliar_meta}}</td>
-                    <td>{{detalle.estd_tecnico_meta}}</td>
-                    <td>{{detalle.estd_tecnologo}}</td>
-                    <td>{{detalle.estd_evento}}</td>
-                    <td>{{detalle.estd_profundizacion_tecnica_meta}}</td>
-                    <td>{{detalle.estd_bilinguismo}}</td>
-                    <td>{{detalle.estd_sin_bilinguismo}}</td>
-                    <td *appCanUseActions>
-                        <ng-container *ngTemplateOutlet="updateDelete; context:{detalle,$index}"></ng-container>
-                    </td>
+                    <th>Id</th>
+                    <th>Año</th>
+                    <th>Fechas</th>
+                    <th>Modalidad</th>
+                    <th>Estrategia</th>
+                    <th>Operarios</th>
+                    <th>Auxiliares</th>
+                    <th>Tecnicos</th>
+                    <th>Tecnologos</th>
+                    <th>Eventos</th>
+                    <th>Profundicación tecnica</th>
+                    <th>Con Bilingüismo</th>
+                    <th>Sin Bilingüismo</th>
+                    <th *appCanUseActions class="bilinguismo-table_actions">Acciones</th>
                 </tr>
-            }
-        </tbody>
-    </nz-table>
-    <ng-container *ngTemplateOutlet="pagination"></ng-container>
+            </thead>
+            <tbody>
+                @for (detalle of detallesTable.data; track $index) {
+                    <tr>
+                        <td>{{detalle.estd_id}}</td>
+                        <td>{{detalle.meta!.met_anio}}</td>
+                        <td>{{detalle.meta!.met_fecha_inicio}} / {{detalle.meta!.met_fecha_fin}}</td>
+                        <td>{{detalle.modalidad!.modalidad}}</td>
+                        <td>{{detalle.estrategia!.est_nombre}}</td>
+                        <td>{{detalle.estd_operario_meta}}</td>
+                        <td>{{detalle.estd_auxiliar_meta}}</td>
+                        <td>{{detalle.estd_tecnico_meta}}</td>
+                        <td>{{detalle.estd_tecnologo}}</td>
+                        <td>{{detalle.estd_evento}}</td>
+                        <td>{{detalle.estd_profundizacion_tecnica_meta}}</td>
+                        <td>{{detalle.estd_bilinguismo}}</td>
+                        <td>{{detalle.estd_sin_bilinguismo}}</td>
+                        <td *appCanUseActions>
+                            <ng-container *ngTemplateOutlet="updateDelete; context:{detalle,$index}"></ng-container>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </nz-table>
+        <ng-container *ngTemplateOutlet="pagination"></ng-container>
+    </div>
 </nz-card>
 <ng-template #pagination>
     <div class="flex py-3 w-full justify-end">
@@ -139,26 +151,45 @@
 <ng-template #pageTitle>
     <div class="page-title" nz-row nzAlign="middle" nzGutter="15">
         <div nz-col>
-            <ng-icon name="lucideGoal"></ng-icon>
+            <ng-icon name="lucideCheckCheck"></ng-icon>
         </div>
         <div nz-col>
-            <h1>Gestión Programas de Metas</h1>
+            <h1>Gestión Estrategias Institucionales</h1>
         </div>
     </div>
 </ng-template>
 <ng-template #loadingImg>
     <app-sena-loading [loading]="loading"></app-sena-loading>
 </ng-template>
-<ng-template #updateDelete let-estrategia="meta" let-i="index">
-    <app-estrategia-detalle-actions>
-    </app-estrategia-detalle-actions>
+<ng-template #updateDelete let-detalle="detalle" let-i="index">
+    <div class="flex gap-1 justify-center items-center">
+        <app-estrategia-detalle-actions 
+            type_actions="actualizar" 
+            (update)="onUpdate($event)"
+            [icons]="true" 
+            [index]="i" 
+            [detalle]="detalle">
+        </app-estrategia-detalle-actions>
+        <app-estrategia-detalle-actions 
+            type_actions="eliminar" 
+            (delete)="onDelete($event)"
+            [icons]="true" 
+            [index]="i" 
+            [detalle]="detalle">
+        </app-estrategia-detalle-actions>
+    </div>
 </ng-template>
 <ng-template #actionButton>
     <div class="flex gap-2">
         <app-estrategia-actions
+            (create)="onCreateEstrategia($event)"
+            (setLoading)="onLoad($event)"
             [long_title]="true">
         </app-estrategia-actions>
-        <app-estrategia-detalle-actions>
+        <app-estrategia-detalle-actions 
+            (create)="onCreate($event)"
+            (setLoading)="onLoad($event)"
+            [long_title]="true">
         </app-estrategia-detalle-actions>
     </div>
 </ng-template>

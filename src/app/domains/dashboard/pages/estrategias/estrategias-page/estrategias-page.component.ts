@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgIconComponent } from '@ng-icons/core';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { SenaLoadingComponent } from '@shared/components/sena-loading/sena-loading.component';
 import { CanUseActionsDirective } from '@shared/directives/can-use-actions.directive';
 import { NzCardModule } from 'ng-zorro-antd/card';
@@ -27,6 +27,7 @@ import { ModalidadModel } from '@shared/models/modalidad.model';
 import { EstrategiaModel } from '@shared/models/estrategia.model';
 import { formatDateToString } from '@shared/functions/date.functions';
 import { CentroFormacionService } from '@shared/services/centro-formacion.service';
+import { lucideCheckCheck } from '@ng-icons/lucide';
 
 @Component({
   selector: 'app-estrategias-page',
@@ -51,7 +52,10 @@ import { CentroFormacionService } from '@shared/services/centro-formacion.servic
     EstrategiaDetalleActionsComponent,
   ],
   templateUrl: './estrategias-page.component.html',
-  styleUrl: './estrategias-page.component.css'
+  styleUrl: './estrategias-page.component.css',
+  viewProviders: [provideIcons({ 
+    lucideCheckCheck
+  })]
 })
 export class EstrategiasPageComponent {
 
@@ -267,6 +271,23 @@ export class EstrategiasPageComponent {
     let filters:{[key:string]:string|number} = {};    
     if(this.search_estrategia && this.search_estrategia.trim().length > 0) filters['est_nombre'] = this.search_estrategia;
     return this.estrategias_service.getAll({filter:filters,page_number:this.page_estrategia,page_size:this.size_estrategia});
+  }
+
+  onCreateEstrategia(estrategia:EstrategiaModel){
+    this.estrategias = [...this.estrategias,estrategia];
+  }
+
+  onUpdateEstrategia(data:{estrategia:EstrategiaModel, index:number}) {    
+    let {estrategia,index} = data;
+    let estrategias = [...this.estrategias];
+    estrategias[index] = estrategia;
+    this.estrategias = [...estrategias];
+  }
+
+  onDeleteEstrategia(index:number) {
+    let estrategias = [...this.estrategias];
+    estrategias.splice(index,1);
+    this.estrategias = [...estrategias];
   }
 
   onScrollEstrategia(){

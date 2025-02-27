@@ -148,8 +148,6 @@ export class EstrategiaActionsComponent implements OnInit,OnDestroy{
   }
 
   private editarEstrategia(form:EstrategiaModel,id:number){
-    console.log(this.estrategia);
-    
     this.loadingStatus(true);
     this.resetDataSub();
     this.data_sub = this.estrategia_service.update(form,id)

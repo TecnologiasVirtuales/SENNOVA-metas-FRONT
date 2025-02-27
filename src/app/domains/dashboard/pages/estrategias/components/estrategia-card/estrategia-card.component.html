@@ -9,8 +9,21 @@
     </button>
 </nz-card>
 <ng-template #actionEdit>
-    <app-estrategia-actions [estrategia]="estrategia" [index]="index" type_actions="actualizar" [show_title]="false"></app-estrategia-actions>
+    <app-estrategia-actions
+        (setLoading)="onLoading($event)"
+        (update)="onUpdate($event)"
+        [estrategia]="estrategia" 
+        [index]="index" 
+        type_actions="actualizar" 
+        [show_title]="false">
+    </app-estrategia-actions>
 </ng-template>
 <ng-template #actionDelete>
-    <app-estrategia-actions [estrategia]="estrategia" [index]="index" type_actions="eliminar" [show_title]="false"></app-estrategia-actions>
+    <app-estrategia-actions
+        (delete)="onDelete($event)"
+        [estrategia]="estrategia" 
+        [index]="index" 
+        type_actions="eliminar" 
+        [show_title]="false">
+    </app-estrategia-actions>
 </ng-template>

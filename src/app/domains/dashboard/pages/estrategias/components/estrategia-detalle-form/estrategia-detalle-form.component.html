@@ -1,1 +1,411 @@
-<p>estrategia-detalle-form works!</p>
+<form class="form-container" nz-form [formGroup]="form">
+    <!-- Select de Modalidad -->
+    <nz-form-item nz-col nzSpan="20">
+      <nz-form-control [nzErrorTip]="erroresModalidad">
+        <nz-form-label nzFor="modalidad" class="form-label" nzRequired>
+          <span class="form-label_text" nz-typography>Modalidad</span>
+        </nz-form-label>
+        <nz-input-group class="form-group">
+          <nz-select
+            nzId="modalidad"
+            [formControl]="field_modalidad"
+            (nzScrollToBottom)="onScrollModalidad()"
+            (nzOnSearch)="onSearchModalidad($event)"
+            [nzAllowClear]="true"
+            [nzShowSearch]="true"
+            [nzServerSearch]="true"
+            [nzDropdownRender]="loadingModalidad"
+            [nzLoading]="is_loading_modalidad"
+            nzPlaceHolder="Elija la modalidad de la meta">
+            @for (modalidad of modalidades; track $index) {
+              <nz-option [nzLabel]="modalidad.modalidad" [nzValue]="modalidad.id"></nz-option>
+            }
+          </nz-select>
+          <ng-template #loadingModalidad>
+            <nz-spin [nzSpinning]="is_loading_modalidad"></nz-spin>
+          </ng-template>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Select de Meta -->
+    <nz-form-item nz-col nzSpan="20">
+      <nz-form-control [nzErrorTip]="erroresMeta">
+        <nz-form-label nzFor="meta" class="form-label" nzRequired>
+          <span class="form-label_text" nz-typography>Meta</span>
+        </nz-form-label>
+        <nz-input-group class="form-group">
+          <nz-select
+            nzId="meta"
+            [formControl]="field_meta"
+            (nzScrollToBottom)="onScrollMeta()"
+            (nzOnSearch)="onSearchMeta($event)"
+            [nzAllowClear]="true"
+            [nzShowSearch]="true"
+            [nzServerSearch]="true"
+            [nzDropdownRender]="loadingMeta"
+            [nzLoading]="is_loading_meta"
+            nzPlaceHolder="Elija el año de la meta">
+            @for (meta of metas; track $index) {
+              <nz-option [nzLabel]="meta.met_anio" [nzValue]="meta.met_id"></nz-option>
+            }
+          </nz-select>
+          <ng-template #loadingMeta>
+            <nz-spin [nzSpinning]="is_loading_meta"></nz-spin>
+          </ng-template>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Select de Meta de la estrategia -->
+    <nz-form-item nz-col nzSpan="20">
+      <nz-form-control [nzErrorTip]="erroresEstrategia">
+        <nz-form-label nzFor="estrategia" class="form-label" nzRequired>
+          <span class="form-label_text" nz-typography>Meta de la estrategia</span>
+        </nz-form-label>
+        <nz-input-group class="form-group">
+          <nz-select
+            nzId="estrategia"
+            [formControl]="field_estrategia"
+            (nzScrollToBottom)="onScrollEstrategia()"
+            (nzOnSearch)="onSearchEstrategia($event)"
+            [nzAllowClear]="true"
+            [nzShowSearch]="true"
+            [nzServerSearch]="true"
+            [nzDropdownRender]="loadingEstrategia"
+            [nzLoading]="is_loading_estrategia"
+            nzPlaceHolder="Elija la estrategia">
+            @for (estrategia of estrategias; track $index) {
+              <nz-option [nzLabel]="estrategia.est_nombre" [nzValue]="estrategia.est_id"></nz-option>
+            }
+          </nz-select>
+          <ng-template #loadingEstrategia>
+            <nz-spin [nzSpinning]="is_loading_estrategia"></nz-spin>
+          </ng-template>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Input numérico: Operarios -->
+    <nz-form-item nz-col nzSpan="20">
+      <nz-form-control [nzErrorTip]="erroresOperario">
+        <nz-form-label nzFor="operario" class="form-label" nzRequired>
+          <span class="form-label_text" nz-typography>Operarios</span>
+        </nz-form-label>
+        <nz-input-group class="form-group">
+          <input class="form-input"
+            (focus)="onFocus($event)"
+            (blur)="onBlur($event)"
+            type="number"
+            nz-input
+            [formControl]="field_estd_operario_meta"
+            placeholder="Escriba la meta de operarios"
+            id="operario"
+            nz-typography/>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Input numérico: Auxiliares -->
+    <nz-form-item nz-col nzSpan="20">
+      <nz-form-control [nzErrorTip]="erroresAuxiliar">
+        <nz-form-label nzFor="auxiliar" class="form-label" nzRequired>
+          <span class="form-label_text" nz-typography>Auxiliares</span>
+        </nz-form-label>
+        <nz-input-group class="form-group">
+          <input class="form-input"
+            (focus)="onFocus($event)"
+            (blur)="onBlur($event)"
+            type="number"
+            nz-input
+            [formControl]="field_estd_auxiliar_meta"
+            placeholder="Escriba la meta de auxiliares"
+            id="auxiliar"
+            nz-typography/>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Input numérico: Técnicos -->
+    <nz-form-item nz-col nzSpan="20">
+      <nz-form-control [nzErrorTip]="erroresTecnico">
+        <nz-form-label nzFor="tecnico" class="form-label" nzRequired>
+          <span class="form-label_text" nz-typography>Técnicos</span>
+        </nz-form-label>
+        <nz-input-group class="form-group">
+          <input class="form-input"
+            (focus)="onFocus($event)"
+            (blur)="onBlur($event)"
+            type="number"
+            nz-input
+            [formControl]="field_estd_tecnico_meta"
+            placeholder="Escriba la meta de técnicos"
+            id="tecnico"
+            nz-typography/>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Input numérico: Profundización Técnica -->
+    <nz-form-item nz-col nzSpan="20">
+      <nz-form-control [nzErrorTip]="erroresProfundizacion">
+        <nz-form-label nzFor="profundizacion" class="form-label" nzRequired>
+          <span class="form-label_text" nz-typography>Profundización Técnica</span>
+        </nz-form-label>
+        <nz-input-group class="form-group">
+          <input class="form-input"
+            (focus)="onFocus($event)"
+            (blur)="onBlur($event)"
+            type="number"
+            nz-input
+            [formControl]="field_estd_profundizacion_tecnica_meta"
+            placeholder="Escriba la meta de profundización técnica"
+            id="profundizacion"
+            nz-typography/>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Input numérico: Tecnólogos -->
+    <nz-form-item nz-col nzSpan="20">
+      <nz-form-control [nzErrorTip]="erroresTecnologo">
+        <nz-form-label nzFor="tecnologo" class="form-label" nzRequired>
+          <span class="form-label_text" nz-typography>Tecnólogos</span>
+        </nz-form-label>
+        <nz-input-group class="form-group">
+          <input class="form-input"
+            (focus)="onFocus($event)"
+            (blur)="onBlur($event)"
+            type="number"
+            nz-input
+            [formControl]="field_estd_tecnologo"
+            placeholder="Escriba la meta de tecnólogos"
+            id="tecnologo"
+            nz-typography/>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Input numérico: Eventos -->
+    <nz-form-item nz-col nzSpan="20">
+      <nz-form-control [nzErrorTip]="erroresEvento">
+        <nz-form-label nzFor="evento" class="form-label" nzRequired>
+          <span class="form-label_text" nz-typography>Eventos</span>
+        </nz-form-label>
+        <nz-input-group class="form-group">
+          <input class="form-input"
+            (focus)="onFocus($event)"
+            (blur)="onBlur($event)"
+            type="number"
+            nz-input
+            [formControl]="field_estd_evento"
+            placeholder="Escriba la meta de eventos"
+            id="evento"
+            nz-typography/>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Input numérico: Curso Especial -->
+    <nz-form-item nz-col nzSpan="20">
+      <nz-form-control [nzErrorTip]="erroresCursoEspecial">
+        <nz-form-label nzFor="cursoEspecial" class="form-label" nzRequired>
+          <span class="form-label_text" nz-typography>Curso Especial</span>
+        </nz-form-label>
+        <nz-input-group class="form-group">
+          <input class="form-input"
+            (focus)="onFocus($event)"
+            (blur)="onBlur($event)"
+            type="number"
+            nz-input
+            [formControl]="field_estd_curso_especial"
+            placeholder="Escriba la meta de curso especial"
+            id="cursoEspecial"
+            nz-typography/>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Input numérico: Bilingüismo -->
+    <nz-form-item nz-col nzSpan="20">
+      <nz-form-control [nzErrorTip]="erroresBilinguismo">
+        <nz-form-label nzFor="bilinguismo" class="form-label" nzRequired>
+          <span class="form-label_text" nz-typography>Bilingüismo</span>
+        </nz-form-label>
+        <nz-input-group class="form-group">
+          <input class="form-input"
+            (focus)="onFocus($event)"
+            (blur)="onBlur($event)"
+            type="number"
+            nz-input
+            [formControl]="field_estd_bilinguismo"
+            placeholder="Escriba la meta de bilingüismo"
+            id="bilinguismo"
+            nz-typography/>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Input numérico: Sin Bilingüismo -->
+    <nz-form-item nz-col nzSpan="20">
+      <nz-form-control [nzErrorTip]="erroresSinBilinguismo">
+        <nz-form-label nzFor="sinBilinguismo" class="form-label" nzRequired>
+          <span class="form-label_text" nz-typography>Sin Bilingüismo</span>
+        </nz-form-label>
+        <nz-input-group class="form-group">
+          <input class="form-input"
+            (focus)="onFocus($event)"
+            (blur)="onBlur($event)"
+            type="number"
+            nz-input
+            [formControl]="field_estd_sin_bilinguismo"
+            placeholder="Escriba la meta sin bilingüismo"
+            id="sinBilinguismo"
+            nz-typography/>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+  
+  <!-- Plantillas de error para el segundo formulario -->
+  <ng-template #erroresModalidad>
+    @if (field_modalidad.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La modalidad es obligatoria</span>
+      </div>
+    }
+  </ng-template>
+  
+  <ng-template #erroresMeta>
+    @if (field_meta.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta es obligatoria</span>
+      </div>
+    }
+  </ng-template>
+  
+  <ng-template #erroresEstrategia>
+    @if (field_estrategia.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de la estrategia es obligatoria</span>
+      </div>
+    }
+  </ng-template>
+  
+  <ng-template #erroresOperario>
+    @if (field_estd_operario_meta.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de operarios es obligatoria</span>
+      </div>
+    }
+    @if (field_estd_operario_meta.hasError('min')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de operarios debe ser mayor o igual a 0</span>
+      </div>
+    }
+  </ng-template>
+  
+  <ng-template #erroresAuxiliar>
+    @if (field_estd_auxiliar_meta.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de auxiliares es obligatoria</span>
+      </div>
+    }
+    @if (field_estd_auxiliar_meta.hasError('min')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de auxiliares debe ser mayor o igual a 0</span>
+      </div>
+    }
+  </ng-template>
+  
+  <ng-template #erroresTecnico>
+    @if (field_estd_tecnico_meta.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de técnicos es obligatoria</span>
+      </div>
+    }
+    @if (field_estd_tecnico_meta.hasError('min')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de técnicos debe ser mayor o igual a 0</span>
+      </div>
+    }
+  </ng-template>
+  
+  <ng-template #erroresProfundizacion>
+    @if (field_estd_profundizacion_tecnica_meta.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de profundización técnica es obligatoria</span>
+      </div>
+    }
+    @if (field_estd_profundizacion_tecnica_meta.hasError('min')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de profundización técnica debe ser mayor o igual a 0</span>
+      </div>
+    }
+  </ng-template>
+  
+  <ng-template #erroresTecnologo>
+    @if (field_estd_tecnologo.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de tecnólogos es obligatoria</span>
+      </div>
+    }
+    @if (field_estd_tecnologo.hasError('min')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de tecnólogos debe ser mayor o igual a 0</span>
+      </div>
+    }
+  </ng-template>
+  
+  <ng-template #erroresEvento>
+    @if (field_estd_evento.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de eventos es obligatoria</span>
+      </div>
+    }
+    @if (field_estd_evento.hasError('min')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de eventos debe ser mayor o igual a 0</span>
+      </div>
+    }
+  </ng-template>
+  
+  <ng-template #erroresCursoEspecial>
+    @if (field_estd_curso_especial.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de curso especial es obligatoria</span>
+      </div>
+    }
+    @if (field_estd_curso_especial.hasError('min')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de curso especial debe ser mayor o igual a 0</span>
+      </div>
+    }
+  </ng-template>
+  
+  <ng-template #erroresBilinguismo>
+    @if (field_estd_bilinguismo.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de bilingüismo es obligatoria</span>
+      </div>
+    }
+    @if (field_estd_bilinguismo.hasError('min')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de bilingüismo debe ser mayor o igual a 0</span>
+      </div>
+    }
+  </ng-template>
+  
+  <ng-template #erroresSinBilinguismo>
+    @if (field_estd_sin_bilinguismo.hasError('required')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta sin bilingüismo es obligatoria</span>
+      </div>
+    }
+    @if (field_estd_sin_bilinguismo.hasError('min')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta sin bilingüismo debe ser mayor o igual a 0</span>
+      </div>
+    }
+  </ng-template>
+  

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .card{
-    @apply min-w-[125px] w-1/5 border rounded-md;
+    @apply min-w-fit w-1/5 border rounded-md;
     @apply border border-[--primary-green-color];
 }
 
