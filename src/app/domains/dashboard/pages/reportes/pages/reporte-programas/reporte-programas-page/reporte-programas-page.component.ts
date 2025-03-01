@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { lucideTable2 } from '@ng-icons/lucide';
+import { lucideEye, lucideTable2 } from '@ng-icons/lucide';
 import { P04FichaModel, P04DesercionesModel, P04RegionalModel, P04NivelModel, P04CentroFormacionModel, P04ModalidadModel, P04ProgramaModel } from '@shared/models/p04.model';
 import { PaginateModel } from '@shared/models/paginate.model';
 import { ReporteChartModel } from '@shared/models/reporte-chart.model';
@@ -16,6 +16,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { Subscription, BehaviorSubject, forkJoin, Observable, skip, debounceTime } from 'rxjs';
+import { InfoFichaComponent } from '../components/info-ficha/info-ficha.component';
 
 @Component({
   selector: 'app-reporte-programas-page',
@@ -31,12 +32,14 @@ import { Subscription, BehaviorSubject, forkJoin, Observable, skip, debounceTime
     FormsModule,
     NzDatePickerModule,
     NzInputModule,
-    NzSpinModule
+    NzSpinModule,
+    InfoFichaComponent
   ],
   templateUrl: './reporte-programas-page.component.html',
   styleUrl: './reporte-programas-page.component.css',
   viewProviders: [provideIcons({ 
-    lucideTable2
+    lucideTable2,
+    lucideEye
   })]
 })
 export class ReporteProgramasPageComponent implements OnInit,OnDestroy{
@@ -45,6 +48,7 @@ export class ReporteProgramasPageComponent implements OnInit,OnDestroy{
   
   data_sub?:Subscription;
 
+  ficha_selected?:P04FichaModel;
   fichas:P04FichaModel[] = [];
   numero_fichas:number = 0;
   page_table:number = 1;
@@ -148,6 +152,16 @@ export class ReporteProgramasPageComponent implements OnInit,OnDestroy{
 
   onChangeFin(){
     this.loadData();
+  }
+
+  openInfo(ficha:P04FichaModel){
+    this.ficha_selected = ficha;
+  }
+
+  closeInfo(){
+    this.ficha_selected = undefined;
+    console.log(this.ficha_selected);
+    
   }
 
   private getFichas(){
@@ -427,12 +441,10 @@ export class ReporteProgramasPageComponent implements OnInit,OnDestroy{
           let {results,count} = p_programa;
           this.programas = [...results];
           this.num_centro_formacion = count;
-          this.is_loading_centro_formacion = false;
+          this.is_loading_programa = false;
         }
       });
   }
-
-
 
   private loadData(){
     this.resetDataSub();

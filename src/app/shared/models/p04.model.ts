@@ -10,6 +10,7 @@ export interface P04FichaModel {
   nombre_departamento_curso:string;
   nombre_municipio_curso:string;
   nombre_centro:string;
+  modalidad_formacion:string;
 }
 
 export interface P04DesercionesModel {
@@ -42,6 +43,7 @@ export interface P04ProgramaModel {
   codigo_programa: number;
   version_programa: string;
   nombre_programa_formacion: string;
+  num_fichas:number;
 }
 
 export interface P04NivelModel{

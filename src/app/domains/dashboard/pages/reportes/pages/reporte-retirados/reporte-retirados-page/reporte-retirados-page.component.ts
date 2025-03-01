@@ -3,7 +3,7 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { lucideTable2 } from '@ng-icons/lucide';
-import { P04CentroFormacionModel, P04DesercionesModel, P04FichaModel, P04JornadaModel, P04ModalidadModel, P04MunicipioModel, P04NivelModel, P04RegionalModel } from '@shared/models/p04.model';
+import { P04CentroFormacionModel, P04DesercionesModel, P04FichaModel, P04JornadaModel, P04ModalidadModel, P04MunicipioModel, P04NivelModel, P04ProgramaModel, P04RegionalModel } from '@shared/models/p04.model';
 import { PaginateModel } from '@shared/models/paginate.model';
 import { P04Service } from '@shared/services/documents/p04.service';
 import { NzCardModule } from 'ng-zorro-antd/card';
@@ -103,6 +103,16 @@ export class ReporteRetiradosPageComponent implements OnInit,OnDestroy{
   search_modalidad?: string;
   search_modalidad_sub?: Subscription;
   search_modalidad_subject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  programa?:string;
+  programas:P04ProgramaModel[] = [];
+  is_loading_programa: boolean = false;
+  page_programa: number = 1;
+  num_programa: number = 1;
+  search_programa?: string;
+  search_programa_sub?: Subscription;
+  search_programa_subject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  
+
 
   fecha_fin?:Date;
   fecha_inicio?:Date;
@@ -115,6 +125,7 @@ export class ReporteRetiradosPageComponent implements OnInit,OnDestroy{
     if(this.municipio) filters['nombre_municipio_curso'] = this.municipio;
     if(this.jornada) filters['nombre_jornada'] = this.jornada;
     if(this.modalidad) filters['modalidad_formacion'] = this.modalidad;
+    if(this.programa) filters['nombre_programa_formacion'] = this.programa;
     return filters;
   }
 
@@ -423,6 +434,119 @@ export class ReporteRetiradosPageComponent implements OnInit,OnDestroy{
       });
   }
 
+  private getNiveles(){
+    let filters:{[key:string]:string|number} = {};    
+    if(this.search_nivel_formacion && this.search_nivel_formacion.length > 0) filters['nivel_formacion'] = this.search_nivel_formacion;
+    return this.p04_service.getNiveles({filter:filters,page_number:this.page_regional});
+  }
+
+  onChangeNivel(){
+    this.resetDataSub();
+    let data_to_load:Observable<
+      PaginateModel<P04FichaModel>|
+      PaginateModel<P04ProgramaModel>
+    >[] = [
+      this.getFichas(),
+    ];
+    let obs_programas = this.getProgramas();
+    if(obs_programas) data_to_load = [...data_to_load,obs_programas];
+    this.data_sub = forkJoin(data_to_load).subscribe({
+        next:([p_fichas,p_programa])=>{
+          if(p_programa) {
+            let {results:programas} = p_programa as PaginateModel<P04ProgramaModel>;
+            this.programas = [...programas];
+          };
+          let {results,count} = p_fichas as PaginateModel<P04FichaModel>;
+          this.fichas = [...results];
+          this.numero_fichas = count;
+        }
+      });
+  }
+
+  onScrollNivel(){
+    if(this.niveles.length == this.num_nivel_formacion) return;
+    this.resetDataSub();
+    this.is_loading_nivel_formacion = true;
+    this.page_regional += 1;
+    this.data_sub = this.getNiveles().subscribe({
+      next:(p_nivel)=>{
+        let {results} = p_nivel;
+        this.niveles = [...this.niveles,...results];
+        this.is_loading_nivel_formacion = false;
+      }
+    });
+  }
+
+  onSearchNivel(search:string){
+    this.is_loading_nivel_formacion = true;
+    this.search_nivel_formacion_subject.next(search);
+  }
+
+  private executeSearchNivel(){
+    this.resetDataSub();
+    this.page_nivel_formacion = 1;
+    this.data_sub = this.getNiveles()
+      .subscribe({
+        next:(p_niveles)=>{
+          let {results,count} = p_niveles;
+          this.niveles = [...results];
+          this.num_nivel_formacion = count;
+          this.is_loading_nivel_formacion = false;
+        }
+      });
+  }
+
+  private getProgramas(){
+    if(!this.nivel_formacion) {
+      this.programas = [];
+      this.programa = undefined;
+      return undefined;
+    };
+    let filters:{[key:string]:string|number} = {'nivel_formacion':this.nivel_formacion};
+    if(this.search_programa && this.search_programa.length > 0) filters['nombre_programa_formacion'] = this.search_programa;
+    return this.p04_service.getProgramas({filter:filters,page_number:this.page_centro_formacion});
+  }
+
+  onChangePrograma(){
+    this.loadData();
+  }
+
+  onScrollPrograma(){
+    if(this.programas.length == this.num_programa) return;
+    this.resetDataSub();
+    this.is_loading_programa = true;
+    this.resetDataSub();
+    this.page_programa += 1;
+    this.data_sub = this.getProgramas()!
+      .subscribe({
+        next:(p_programas)=>{
+          let {results} = p_programas;
+          this.programas = [...this.programas,...results];
+          this.is_loading_programa = false;
+        }
+      });
+  }
+
+  onSearchPrograma(search:string){
+    this.is_loading_programa = true;
+    this.search_programa_subject.next(search);
+  }
+
+  private executeSearchPrograma(){
+    this.resetDataSub();
+    this.page_programa = 1;
+    this.data_sub = this.getProgramas()!
+      .subscribe({
+        next:(p_programa)=>{
+          let {results,count} = p_programa;
+          this.programas = [...results];
+          this.num_centro_formacion = count;
+          this.is_loading_programa = false;
+        }
+      });
+  }
+
+
   private loadData(){
     this.resetDataSub();
     this.data_sub = forkJoin([
@@ -494,6 +618,28 @@ export class ReporteRetiradosPageComponent implements OnInit,OnDestroy{
         next:(search)=>{
           this.search_modalidad = search;
           this.executeSearchModalidad();
+        }
+      });
+
+    this.search_nivel_formacion_sub = this.search_nivel_formacion_subject
+      .pipe(
+        skip(search_skip),
+        debounceTime(search_wait)
+      ).subscribe({
+        next:(search)=>{
+          this.search_nivel_formacion = search;
+          this.executeSearchNivel();
+        }
+      });
+
+    this.search_programa_sub = this.search_programa_subject
+      .pipe(
+        skip(search_skip),
+        debounceTime(search_wait)
+      ).subscribe({
+        next:(search)=>{
+          this.search_programa = search;
+          this.executeSearchPrograma();
         }
       });
   }

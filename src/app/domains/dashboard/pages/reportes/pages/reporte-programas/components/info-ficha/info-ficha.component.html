@@ -1,0 +1,51 @@
+<nz-modal 
+    [(nzVisible)]="is_open"  
+    (nzOnCancel)="onVisibleChange($event)"
+    [nzMaskClosable]="true"
+    [nzFooter]="null"
+    [nzContent]="nzModalContent"
+    [nzTitle]="nzModalTitle"
+    [nzClosable]="false"
+    [nzDraggable]="true">
+    <ng-template #nzModalTitle>
+        <div class="flex-col gap-2">
+            <div class="flex justify-between">
+                <span class="font-semibold">{{'Numero Ficha:'|upperCase}}</span>
+                <span>{{ficha?.identificador_ficha}}</span>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template #nzModalContent>
+        <div class="flex flex-col gap-3">
+            <div class="flex gap-1">
+                <span class="font-semibold">{{'Programa:'|upperCase}}</span>
+                <span>{{ficha?.nombre_programa_formacion}}</span>
+            </div>
+            <div class="flex gap-1">
+                <span class="font-semibold">{{'Modalidad:'|upperCase}}</span>
+                <span>{{ficha?.modalidad_formacion}}</span>
+            </div>
+            <div class="flex gap-1">
+                <span class="font-semibold">{{'Centro de formación:'|upperCase}}</span>
+                <span>{{ficha?.nombre_centro}}</span>
+            </div>
+            <div class="flex justify-between">
+                <span class="font-semibold">{{'Fecha de inicio:'|upperCase}}</span>
+                <span>{{ficha?.fecha_inicio_ficha}}</span>
+            </div>
+            <div class="flex justify-between">
+                <span class="font-semibold">{{'Fecha terminación:'|upperCase}}</span>
+                <span>{{ficha?.fecha_terminacion_ficha}}</span>
+            </div>
+            <div class="flex gap-1">
+                <span class="font-semibold">{{'departamento:'|upperCase}}</span>
+                <span>{{ficha?.nombre_departamento_curso}}</span>
+            </div>
+            <div class="flex gap-1">
+                <span class="font-semibold">{{'municipio:'|upperCase}}</span>
+                <span>{{ficha?.nombre_municipio_curso}}</span>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>
+

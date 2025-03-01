@@ -3,9 +3,23 @@
     [nzSpan]="24"
     [nzTitle]="pageTitle">
     <div class="flex justify-between py-2">
-        <div class="flex-col gap-3">
-            <h2 class="text-[--primary-green-color] font-semibold text-2xl">Aprendices Sena:</h2>
-            <div class="flex gap-3">
+        <div class="flex flex-col gap-3 w-full">
+            <div class="flex justify-between">
+                <h2 class="text-[--primary-green-color] font-semibold text-2xl">Aprendices Sena:</h2>
+                <nz-select [(ngModel)]="page_size" (ngModelChange)="sizeChange()">
+                    <nz-option [nzLabel]="10" [nzValue]="10"></nz-option>
+                    <nz-option [nzLabel]="20" [nzValue]="20"></nz-option>
+                    <nz-option [nzLabel]="30" [nzValue]="30"></nz-option>
+                    <nz-option [nzLabel]="40" [nzValue]="40"></nz-option>
+                    <nz-option [nzLabel]="50" [nzValue]="50"></nz-option>
+                    <nz-option [nzLabel]="60" [nzValue]="60"></nz-option>
+                    <nz-option [nzLabel]="70" [nzValue]="70"></nz-option>
+                    <nz-option [nzLabel]="80" [nzValue]="80"></nz-option>
+                    <nz-option [nzLabel]="90" [nzValue]="90"></nz-option>
+                    <nz-option [nzLabel]="100" [nzValue]="100"></nz-option>        
+                </nz-select>
+            </div>
+            <div class="flex justify-around">
                 <div class="flex gap-2">
                     <span class="font-semibold text-xl">Total:</span>
                     <input class="flex p-2 w-fit text-center align-middle text-gray-600" 
@@ -29,18 +43,6 @@
                 </div>
             </div>
         </div>
-        <nz-select [(ngModel)]="page_size" (ngModelChange)="sizeChange()">
-            <nz-option [nzLabel]="10" [nzValue]="10"></nz-option>
-            <nz-option [nzLabel]="20" [nzValue]="20"></nz-option>
-            <nz-option [nzLabel]="30" [nzValue]="30"></nz-option>
-            <nz-option [nzLabel]="40" [nzValue]="40"></nz-option>
-            <nz-option [nzLabel]="50" [nzValue]="50"></nz-option>
-            <nz-option [nzLabel]="60" [nzValue]="60"></nz-option>
-            <nz-option [nzLabel]="70" [nzValue]="70"></nz-option>
-            <nz-option [nzLabel]="80" [nzValue]="80"></nz-option>
-            <nz-option [nzLabel]="90" [nzValue]="90"></nz-option>
-            <nz-option [nzLabel]="100" [nzValue]="100"></nz-option>        
-        </nz-select>
     </div>
     <div class="flex gap-2 py-3 px-2">
         <nz-date-picker
@@ -55,6 +57,49 @@
             (ngModelChange)="onChangeFin()"
             nzPlaceHolder="Fecha de terminación"
         ></nz-date-picker>
+    </div>
+    <div class="flex gap-2 py-3 px-2">
+        <nz-select
+            class="w-1/2"
+            [(ngModel)]="nivel_formacion"
+            (ngModelChange)="onChangeNivel()"
+            (nzScrollToBottom)="onScrollNivel()"
+            (nzOnSearch)="onSearchNivel($event)"
+            [nzAllowClear]="true"
+            [nzShowSearch]="true"
+            [nzServerSearch]="true"
+            [nzDropdownRender]="loadingNivel"
+            [nzLoading]="is_loading_nivel_formacion"
+            nzPlaceHolder="Nivel de formación">
+            @for (nivel of niveles; track $index) {
+                <nz-option [nzLabel]="nivel.nivel_formacion" [nzValue]="nivel.nivel_formacion"></nz-option>
+            }
+            <ng-template #loadingNivel>
+                <nz-spin [nzSpinning]="is_loading_nivel_formacion">
+                </nz-spin>
+            </ng-template>
+        </nz-select>
+        <nz-select
+            class="w-1/2"
+            [(ngModel)]="programa"
+            (ngModelChange)="onChangePrograma()"
+            (nzScrollToBottom)="onScrollPrograma()"
+            (nzOnSearch)="onSearchPrograma($event)"
+            [nzAllowClear]="true"
+            [nzShowSearch]="true"
+            [nzServerSearch]="true"
+            [nzDropdownRender]="loadingPrograma"
+            [nzLoading]="is_loading_programa"
+            [disabled]="!nivel_formacion"
+            nzPlaceHolder="Programa de formación">
+            @for (programa of programas; track $index) {
+                <nz-option [nzLabel]="programa.nombre_programa_formacion" [nzValue]="programa.nombre_programa_formacion"></nz-option>
+            }
+            <ng-template #loadingPrograma>
+                <nz-spin [nzSpinning]="is_loading_programa">
+                </nz-spin>
+            </ng-template>
+        </nz-select>
     </div>
     <div class="flex gap-2 py-3 px-2">
         <nz-select

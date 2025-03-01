@@ -177,13 +177,18 @@
                 [nzShowPagination]="false">
                 <thead>
                     <tr>
-                        <th>N. Ficha</th>
+                        <th class="flex justify-center items-center">N. Ficha</th>
                     </tr>
                 </thead>
                 <tbody>
                     @for (ficha of fichaTable.data; track $index) {
                         <tr>
-                            <td>{{ficha.identificador_ficha}}</td>
+                            <td class="flex justify-evenly">
+                                <span>{{ficha.identificador_ficha}}</span>
+                                <button (click)="openInfo(ficha)">
+                                    <ng-icon name="lucideEye"></ng-icon>
+                                </button>
+                            </td>
                         </tr>
                     }
                 </tbody>
@@ -210,3 +215,4 @@
         </div>
     </div>
 </ng-template>
+<app-info-ficha [ficha]="ficha_selected" (close)="closeInfo()"></app-info-ficha>
