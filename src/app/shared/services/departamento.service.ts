@@ -9,7 +9,7 @@ export class DepartamentoService {
 
   private http = inject(HttpClient);
 
-  private url = 'departamentos'
+  private url = 'api/departamentos'
 
   getAll(){
     return this.http.get<DepartamentoModel[]>(this.url);

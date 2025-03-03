@@ -13,7 +13,7 @@ export class NivelFormacionService {
 
   private http = inject(HttpClient);
 
-  private url = 'niveles_formacion/';
+  private url = 'api/niveles_formacion/';
 
   getAll(data?:QueryUrlModel){
     let url:string = getQueryUrl(this.url,data);

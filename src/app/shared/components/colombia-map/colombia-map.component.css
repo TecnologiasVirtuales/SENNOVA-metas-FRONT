@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.map-container {
+    @apply w-full h-full p-0;
+}
+
+.reset-button{
+    @apply flex justify-center items-center px-2 py-1 gap-1 text-wrap;
+    @apply bg-[--primary-green-color] w-1/2 mx-auto rounded-sm;
+    @apply text-white font-semibold;
+}

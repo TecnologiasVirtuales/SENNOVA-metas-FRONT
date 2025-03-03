@@ -17,7 +17,7 @@ export class AuthService {
   private http = inject(HttpClient);
   private token_service = inject(TokenService);
 
-  private url = `auth`;
+  private url = `api/auth`;
 
   usuario = signal<PersonaModel|null>(null);
   loading_user = signal<boolean>(true);

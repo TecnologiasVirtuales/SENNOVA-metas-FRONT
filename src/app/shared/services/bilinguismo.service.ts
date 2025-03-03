@@ -12,7 +12,7 @@ export class BilinguismoService {
 
   private http = inject(HttpClient);
 
-  private url = 'bilinguismo/';
+  private url = 'api/bilinguismo/';
 
   getAll(data?: QueryUrlModel) {
     let url: string = getQueryUrl(this.url, data);

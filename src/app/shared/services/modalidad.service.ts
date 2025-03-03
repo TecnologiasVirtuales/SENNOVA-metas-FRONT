@@ -13,7 +13,7 @@ export class ModalidadService {
 
   private http = inject(HttpClient);
 
-  private url = 'modalidades/';
+  private url = 'api/modalidades/';
 
   getAll(data?:QueryUrlModel){
     let url:string = getQueryUrl(this.url,data);

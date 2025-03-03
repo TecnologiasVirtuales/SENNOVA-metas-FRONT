@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { getQueryUrl } from '@shared/functions/url.functions';
-import { P04CentroFormacionModel, P04DesercionesModel, P04FichaModel, P04JornadaModel, P04ModalidadModel, P04MunicipioModel, P04NivelModel, P04ProgramaModel, P04RegionalModel } from '@shared/models/p04.model';
+import { P04CentroFormacionModel, P04DepartamentoModel, P04DesercionesModel, P04FichaModel, P04JornadaModel, P04ModalidadModel, P04MunicipioModel, P04NivelModel, P04ProgramaModel, P04RegionalModel } from '@shared/models/p04.model';
 import { PaginateModel } from '@shared/models/paginate.model';
 import { QueryUrlModel } from '@shared/models/query-url.model';
 import { ReporteChartModel } from '@shared/models/reporte-chart.model';
@@ -12,7 +12,7 @@ import { ReporteChartModel } from '@shared/models/reporte-chart.model';
 export class P04Service {
 
   private http = inject(HttpClient);
-  private url = 'p04';
+  private url = 'api/p04';
 
   upload(form_data:FormData){
     return this.http.post(`${this.url}/upload/`,form_data);
@@ -36,6 +36,11 @@ export class P04Service {
   getModalidades(data?: QueryUrlModel) {
     const url: string = getQueryUrl(`${this.url}/modalidades/`, data);
     return this.http.get<PaginateModel<P04ModalidadModel>>(url);
+  }
+
+  getDepartamentos(data?: QueryUrlModel) {
+    const url: string = getQueryUrl(`${this.url}/departamentos/`, data);
+    return this.http.get<PaginateModel<P04DepartamentoModel>>(url);
   }
 
   getCentrosFormacion(data?: QueryUrlModel) {

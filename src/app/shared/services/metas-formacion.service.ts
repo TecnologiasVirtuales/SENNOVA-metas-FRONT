@@ -12,7 +12,7 @@ export class MetasFormacionService {
 
     private http = inject(HttpClient);
   
-    private url = 'metas_formacion/';
+    private url = 'api/metas_formacion/';
   
     constructor() { }
   

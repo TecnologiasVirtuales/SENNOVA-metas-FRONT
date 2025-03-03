@@ -125,6 +125,12 @@ export const side_routes:Routes = [
                 title:'Programas',
                 data:{breadcrumb:'Programas', icon:'lucideTable2'},
                 loadComponent:()=>import('@domains/dashboard/pages/reportes/pages/reporte-programas/reporte-programas-page/reporte-programas-page.component').then(c=>c.ReporteProgramasPageComponent)
+            },
+            {
+                path:'cobertura',
+                title:'Cobertura',
+                data:{breadcrumb:'Cobertura', icon:'lucideGlobe'},
+                loadComponent:()=>import('@domains/dashboard/pages/reportes/pages/reporte-cobertura/reporte-cobertura-page/reporte-cobertura-page.component').then(c=>c.ReporteCoberturaPageComponent)
             }
         ]
     }

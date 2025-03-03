@@ -13,7 +13,7 @@ export class CentroFormacionService {
 
   private http = inject(HttpClient);
 
-  private url = 'centros_formacion/';
+  private url = 'api/centros_formacion/';
 
   getAll(data?:QueryUrlModel){
     let url:string = getQueryUrl(this.url,data);

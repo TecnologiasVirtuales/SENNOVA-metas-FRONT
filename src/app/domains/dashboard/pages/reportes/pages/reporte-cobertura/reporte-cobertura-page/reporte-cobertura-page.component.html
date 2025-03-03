@@ -1,0 +1,233 @@
+<nz-card
+    class="w-full h-full"
+    [nzTitle]="pageTitle">
+    <div class="flex gap-2 py-3 px-2">
+        <nz-date-picker
+            class="w-1/2"
+            [(ngModel)]="fecha_inicio"
+            (ngModelChange)="onChangeInicio()"
+            nzPlaceHolder="Fecha de inicio"
+        ></nz-date-picker>
+        <nz-date-picker
+            class="w-1/2"
+            [(ngModel)]="fecha_fin"
+            (ngModelChange)="onChangeFin()"
+            nzPlaceHolder="Fecha de terminación"
+        ></nz-date-picker>
+    </div>
+    <div class="flex gap-2 py-3 px-2">
+        <nz-select
+            class="w-1/2"
+            [(ngModel)]="nivel_formacion"
+            (ngModelChange)="onChangeNivel()"
+            (nzScrollToBottom)="onScrollNiveles()"
+            (nzOnSearch)="onSearchNiveles($event)"
+            [nzAllowClear]="true"
+            [nzShowSearch]="true"
+            [nzServerSearch]="true"
+            [nzDropdownRender]="loadingNivel"
+            [nzLoading]="is_loading_nivel"
+            nzPlaceHolder="Nivel de formación">
+            @for (nivel of niveles; track $index) {
+                <nz-option [nzLabel]="nivel.nivel_formacion" [nzValue]="nivel.nivel_formacion"></nz-option>
+            }
+            <ng-template #loadingNivel>
+                <nz-spin [nzSpinning]="is_loading_nivel">
+                </nz-spin>
+            </ng-template>
+        </nz-select>
+        <nz-select
+            class="w-1/2"
+            [(ngModel)]="programa"
+            (ngModelChange)="onChangePrograma()"
+            (nzScrollToBottom)="onScrollProgramasSelect()"
+            (nzOnSearch)="onSearchProgramas($event)"
+            [nzAllowClear]="true"
+            [nzShowSearch]="true"
+            [nzServerSearch]="true"
+            [nzDropdownRender]="loadingPrograma"
+            [nzLoading]="is_loading_programa"
+            [disabled]="!nivel_formacion"
+            nzPlaceHolder="Programa de formación">
+            @for (programa of programas_select; track $index) {
+                <nz-option [nzLabel]="programa.nombre_programa_formacion" [nzValue]="programa.nombre_programa_formacion"></nz-option>
+            }
+            <ng-template #loadingPrograma>
+                <nz-spin [nzSpinning]="is_loading_programa">
+                </nz-spin>
+            </ng-template>
+        </nz-select>
+    </div>
+    <div class="flex gap-2 py-3 px-2">
+        <nz-select
+            class="w-1/2"
+            [(ngModel)]="regional"
+            (ngModelChange)="onChangeRegional()"
+            (nzScrollToBottom)="onScrollRegionales()"
+            (nzOnSearch)="onSearchRegionales($event)"
+            [nzAllowClear]="true"
+            [nzShowSearch]="true"
+            [nzServerSearch]="true"
+            [nzDropdownRender]="loadingReg"
+            [nzLoading]="is_loading_regional"
+            nzPlaceHolder="Regionales">
+            @for (reg of regionales; track $index) {
+                <nz-option [nzLabel]="reg.nombre_regional" [nzValue]="reg.nombre_regional"></nz-option>
+            }
+            <ng-template #loadingReg>
+                <nz-spin [nzSpinning]="is_loading_regional">
+                </nz-spin>
+            </ng-template>
+        </nz-select>
+        <nz-select
+            class="w-1/2"
+            [(ngModel)]="centro_formacion"
+            (ngModelChange)="onChangeCentro()"
+            (nzScrollToBottom)="onScrollCentros()"
+            (nzOnSearch)="onSearchCentros($event)"
+            [nzAllowClear]="true"
+            [nzShowSearch]="true"
+            [nzServerSearch]="true"
+            [nzDropdownRender]="loadCentro"
+            [nzLoading]="is_loading_centro"
+            [disabled]="!regional"
+            nzPlaceHolder="Centros de formación">
+            @for (centro of centros; track $index) {
+                <nz-option [nzLabel]="centro.nombre_centro" [nzValue]="centro.nombre_centro"></nz-option>
+            }
+            <ng-template #loadCentro>
+                <nz-spin [nzSpinning]="is_loading_centro">
+                </nz-spin>
+            </ng-template>
+        </nz-select>
+    </div>
+    <div class="flex gap-2 py-3 px-2">
+        <nz-select
+            class="w-1/2"
+            [(ngModel)]="departamento"
+            (ngModelChange)="onChangeDepartamento()"
+            (nzScrollToBottom)="onScrollDepartamentos()"
+            (nzOnSearch)="onSearchDepartamentos($event)"
+            [nzAllowClear]="true"
+            [nzShowSearch]="true"
+            [nzServerSearch]="true"
+            [nzDropdownRender]="loadingDep"
+            [nzLoading]="is_loading_departamento"
+            nzPlaceHolder="Departamento">
+            @for (dep of departamentos; track $index) {
+                <nz-option [nzLabel]="dep.nombre_departamento_curso" [nzValue]="dep.nombre_departamento_curso"></nz-option>
+            }
+            <ng-template #loadingDep>
+                <nz-spin [nzSpinning]="is_loading_departamento">
+                </nz-spin>
+            </ng-template>
+        </nz-select>
+        <nz-select
+            class="w-1/2"
+            [(ngModel)]="municipio"
+            (ngModelChange)="onChangeMunicipio()"
+            (nzScrollToBottom)="onScrollMunicipios()"
+            (nzOnSearch)="onSearchMunicipios($event)"
+            [nzAllowClear]="true"
+            [nzShowSearch]="true"
+            [nzServerSearch]="true"
+            [nzDropdownRender]="loadingMuni"
+            [nzLoading]="is_loading_municipio"
+            [disabled]="!departamento"
+            nzPlaceHolder="Municipios">
+            @for (muni of municipios; track $index) {
+                <nz-option [nzLabel]="muni.nombre_municipio_curso" [nzValue]="muni.nombre_municipio_curso"></nz-option>
+            }
+            <ng-template #loadingMuni>
+                <nz-spin [nzSpinning]="is_loading_municipio">
+                </nz-spin>
+            </ng-template>
+        </nz-select>
+    </div>
+    <div class="flex justify-between py-3 px-2">
+        <nz-select
+            class="w-1/2"
+            [(ngModel)]="modalidad"
+            (ngModelChange)="onChangeModalidad()"
+            (nzScrollToBottom)="onScrollModalidades()"
+            (nzOnSearch)="onSearchModalidades($event)"
+            [nzAllowClear]="true"
+            [nzShowSearch]="true"
+            [nzServerSearch]="true"
+            [nzDropdownRender]="loadingDep"
+            [nzLoading]="is_loading_modalidad"
+            nzPlaceHolder="Modalidades">
+            @for (mod of modalidades; track $index) {
+                <nz-option [nzLabel]="mod.modalidad_formacion" [nzValue]="mod.modalidad_formacion"></nz-option>
+            }
+            <ng-template #loadingMod>
+                <nz-spin [nzSpinning]="is_loading_modalidad">
+                </nz-spin>
+            </ng-template>
+        </nz-select>
+        <nz-select [(ngModel)]="page_size" (ngModelChange)="sizeChange()">
+            <nz-option [nzLabel]="5" [nzValue]="5"></nz-option>
+            <nz-option [nzLabel]="10" [nzValue]="10"></nz-option>
+            <nz-option [nzLabel]="20" [nzValue]="20"></nz-option>       
+        </nz-select>
+    </div>
+    <div class="flex flex-wrap justify-between w-full h-full">
+        <div class="w-1/3 min-w-[525px] h-[600px]">
+            <app-colombia-map
+                [selected_municipio]="municipio"
+                [selected_departamento]="departamento"
+                (nombre_departamento)="onSelectDepartamento($event)" 
+                (nombre_municipio)="onSelectMunicipio($event)"
+                (mostrar_pais)="onResetMap()">
+            </app-colombia-map>
+        </div>
+
+        <div class="w-1/2">
+            <nz-table
+                #programasTable
+                [nzPageSize]="page_size"
+                [nzData]="programas"
+                [nzShowPagination]="false">
+                <thead>
+                    <tr>
+                        <th>Nivel de formación</th>
+                        <th>Nombre del programa</th>
+                        <th>Versión</th>
+                        <th>Fichas por programa</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (programa of programasTable.data; track $index) {
+                        <tr>
+                            <td>{{programa.nivel_formacion}}</td>
+                            <td>{{programa.nombre_programa_formacion}}</td>
+                            <td>{{programa.version_programa}}</td>
+                            <td>{{programa.num_fichas}}</td>
+                        </tr>
+                    }
+                </tbody>
+            </nz-table>
+            <div class="flex py-3 w-full justify-end">
+                <nz-pagination
+                    (nzPageIndexChange)="changePage($event)"
+                    [nzHideOnSinglePage]="true"
+                    [nzPageIndex]="page_table"
+                    [nzTotal]="num_programa"
+                    [nzPageSize]="page_size">
+                </nz-pagination>
+            </div>
+        </div>
+    </div>
+</nz-card>
+<ng-template #pageTitle>
+    <div class="page-title" nz-row nzAlign="middle" nzGutter="15">
+        <div nz-col>
+            <ng-icon name="lucideGlobe"></ng-icon>
+        </div>
+        <div nz-col>
+            <h1>Retiros</h1>
+        </div>
+    </div>
+</ng-template>
+
+

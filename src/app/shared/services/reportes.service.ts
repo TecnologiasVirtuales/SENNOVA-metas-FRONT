@@ -8,7 +8,7 @@ import { FichasByModalidadModel } from '@shared/models/fichas-by-nivel-modalidad
 export class ReportesService {
 
   private http = inject(HttpClient);
-  private url:string = 'reportes';
+  private url:string = 'api/reportes';
 
   fichasByNivelModalidad(){
     return this.http.get<FichasByModalidadModel>(`${this.url}/fichas-by-nivel-modalidad`);

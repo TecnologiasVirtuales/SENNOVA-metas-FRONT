@@ -12,7 +12,7 @@ import { ReporteChartModel } from '@shared/models/reporte-chart.model';
 export class Df14Service {
 
   private http = inject(HttpClient);
-  private url = 'df14'
+  private url = 'api/df14'
 
   upload(form_data:FormData){
     return this.http.post(`${this.url}/upload/`,form_data);

@@ -35,6 +35,10 @@ export interface P04MunicipioModel {
   nombre_municipio_curso: string;
 }
 
+export interface P04DepartamentoModel {
+  nombre_departamento_curso: string;
+}
+
 export interface P04JornadaModel {
   nombre_jornada: string;
 }
@@ -43,6 +47,7 @@ export interface P04ProgramaModel {
   codigo_programa: number;
   version_programa: string;
   nombre_programa_formacion: string;
+  nivel_formacion:string;
   num_fichas:number;
 }
 

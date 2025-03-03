@@ -3,6 +3,7 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { lucideTable2 } from '@ng-icons/lucide';
+import { formatDateToString } from '@shared/functions/date.functions';
 import { P04CentroFormacionModel, P04DesercionesModel, P04FichaModel, P04JornadaModel, P04ModalidadModel, P04MunicipioModel, P04NivelModel, P04ProgramaModel, P04RegionalModel } from '@shared/models/p04.model';
 import { PaginateModel } from '@shared/models/paginate.model';
 import { P04Service } from '@shared/services/documents/p04.service';
@@ -112,8 +113,6 @@ export class ReporteRetiradosPageComponent implements OnInit,OnDestroy{
   search_programa_sub?: Subscription;
   search_programa_subject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   
-
-
   fecha_fin?:Date;
   fecha_inicio?:Date;
 
@@ -126,6 +125,8 @@ export class ReporteRetiradosPageComponent implements OnInit,OnDestroy{
     if(this.jornada) filters['nombre_jornada'] = this.jornada;
     if(this.modalidad) filters['modalidad_formacion'] = this.modalidad;
     if(this.programa) filters['nombre_programa_formacion'] = this.programa;
+    if(this.fecha_inicio) filters['fecha_inicio_ficha'] = formatDateToString(this.fecha_inicio);
+    if(this.fecha_fin) filters['fecha_terminacion_ficha'] = formatDateToString(this.fecha_fin);    
     return filters;
   }
 

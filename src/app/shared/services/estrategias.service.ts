@@ -12,7 +12,7 @@ export class EstrategiasService {
 
     private http = inject(HttpClient);
   
-    private url = 'estrategias/';
+    private url = 'api/estrategias/';
   
     getAll(data?: QueryUrlModel) {
       let url: string = getQueryUrl(this.url, data);

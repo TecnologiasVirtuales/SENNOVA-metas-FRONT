@@ -14,7 +14,7 @@ export class RegionalService {
   
   private http = inject(HttpClient);
 
-  private url = 'regionales/';
+  private url = 'api/regionales/';
 
   getAll(data?:QueryUrlModel){
     let url:string = getQueryUrl(this.url,data);

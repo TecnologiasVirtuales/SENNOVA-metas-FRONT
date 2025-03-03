@@ -12,7 +12,7 @@ export class MetasService {
 
   private http = inject(HttpClient);
 
-  private url = 'metas/';
+  private url = 'api/metas/';
 
   constructor() { }
 

@@ -1,0 +1,9 @@
+<div class="flex flex-col gap-2 w-full h-full">
+    @if (selected_departamento) {
+        <button class="reset-button" (click)="mostrarPais()">
+            <ng-icon [name]="'lucideX'"></ng-icon>
+            Mostrar mapa de colombia
+        </button>
+    }
+    <div #mapContainer class="map-container"></div>   
+</div>
