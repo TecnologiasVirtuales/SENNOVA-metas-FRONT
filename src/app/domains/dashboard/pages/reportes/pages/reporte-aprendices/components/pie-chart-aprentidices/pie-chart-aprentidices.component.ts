@@ -498,7 +498,7 @@ export class PieChartAprentidicesComponent implements OnInit,OnDestroy{
 
   setChartData(){
     let labels = Object.keys(this.reporte_aprendices);
-    let series:ApexNonAxisChartSeries = labels.map((label)=>this.reporte_aprendices[label]);
+    let series:ApexNonAxisChartSeries = labels.map((label)=>this.reporte_aprendices[label] as number);
     this.chart_options = {
       series:series,
       labels:labels,

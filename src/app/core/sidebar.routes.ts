@@ -131,6 +131,12 @@ export const side_routes:Routes = [
                 title:'Cobertura',
                 data:{breadcrumb:'Cobertura', icon:'lucideGlobe'},
                 loadComponent:()=>import('@domains/dashboard/pages/reportes/pages/reporte-cobertura/reporte-cobertura-page/reporte-cobertura-page.component').then(c=>c.ReporteCoberturaPageComponent)
+            },
+            {
+                path:'estrategias',
+                title:'Estrategias',
+                data:{breadcrumb:'Estrategias', icon:'lucideChartColumn'},
+                loadComponent:()=>import('@domains/dashboard/pages/reportes/pages/reporte-estrategia/reporte-estrategia-page/reporte-estrategia-page.component').then(c=>c.ReporteEstrategiaPageComponent)
             }
         ]
     }

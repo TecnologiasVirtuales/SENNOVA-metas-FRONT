@@ -1,0 +1,22 @@
+<nz-card
+    [nzTitle]="cardTitle">
+    @if(chart_options){
+        <apx-chart
+            class=""
+            [series]="chart_options.series"
+            [chart]="chart_options.chart"
+            [dataLabels]="chart_options.data_labels"
+            [plotOptions]="chart_options.plot_options"
+            [yaxis]="chart_options.yaxis"
+            [xaxis]="chart_options.xaxis"
+            [legend]="chart_options.legend"
+            [colors]="chart_options.colors"
+            [grid]="chart_options.grid"
+        ></apx-chart>
+    }
+</nz-card>
+<ng-template #cardTitle>
+    <div class="w-full flex justify-center">
+        <h3 class="text-[--primary-green-color]">{{nivel}}</h3>
+    </div>
+</ng-template>

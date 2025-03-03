@@ -1,3 +1,3 @@
 export interface ReporteChartModel {
-    [key:string]:number;
+    [key:string]:number|ReporteChartModel;
 }

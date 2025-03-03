@@ -1,0 +1,8 @@
+<div class="flex flex-wrap gap-2 mx-auto w-[80%] justify-center">
+    @for (nivel of niveles; track $index) {
+        <app-bar-char-nivel-modalidad 
+            class="w-1/4" 
+            [reporte_nivel]="reportes_nivel[$index]">
+        </app-bar-char-nivel-modalidad>
+    }
+</div>
