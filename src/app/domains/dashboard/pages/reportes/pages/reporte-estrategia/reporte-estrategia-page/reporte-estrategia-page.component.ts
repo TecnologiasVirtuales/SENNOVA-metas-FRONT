@@ -5,8 +5,9 @@ import { P04Service } from '@shared/services/documents/p04.service';
 import { ReporteChartModel } from '@shared/models/reporte-chart.model';
 import { forkJoin } from 'rxjs';
 import { NzCardModule } from 'ng-zorro-antd/card';
-import { NzTableModule } from 'ng-zorro-antd/table';
-import { KeyReportePipe } from '@shared/pipes/key-reporte.pipe';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzCarouselModule } from 'ng-zorro-antd/carousel';
+import { ValueReportePipe } from '@shared/pipes/value-reporte.pipe';
 
 @Component({
   selector: 'app-reporte-estrategia-page',
@@ -15,7 +16,9 @@ import { KeyReportePipe } from '@shared/pipes/key-reporte.pipe';
     CommonModule,
     BarCharNivelModalidadComponent,
     NzCardModule,
-    KeyReportePipe
+    ValueReportePipe,
+    NzGridModule,
+    NzCarouselModule
   ],
   templateUrl: './reporte-estrategia-page.component.html',
   styleUrl: './reporte-estrategia-page.component.css'
@@ -51,6 +54,13 @@ export class ReporteEstrategiaPageComponent  implements OnInit,OnDestroy{
     return Object.keys(this.reporte);
   }
 
+  get modalidades(){
+    if(!this.reportes_nivel.at(0)!) return [];
+    let nivel = Object.keys(this.reportes_nivel.at(0)!).at(0)!;
+    let reporte = this.reportes_nivel.at(0)!;
+    return Object.keys(reporte[nivel]);
+  }
+
   private loadData(){
     forkJoin([
       this.getReporte(),
@@ -59,7 +69,7 @@ export class ReporteEstrategiaPageComponent  implements OnInit,OnDestroy{
       .subscribe({
         next:([reporte,metas])=>{
           this.reporte = {...reporte};
-          this.metas = {...metas};          
+          this.metas = {...metas};                    
         }
       });
   }

@@ -52,6 +52,8 @@ export class BarCharNivelModalidadComponent implements OnInit{
   }
 
   setChartData(){
+    console.log(this.modalidades.map((m)=>[m]));
+    
     this.chart_options = {
       series:[
         {
@@ -72,7 +74,7 @@ export class BarCharNivelModalidadComponent implements OnInit{
         bar: {
           columnWidth: '80%',
           distributed: true
-        }
+        },
       },
       data_labels: {
         enabled: false
@@ -90,7 +92,10 @@ export class BarCharNivelModalidadComponent implements OnInit{
             colors:getColorsForLevel(this.reporte_modalidades,this.metas_nivel),
             fontSize: "12px",
             fontWeight: "bold"
-          }
+          },
+          hideOverlappingLabels:false,
+          rotate:-25,
+          rotateAlways:true
         }
       }
     };

@@ -23,7 +23,5 @@ export function getColorsForLevel(reporte:ReporteChartModel, metas:ReporteChartM
         const achievedValue = reporte[modality] || 0;
         result = [...result,getColorForPercentage(achievedValue as number, metaValue as number,for_label)];
     }
-    console.log(result);
-    
     return result;
 }

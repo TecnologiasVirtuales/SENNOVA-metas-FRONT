@@ -1,4 +1,4 @@
-<nz-card class="container">
+<nz-card nz-col class="container mx-auto" nzSpan="24" nzBorderless>
     <div class="flex justify-center gap-3">
         <div class="flex gap-1 justify-center items-center">
             <div class="w-[20px] h-[20px] bg-[--green-label-chart-color]"></div>
@@ -27,7 +27,7 @@
         }
     </div>
     <div class="w-full flex justify-center py-2">
-        <table>
+        <table class="table-container">
             <thead class="bg-[--primary-green-color-transparent]">
                 <tr>
                     <th class="py-2 px-3">Modalidad</th>
@@ -37,9 +37,17 @@
                 </tr>
             </thead>
             <tbody>
-                @for (reporte of reportes_nivel; track $index) {
-                    <tr>
-                        <td>{{reporte|keyReporte}}</td>
+                @for (modalidad of modalidades; track $index) {
+                    <tr [ngClass]="{'pair-row':(($index%2)!==0)}">
+                        <td class="font-semibold text-md">{{modalidad}}</td>
+                        @for (nivel of niveles; track $index) {
+                            <td>
+                                <div class="flex flex-col gap-2" >
+                                    <span class="w-full"> Ejecutado: {{ reportes_nivel[$index]|valueReporte:nivel:modalidad}}</span>                              
+                                    <span class="w-full">Meta: {{metas_nivel[$index]|valueReporte:nivel:modalidad}}</span>
+                                </div>
+                            </td>
+                        }
                     </tr>
                 }
             </tbody>
