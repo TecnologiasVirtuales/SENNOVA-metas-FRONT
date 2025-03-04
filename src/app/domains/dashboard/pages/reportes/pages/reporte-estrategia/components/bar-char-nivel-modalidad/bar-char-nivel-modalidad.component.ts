@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { getColorsForLevel } from '@shared/functions/colors.functions';
 import { ReporteChartModel } from '@shared/models/reporte-chart.model';
 import { ChartOptions } from '@shared/types/chart-options.type';
 import { ApexAxisChartSeries, ChartComponent } from 'ng-apexcharts';
@@ -18,14 +19,12 @@ import { NzCardComponent } from 'ng-zorro-antd/card';
 })
 export class BarCharNivelModalidadComponent implements OnInit{
   @Input({required:true}) reporte_nivel:ReporteChartModel = {} as ReporteChartModel;
+  @Input({required:true}) meta_nivel:ReporteChartModel = {} as ReporteChartModel;
 
   chart_options?:Partial<ChartOptions>;
 
   ngOnInit(): void {
-    console.log(this.reporte_nivel);
-    console.log(this.reporte_modalidades);
     this.setChartData();
-    
   }
 
   get nivel() {
@@ -40,8 +39,16 @@ export class BarCharNivelModalidadComponent implements OnInit{
     return this.reporte_nivel[this.nivel] as ReporteChartModel;
   }
 
+  get metas_nivel(){
+    return this.meta_nivel[this.nivel] as ReporteChartModel;
+  }
+
   get reporte_series(){
     return Object.keys(this.reporte_modalidades).map((k)=>this.reporte_modalidades[k] as number);
+  }
+
+  get meta_series(){
+    return Object.keys(this.metas_nivel).map((k)=>this.metas_nivel[k] as number);
   }
 
   setChartData(){
@@ -50,18 +57,20 @@ export class BarCharNivelModalidadComponent implements OnInit{
         {
           name:"aprendices",
           data:this.reporte_series
+        },
+        {
+          name:"meta",
+          data:this.meta_series
         }
       ],
       chart: {
         height: 350,
         type: 'bar',
       },
-      colors: [
-        'var(--primary-green-color)'
-      ],
+      colors: getColorsForLevel(this.reporte_modalidades,this.metas_nivel,false),
       plot_options: {
         bar: {
-          columnWidth: '50%',
+          columnWidth: '80%',
           distributed: true
         }
       },
@@ -78,10 +87,9 @@ export class BarCharNivelModalidadComponent implements OnInit{
         categories: this.modalidades.map((m)=>[m]),
         labels:{
           style:{
-            colors:[
-              'var(--primary-green-color)'
-            ],
-            fontSize: "12px"
+            colors:getColorsForLevel(this.reporte_modalidades,this.metas_nivel),
+            fontSize: "12px",
+            fontWeight: "bold"
           }
         }
       }

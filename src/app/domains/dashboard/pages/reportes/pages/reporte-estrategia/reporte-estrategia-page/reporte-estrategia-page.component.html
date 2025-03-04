@@ -1,8 +1,48 @@
-<div class="flex flex-wrap gap-2 mx-auto w-[80%] justify-center">
-    @for (nivel of niveles; track $index) {
-        <app-bar-char-nivel-modalidad 
-            class="w-1/4" 
-            [reporte_nivel]="reportes_nivel[$index]">
-        </app-bar-char-nivel-modalidad>
-    }
-</div>
+<nz-card class="container">
+    <div class="flex justify-center gap-3">
+        <div class="flex gap-1 justify-center items-center">
+            <div class="w-[20px] h-[20px] bg-[--green-label-chart-color]"></div>
+            <span class="text-md font-semibold">100% - 60%</span>
+        </div>
+        <div class="flex gap-1 justify-center items-center">
+            <div class="w-[20px] h-[20px] bg-[--yellow-label-chart-color]"></div>
+            <span class="text-md font-semibold">59% - 50%</span>
+        </div>
+        <div class="flex gap-1 justify-center items-center">
+            <div class="w-[20px] h-[20px] bg-[--orange-label-chart-color]"></div>
+            <span class="text-md font-semibold">49% - 30%</span>
+        </div>
+        <div class="flex gap-1 justify-center items-center">
+            <div class="w-[20px] h-[20px] bg-[--red-label-chart-color]"></div>
+            <span class="text-md font-semibold">29% - 0%</span>
+        </div>
+    </div>
+    <div class="flex flex-wrap mx-auto w-[95%] gap-3 justify-center">
+        @for (nivel of niveles; track $index) {
+            <app-bar-char-nivel-modalidad 
+                class="w-1/4" 
+                [reporte_nivel]="reportes_nivel[$index]"
+                [meta_nivel]="metas_nivel[$index]">
+            </app-bar-char-nivel-modalidad>
+        }
+    </div>
+    <div class="w-full flex justify-center py-2">
+        <table>
+            <thead class="bg-[--primary-green-color-transparent]">
+                <tr>
+                    <th class="py-2 px-3">Modalidad</th>
+                    @for (nivel of niveles; track $index) {
+                        <th class="py-2 px-3">{{nivel}}</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @for (reporte of reportes_nivel; track $index) {
+                    <tr>
+                        <td>{{reporte|keyReporte}}</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</nz-card>

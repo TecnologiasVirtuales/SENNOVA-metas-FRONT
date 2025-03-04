@@ -1,8 +1,8 @@
 <nz-card
+    class="card"
     [nzTitle]="cardTitle">
     @if(chart_options){
         <apx-chart
-            class=""
             [series]="chart_options.series"
             [chart]="chart_options.chart"
             [dataLabels]="chart_options.data_labels"

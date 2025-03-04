@@ -28,6 +28,11 @@ export class P04Service {
     return this.http.get<ReporteChartModel>(url);
   }
 
+  countMetasEstrategia(data?: QueryUrlModel) {
+    const url: string = getQueryUrl(`${this.url}/count-metas-estrategia/`, data);
+    return this.http.get<ReporteChartModel>(url);
+  }
+
   getDeserciones(data?: QueryUrlModel) {
     const url: string = getQueryUrl(`${this.url}/deserciones/`, data);
     return this.http.get<P04DesercionesModel>(url);
