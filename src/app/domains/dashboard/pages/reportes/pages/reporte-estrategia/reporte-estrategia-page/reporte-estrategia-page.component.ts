@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { formatDateToString } from '@shared/functions/date.functions';
+import { ExtractSubReportesPipe } from '@shared/pipes/extract-sub-reportes.pipe';
 
 @Component({
   selector: 'app-reporte-estrategia-page',
@@ -30,7 +31,8 @@ import { formatDateToString } from '@shared/functions/date.functions';
     FormsModule,
     NzSpinModule,
     NzDatePickerModule,
-    NzCarouselModule
+    NzCarouselModule,
+    ExtractSubReportesPipe
   ],
   templateUrl: './reporte-estrategia-page.component.html',
   styleUrl: './reporte-estrategia-page.component.css'
@@ -81,7 +83,7 @@ export class ReporteEstrategiaPageComponent  implements OnInit,OnDestroy{
 
   get filters():{[key:string]:number|string}{
     let filters:{[key:string]:string|number} = {};
-    if(this.estrategia) filters['meta.est_nombre'] = this.estrategia;
+    if(this.estrategia) filters['estrategia.est_nombre'] = this.estrategia;
     if(this.fecha_inicio){
       filters['meta.met_fecha_inicio'] = formatDateToString(this.fecha_inicio);
       filters['fecha_inicio_ficha'] = formatDateToString(this.fecha_inicio);

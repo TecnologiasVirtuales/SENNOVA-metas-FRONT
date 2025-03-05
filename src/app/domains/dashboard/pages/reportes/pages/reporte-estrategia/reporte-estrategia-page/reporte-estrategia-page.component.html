@@ -54,12 +54,13 @@
     @if (niveles.length) {
 
         <nz-carousel nzEffect="scrollx">
-            @for (nivel of niveles; track $index) {
+            @for (reporte_meta of (reporte|extractSubReportes:metas); track $index) {
                 <div 
                     nz-carousel-content>
                     <app-bar-char-nivel-modalidad
-                        [reporte_nivel]="reportes_nivel[$index]"
-                        [meta_nivel]="metas_nivel[$index]">
+                        [nivel]="reporte_meta.nivel"
+                        [reporte_nivel]="reporte_meta.reporte"
+                        [meta_nivel]="reporte_meta.reporte_meta">
                     </app-bar-char-nivel-modalidad>
                 </div>
 

@@ -22,6 +22,10 @@ td {
     @apply p-0 flex flex-col gap-3;
 }
 
+::ng-deep .slick-slide{
+    @apply max-h-[250px];
+}
+
 [nz-carousel-content]{
      @apply h-[500px]  py-5 px-3;
 }
