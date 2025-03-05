@@ -1,4 +1,38 @@
-<nz-card nz-col class="container mx-auto" nzSpan="24" nzBorderless>
+<nz-card [nzTitle]="cardTitle" nz-col class="container mx-auto" nzSpan="24" nzBorderless>
+    <div class="flex gap-2 justify-center">
+        <nz-date-picker
+            class="w-1/6"
+            [(ngModel)]="fecha_inicio"
+            (ngModelChange)="onChangeInicio()"
+            nzPlaceHolder="Fecha de inicio"
+        ></nz-date-picker>
+        <nz-date-picker
+            class="w-1/6"
+            [(ngModel)]="fecha_fin"
+            (ngModelChange)="onChangeFin()"
+            nzPlaceHolder="Fecha de terminación"
+        ></nz-date-picker>
+        <nz-select
+            class="w-1/4"
+            [(ngModel)]="estrategia"
+            (ngModelChange)="onChangeEstrategia()"
+            (nzScrollToBottom)="onScrollEstrategia()"
+            (nzOnSearch)="onSearchEstrategia($event)"
+            [nzAllowClear]="true"
+            [nzShowSearch]="true"
+            [nzServerSearch]="true"
+            [nzDropdownRender]="loadingEstrategia"
+            [nzLoading]="is_loading_estrategia"
+            nzPlaceHolder="Estrategia">
+            @for (est of estrategias; track $index) {
+                <nz-option [nzLabel]="est.est_nombre" [nzValue]="est.est_nombre"></nz-option>
+            }
+            <ng-template #loadingEstrategia>
+                <nz-spin [nzSpinning]="is_loading_estrategia">
+                </nz-spin>
+            </ng-template>
+        </nz-select>
+    </div>
     <div class="flex justify-center gap-3">
         <div class="flex gap-1 justify-center items-center">
             <div class="w-[20px] h-[20px] bg-[--green-label-chart-color]"></div>
@@ -17,40 +51,52 @@
             <span class="text-md font-semibold">29% - 0%</span>
         </div>
     </div>
-    <div class="flex flex-wrap mx-auto w-[95%] gap-3 justify-center">
-        @for (nivel of niveles; track $index) {
-            <app-bar-char-nivel-modalidad 
-                class="w-1/4" 
-                [reporte_nivel]="reportes_nivel[$index]"
-                [meta_nivel]="metas_nivel[$index]">
-            </app-bar-char-nivel-modalidad>
-        }
-    </div>
-    <div class="w-full flex justify-center py-2">
-        <table class="table-container">
-            <thead class="bg-[--primary-green-color-transparent]">
-                <tr>
-                    <th class="py-2 px-3">Modalidad</th>
-                    @for (nivel of niveles; track $index) {
-                        <th class="py-2 px-3">{{nivel}}</th>
-                    }
-                </tr>
-            </thead>
-            <tbody>
-                @for (modalidad of modalidades; track $index) {
-                    <tr [ngClass]="{'pair-row':(($index%2)!==0)}">
-                        <td class="font-semibold text-md">{{modalidad}}</td>
+    @if (niveles.length) {
+
+        <nz-carousel nzEffect="scrollx">
+            @for (nivel of niveles; track $index) {
+                <div 
+                    nz-carousel-content>
+                    <app-bar-char-nivel-modalidad
+                        [reporte_nivel]="reportes_nivel[$index]"
+                        [meta_nivel]="metas_nivel[$index]">
+                    </app-bar-char-nivel-modalidad>
+                </div>
+
+            }
+        </nz-carousel>
+        <div class="w-full flex justify-center py-2">
+            <table class="table-container">
+                <thead class="bg-[--primary-green-color-transparent]">
+                    <tr>
+                        <th class="py-2 px-3">Modalidad</th>
                         @for (nivel of niveles; track $index) {
-                            <td>
-                                <div class="flex flex-col gap-2" >
-                                    <span class="w-full"> Ejecutado: {{ reportes_nivel[$index]|valueReporte:nivel:modalidad}}</span>                              
-                                    <span class="w-full">Meta: {{metas_nivel[$index]|valueReporte:nivel:modalidad}}</span>
-                                </div>
-                            </td>
+                            <th class="py-2 px-3">{{nivel}}</th>
                         }
                     </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                    @for (modalidad of modalidades; track $index) {
+                        <tr [ngClass]="{'pair-row':(($index%2)!==0)}">
+                            <td class="font-semibold text-md">{{modalidad}}</td>
+                            @for (nivel of niveles; track $index) {
+                                <td>
+                                    <div class="flex flex-col gap-2" >
+                                        <span class="w-full"> Ejecutado: {{ reportes_nivel[$index]|valueReporte:nivel:modalidad}}</span>                              
+                                        <span class="w-full">Meta: {{metas_nivel[$index]|valueReporte:nivel:modalidad}}</span>
+                                    </div>
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    
+    }@else {
+        <span class="mx-auto text-3xl font-semibold text-[--primary-green-color]">No hay información que mostrar</span>
+    }
 </nz-card>
+<ng-template #cardTitle>
+    <h1 class="text-2xl font-bold text-[--primary-green-color]">Estrategias</h1>
+</ng-template>

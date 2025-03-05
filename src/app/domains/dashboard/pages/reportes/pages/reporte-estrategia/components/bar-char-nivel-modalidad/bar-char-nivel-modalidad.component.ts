@@ -93,9 +93,6 @@ export class BarCharNivelModalidadComponent implements OnInit{
             fontSize: "12px",
             fontWeight: "bold"
           },
-          hideOverlappingLabels:false,
-          rotate:-25,
-          rotateAlways:true
         }
       }
     };

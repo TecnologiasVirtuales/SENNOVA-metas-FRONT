@@ -312,7 +312,7 @@ export class EstrategiasPageComponent {
 
   private executeSearchEstrategia(){
     this.resetDataSub();
-    this.page_meta = 1;
+    this.page_estrategia = 1;
     this.data_sub = this.getEstrategia().subscribe({
       next:(p_estrategia)=>{
         let {results,count} = p_estrategia;        
