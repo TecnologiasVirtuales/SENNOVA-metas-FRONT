@@ -17,20 +17,13 @@ import { NzCardComponent } from 'ng-zorro-antd/card';
   templateUrl: './bar-char-nivel-modalidad.component.html',
   styleUrl: './bar-char-nivel-modalidad.component.css',
 })
-export class BarCharNivelModalidadComponent implements OnChanges,OnInit{
+export class BarCharNivelModalidadComponent implements OnChanges{
   @Input({required:true}) reporte_nivel:ReporteChartModel = {} as ReporteChartModel;
   @Input({required:true}) meta_nivel:ReporteChartModel = {} as ReporteChartModel;
   @Input({required:true}) nivel:string = '';
 
 
   chart_options?:Partial<ChartOptions>;
-
-
-  ngOnInit(): void {
-    console.log('reporte_nivel',this.reporte_nivel);
-    console.log('metas',this.meta_nivel);
-    console.log('nivel',this.nivel);
-  }
 
   ngOnChanges(): void {
     this.setChartData();
