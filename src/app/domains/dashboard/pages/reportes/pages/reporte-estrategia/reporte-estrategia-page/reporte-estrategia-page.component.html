@@ -52,8 +52,7 @@
         </div>
     </div>
     @if (niveles.length) {
-
-        <nz-carousel nzEffect="scrollx">
+        <nz-carousel class="w-[80%] mx-auto" nzEffect="scrollx">
             @for (reporte_meta of (reporte|extractSubReportes:metas); track $index) {
                 <div 
                     nz-carousel-content>

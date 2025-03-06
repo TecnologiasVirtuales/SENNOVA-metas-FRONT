@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .table-container{
-    @apply max-w-[70%]
+    @apply max-w-[70%];
 }
 
 .pair-row {
@@ -27,7 +27,7 @@ td {
 }
 
 [nz-carousel-content]{
-     @apply h-[500px]  py-5 px-3;
+     @apply h-[300px]  py-5 px-3;
 }
 /* slick-dots slick-dots-bottom ng-star-inserted slick-active*/
 ::ng-deep .slick-dots-bottom{
