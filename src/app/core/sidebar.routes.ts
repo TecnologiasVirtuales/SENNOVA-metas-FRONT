@@ -100,7 +100,7 @@ export const side_routes:Routes = [
             {
                 path:'',
                 pathMatch:'full',
-                redirectTo:'estado-aprendices'
+                redirectTo:'general'
             },
             {
                 path:'estado-aprendices',
@@ -137,6 +137,12 @@ export const side_routes:Routes = [
                 title:'Estrategias',
                 data:{breadcrumb:'Estrategias', icon:'lucideChartColumn'},
                 loadComponent:()=>import('@domains/dashboard/pages/reportes/pages/reporte-estrategia/reporte-estrategia-page/reporte-estrategia-page.component').then(c=>c.ReporteEstrategiaPageComponent)
+            },
+            {
+                path:'general',
+                title:'General',
+                data:{breadcrumb:'General', icon:'lucideChartColumn'},
+                loadComponent:()=>import('@domains/dashboard/pages/reportes/pages/reporte-general/reporte-general-page/reporte-general-page.component').then(c=>c.ReporteGeneralPageComponent)
             }
         ]
     }
