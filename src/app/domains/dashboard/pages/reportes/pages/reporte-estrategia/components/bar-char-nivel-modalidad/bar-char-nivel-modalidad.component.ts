@@ -41,9 +41,7 @@ export class BarCharNivelModalidadComponent implements OnChanges{
     return Object.keys(this.meta_nivel).map((k)=>this.meta_nivel[k] as number);
   }
 
-  setChartData(){
-    console.log(this.modalidades.map((m)=>[m]));
-    
+  setChartData(){    
     this.chart_options = {
       series:[
         {
@@ -60,13 +58,13 @@ export class BarCharNivelModalidadComponent implements OnChanges{
         type: 'bar',
       },
       colors: getColorsForLevel(this.reporte_nivel,this.meta_nivel,false),
-      plot_options: {
+      plotOptions: {
         bar: {
           columnWidth: '80%',
           distributed: true
         },
       },
-      data_labels: {
+      dataLabels: {
         enabled: false
       },
       legend: {

@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::ng-deep .card {
+    @apply shadow-gray-500 shadow-sm;
+    @apply hover:shadow-[--primary-green-color] hover:shadow-lg;
+}

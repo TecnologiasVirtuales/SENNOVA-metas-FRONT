@@ -4,7 +4,13 @@ import { formatDateToString } from '@shared/functions/date.functions';
 import { ReporteChartModel } from '@shared/models/reporte-chart.model';
 import { P04Service } from '@shared/services/documents/p04.service';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { forkJoin } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { ColoresPorcentajeComponent } from '@shared/components/colores-porcentaje/colores-porcentaje.component';
+import { BarCharGeneralComponent } from '../components/bar-char-general/bar-char-general.component';
+import { KeysReportePipe } from '@shared/pipes/keys-reporte.pipe';
 
 @Component({
   selector: 'app-reporte-general-page',
@@ -12,6 +18,12 @@ import { forkJoin } from 'rxjs';
   imports: [
     CommonModule,
     NzDatePickerModule,
+    BarCharGeneralComponent,
+    NzTabsModule,
+    FormsModule,
+    NzCardModule,
+    ColoresPorcentajeComponent,
+    KeysReportePipe
   ],
   templateUrl: './reporte-general-page.component.html',
   styleUrl: './reporte-general-page.component.css'
@@ -20,21 +32,22 @@ export class ReporteGeneralPageComponent implements OnInit{
 
   private p04_service = inject(P04Service);
 
+  tabs:string[] = [
+    'titulada',
+    'complementaria'
+  ];
+  tab_index:number = 0;
+
+  grafica_titulada:ReporteChartModel = {}
+  grafica_complementaria:ReporteChartModel = {};
+  grafica_meta_titulada:ReporteChartModel = {}
+  grafica_meta_complementaria:ReporteChartModel = {};
+
   fecha_inicio?:Date;
   fecha_fin?:Date;
 
   ngOnInit(): void {
-    forkJoin([
-      this.getReporte(),
-      this.getMetas()
-    ]).subscribe({
-      next:([reporte,metas])=>{
-        let {titulada:t_reporte,complementaria:c_reporte} = this.divideReporte(reporte);
-        let {titulada:t_meta,complementaria:c_meta} = this.divideReporte(metas);
-        let t_reporte_g = this.formatToGrafica(t_reporte);
-        console.log(t_reporte_g);
-      }
-    });
+    this.loadData();
   }
 
   get filters():{[key:string]:number|string}{
@@ -50,6 +63,22 @@ export class ReporteGeneralPageComponent implements OnInit{
 
   private getMetas(){
     return this.p04_service.countMetasEstrategia();
+  }
+
+  private loadData(){
+    forkJoin([
+      this.getReporte(),
+      this.getMetas()
+    ]).subscribe({
+      next:([reporte,metas])=>{
+        let {titulada:t_reporte,complementaria:c_reporte} = this.divideReporte(reporte);
+        let {titulada:t_meta,complementaria:c_meta} = this.divideReporte(metas);
+        this.grafica_titulada = {...this.formatToGrafica(t_reporte)};
+        this.grafica_complementaria = {...this.formatToGrafica(c_reporte)};
+        this.grafica_meta_titulada = {...this.formatToGrafica(t_meta)};
+        this.grafica_meta_complementaria = {...this.formatToGrafica(c_meta)};
+      }
+    });
   }
 
   private divideReporte(reporte:ReporteChartModel){

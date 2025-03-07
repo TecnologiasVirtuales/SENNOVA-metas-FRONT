@@ -1,7 +1,7 @@
 <nz-card
-    class="card"
+    class="card overflow-auto"
     [nzTitle]="cardTitle">
-    @if(chart_options){
+    @if(chart_options&&reporte_series.length&&meta_series.length&&labels.length){
         <apx-chart
             [series]="chart_options.series"
             [chart]="chart_options.chart"
@@ -17,6 +17,6 @@
 </nz-card>
 <ng-template #cardTitle>
     <div class="w-full flex justify-center">
-        <h3 class="text-[--primary-green-color]">{{nivel}}</h3>
+        <h3 class="text-[--primary-green-color]">{{title}}</h3>
     </div>
 </ng-template>

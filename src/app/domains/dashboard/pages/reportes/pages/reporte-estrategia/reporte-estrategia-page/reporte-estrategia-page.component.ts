@@ -16,6 +16,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { formatDateToString } from '@shared/functions/date.functions';
 import { ExtractSubReportesPipe } from '@shared/pipes/extract-sub-reportes.pipe';
+import { ColoresPorcentajeComponent } from '@shared/components/colores-porcentaje/colores-porcentaje.component';
 
 @Component({
   selector: 'app-reporte-estrategia-page',
@@ -32,7 +33,8 @@ import { ExtractSubReportesPipe } from '@shared/pipes/extract-sub-reportes.pipe'
     NzSpinModule,
     NzDatePickerModule,
     NzCarouselModule,
-    ExtractSubReportesPipe
+    ExtractSubReportesPipe,
+    ColoresPorcentajeComponent
   ],
   templateUrl: './reporte-estrategia-page.component.html',
   styleUrl: './reporte-estrategia-page.component.css'

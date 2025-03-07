@@ -1,1 +1,32 @@
-<p>reporte-general-page works!</p>
+<nz-card [nzTitle]="cardTitle">
+    <app-colores-porcentaje></app-colores-porcentaje>
+    <nz-tabset nzCentered>
+        @for (item of tabs; track $index) {
+            <nz-tab [nzTitle]="item|uppercase">
+                <ng-template nz-tab>
+                    @if(tabs[$index]==='titulada'){
+                        @if ((grafica_titulada|keysReporte).length) {
+                            <app-bar-char-general
+                                [title]="tabs[$index]|uppercase"
+                                [reporte]="grafica_titulada"
+                                [meta]="grafica_meta_titulada">
+                            </app-bar-char-general>
+                        }
+          
+                    }@else if(tabs[$index]==='complementaria'){
+                        @if ((grafica_complementaria|keysReporte).length) {
+                            <app-bar-char-general
+                                [title]="tabs[$index]|uppercase"
+                                [reporte]="grafica_complementaria"
+                                [meta]="grafica_meta_complementaria">
+                            </app-bar-char-general>
+                        }
+                    }
+                </ng-template>
+            </nz-tab>
+        }
+    </nz-tabset>
+</nz-card>
+<ng-template #cardTitle>
+    <h1 class="text-3xl text-[--primary-green-color] font-bol">General</h1>
+</ng-template>

@@ -83,12 +83,12 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
       },
       colors:this.chart_colors,
-      plot_options:{
+      plotOptions:{
         bar:{
           distributed:true,
         }
       },
-      data_labels: {
+      dataLabels: {
         enabled: false
       },
       grid: {

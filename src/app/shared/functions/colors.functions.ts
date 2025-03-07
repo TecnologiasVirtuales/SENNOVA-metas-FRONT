@@ -1,9 +1,6 @@
 import { ReporteChartModel } from "@shared/models/reporte-chart.model";
 
 export function getColorForPercentage(achieved:number, meta:number,for_label:boolean = true):string {
-    if (meta === 0) {
-        return "red"; // Si no hay meta definida, se considera 0% cumplido
-    }
     const percentage = (achieved / meta) * 100;
     if (percentage < 30) {
         return for_label ? "var(--red-label-chart-color)" : "var(--red-chart-color)";

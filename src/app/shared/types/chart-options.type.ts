@@ -3,8 +3,8 @@ import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexGrid, ApexLegend, A
 export type ChartOptions = {
     series:ApexAxisChartSeries;
     chart:ApexChart;
-    data_labels:ApexDataLabels;
-    plot_options:ApexPlotOptions;
+    dataLabels:ApexDataLabels;
+    plotOptions:ApexPlotOptions;
     yaxis:ApexYAxis;
     xaxis:ApexXAxis;
     grid:ApexGrid;
