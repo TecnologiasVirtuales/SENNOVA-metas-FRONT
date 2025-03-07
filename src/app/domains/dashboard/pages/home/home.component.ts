@@ -76,9 +76,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         zoom:{enabled:true},
         events: {
           click: (chart, w, e) => {
-            console.log('chart', chart);
-            console.log('w', w);
-            console.log('e', e);
           }
         }
       },

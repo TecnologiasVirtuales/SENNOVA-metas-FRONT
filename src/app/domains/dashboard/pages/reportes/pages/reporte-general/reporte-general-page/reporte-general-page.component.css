@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.table-container{
+    @apply max-w-[70%];
+}
+
+.pair-row {
+    @apply border-y border-[--primary-green-color];
+}
+
+td {
+    @apply px-3 py-2;
+}
+
+.container{
+    @apply w-full;
+}
+
+::ng-deep .container > .ant-card-body {
+    @apply p-0 flex flex-col gap-3;
+}
+
+::ng-deep .slick-slide{
+    @apply max-h-[250px];
+}
+
+[nz-carousel-content]{
+     @apply h-[300px]  py-5 px-3;
+}
+/* slick-dots slick-dots-bottom ng-star-inserted slick-active*/
+::ng-deep .slick-dots-bottom{
+    @apply h-[15px] flex items-center;
+}
+
+::ng-deep .slick-dots > .ng-star-inserted{
+    @apply bg-[--primary-green-color] h-2/3;
+}
+
+::ng-deep .ng-star-inserted.slick-active > .ng-star-inserted::after{
+    @apply bg-[--primary-green-color] rounded-md;
+}

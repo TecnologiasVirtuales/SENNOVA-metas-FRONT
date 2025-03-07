@@ -150,9 +150,7 @@ export class ReporteProgramasPageComponent implements OnInit,OnDestroy{
     this.resetSearch();
   }
 
-  onChangeInicio(){
-    console.log(this.fecha_inicio);
-    
+  onChangeInicio(){    
     this.loadData();
   }
 
@@ -165,9 +163,7 @@ export class ReporteProgramasPageComponent implements OnInit,OnDestroy{
   }
 
   closeInfo(){
-    this.ficha_selected = undefined;
-    console.log(this.ficha_selected);
-    
+    this.ficha_selected = undefined;    
   }
 
   private getFichas(){

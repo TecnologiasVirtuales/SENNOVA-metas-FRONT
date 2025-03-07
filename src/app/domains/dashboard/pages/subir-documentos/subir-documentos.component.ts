@@ -56,7 +56,6 @@ export class SubirDocumentosComponent implements OnDestroy {
   onUpload = (item:any) =>{
     const form_data = new FormData();
     const {file} = item;
-    console.log(file);
     
     form_data.append('files',item.file);
 
@@ -79,12 +78,10 @@ export class SubirDocumentosComponent implements OnDestroy {
     const upload_sub = this.df14_service.upload(form_data)
       .subscribe({
         next:(message:any)=>{
-          console.log(message);
           item.onSuccess(message.message);
           this.addFileToList(item.file);
         },
         error:(error:any)=>{
-          console.log(error);
           item.onError(error.error);
         }
       })

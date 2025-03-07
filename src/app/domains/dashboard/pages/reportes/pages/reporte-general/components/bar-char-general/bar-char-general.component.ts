@@ -41,18 +41,7 @@ export class BarCharGeneralComponent implements OnChanges{
     return Object.keys(this.meta).map((k)=>this.meta[k] as number);
   }
 
-  setChartData(){
-    const repSeries = this.reporte_series;
-    const metaSeries = this.meta_series;
-    const categories = this.labels;
-    console.log('rep',repSeries);
-    console.log('categories',categories);
-    console.log('meta',metaSeries);
-    
-    if(!repSeries.length || !metaSeries.length || categories.length === 0) {
-      console.warn("Faltan datos para renderizar el gráfico");
-      return;
-    }    
+  setChartData(){   
     this.chart_options = {
       series:[
         {

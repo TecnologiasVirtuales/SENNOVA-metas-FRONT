@@ -1,8 +1,7 @@
-import { Component, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
-import { ModalFooterComponent } from '@shared/components/modal-footer/modal-footer.component';
+import { Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import { P04FichaModel } from '@shared/models/p04.model';
 import { UpperCasePipe } from '@shared/pipes/upper-case.pipe';
-import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-info-ficha',
@@ -32,9 +31,7 @@ export class InfoFichaComponent implements OnChanges{
     this.close.emit();
   }
 
-  onVisibleChange(visible: boolean): void {
-    console.log(visible);
-    
+  onVisibleChange(visible: boolean): void {    
     if (!visible) {
       this.onClose();
     }

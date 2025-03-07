@@ -11,6 +11,12 @@
                                 [reporte]="grafica_titulada"
                                 [meta]="grafica_meta_titulada">
                             </app-bar-char-general>
+                            <ng-container *ngTemplateOutlet="table; context:{
+                                reportes:reportes_titulada,
+                                metas:metas_titulada,
+                                niveles:niveles_titulada,
+                                modalidades:modalidades_titulada
+                            }"></ng-container>
                         }
           
                     }@else if(tabs[$index]==='complementaria'){
@@ -20,6 +26,12 @@
                                 [reporte]="grafica_complementaria"
                                 [meta]="grafica_meta_complementaria">
                             </app-bar-char-general>
+                            <ng-container *ngTemplateOutlet="table; context:{
+                                reportes:reportes_complementaria,
+                                metas:metas_complementaria,
+                                niveles:niveles_complementaria,
+                                modalidades:modalidades_complementaria
+                            }"></ng-container>
                         }
                     }
                 </ng-template>
@@ -29,4 +41,40 @@
 </nz-card>
 <ng-template #cardTitle>
     <h1 class="text-3xl text-[--primary-green-color] font-bol">General</h1>
+</ng-template>
+<ng-template 
+    #table
+    let-reportes="reportes"
+    let-metas="metas"
+    let-niveles="niveles"
+    let-modalidades="modalidades">
+    <div class="w-full flex justify-center py-2">
+        <table class="table-container">
+            <thead class="bg-[--primary-green-color-transparent]">
+                <tr>
+                    <th class="py-2 px-3">
+                        Modalidad
+                    </th>
+                    @for (nivel of niveles; track $index) {
+                        <th class="py-2 px-3">{{nivel}}</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @for (modalidad of modalidades; track $index) {
+                    <tr [ngClass]="{'pair-row':(($index%2)!==0)}">
+                        <td class="font-semibold text-md">{{modalidad}}</td>
+                        @for (nivel of niveles; track $index) {
+                            <td>
+                                <div class="flex flex-col gap-2" >
+                                    <span class="w-full"> Ejecutado: {{ reportes[$index]|valueReporte:nivel:modalidad}}</span>                              
+                                    <span class="w-full">Meta: {{metas[$index]|valueReporte:nivel:modalidad}}</span>
+                                </div>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </ng-template>

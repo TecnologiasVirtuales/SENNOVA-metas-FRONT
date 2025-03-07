@@ -241,7 +241,6 @@ export class ReporteCoberturaPageComponent implements OnInit, OnDestroy {
   private getProgramasSelect() {
     if (!this.nivel_formacion) {
       this.programas_select = [];
-      console.log('entrando aqui');
       this.programa = undefined;
       return this.p04_service.getProgramas({ filter: { nivel_formacion: '' }, page_number: this.page_programa });
     }
