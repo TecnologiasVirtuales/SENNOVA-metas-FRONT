@@ -1,15 +1,14 @@
 import { EstrategiaModel } from "./estrategia.model";
+import { MetaFormacionModel } from "./meta-formacion.model";
 import { MetaModel } from "./meta.model";
 import { ModalidadModel } from "./modalidad.model";
 
 export interface EstrategiaDetalleModel {
     estd_id:number;
-    modalidad_id:number;
-    modalidad?:ModalidadModel;
     estrategia_id:number;
     estrategia?:EstrategiaModel;
-    meta_id:number;
-    meta?:MetaModel;
+    meta_formacion_id:number;
+    meta_formacion?:MetaFormacionModel;
     estd_operario_meta:number;
     estd_auxiliar_meta:number;
     estd_tecnico_meta:number;

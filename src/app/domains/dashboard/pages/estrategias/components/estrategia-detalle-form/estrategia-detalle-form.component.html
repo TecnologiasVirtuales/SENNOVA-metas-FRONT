@@ -1,32 +1,4 @@
 <form class="form-container" nz-form [formGroup]="form">
-    <!-- Select de Modalidad -->
-    <nz-form-item nz-col nzSpan="20">
-      <nz-form-control [nzErrorTip]="erroresModalidad">
-        <nz-form-label nzFor="modalidad" class="form-label" nzRequired>
-          <span class="form-label_text" nz-typography>Modalidad</span>
-        </nz-form-label>
-        <nz-input-group class="form-group">
-          <nz-select
-            nzId="modalidad"
-            [formControl]="field_modalidad"
-            (nzScrollToBottom)="onScrollModalidad()"
-            (nzOnSearch)="onSearchModalidad($event)"
-            [nzAllowClear]="true"
-            [nzShowSearch]="true"
-            [nzServerSearch]="true"
-            [nzDropdownRender]="loadingModalidad"
-            [nzLoading]="is_loading_modalidad"
-            nzPlaceHolder="Elija la modalidad de la meta">
-            @for (modalidad of modalidades; track $index) {
-              <nz-option [nzLabel]="modalidad.modalidad" [nzValue]="modalidad.id"></nz-option>
-            }
-          </nz-select>
-          <ng-template #loadingModalidad>
-            <nz-spin [nzSpinning]="is_loading_modalidad"></nz-spin>
-          </ng-template>
-        </nz-input-group>
-      </nz-form-control>
-    </nz-form-item>
   
     <!-- Select de Meta -->
     <nz-form-item nz-col nzSpan="20">
@@ -45,9 +17,9 @@
             [nzServerSearch]="true"
             [nzDropdownRender]="loadingMeta"
             [nzLoading]="is_loading_meta"
-            nzPlaceHolder="Elija el año de la meta">
+            nzPlaceHolder="Elija la meta de formación">
             @for (meta of metas; track $index) {
-              <nz-option [nzLabel]="meta.met_anio" [nzValue]="meta.met_id"></nz-option>
+              <nz-option [nzLabel]="meta.meta!.met_anio+' - '+meta.modalidad?.modalidad" [nzValue]="meta.metd_id"></nz-option>
             }
           </nz-select>
           <ng-template #loadingMeta>
@@ -268,14 +240,6 @@
   </form>
   
   <!-- Plantillas de error para el segundo formulario -->
-  <ng-template #erroresModalidad>
-    @if (field_modalidad.hasError('required')) {
-      <div nz-col nzSpan="24">
-        <span nz-typography nzType="danger">La modalidad es obligatoria</span>
-      </div>
-    }
-  </ng-template>
-  
   <ng-template #erroresMeta>
     @if (field_meta.hasError('required')) {
       <div nz-col nzSpan="24">

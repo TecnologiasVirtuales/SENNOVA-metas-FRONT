@@ -355,7 +355,7 @@ export class MetasFormacionFormComponent extends FormStyle implements OnInit, On
 
   private startSearch(){
     let search_wait:number = 200;
-    let search_skip:number = 0;
+    let search_skip:number = 1;
 
     this.search_modalidad_sub = this.search_modalidad_subject
       .pipe(

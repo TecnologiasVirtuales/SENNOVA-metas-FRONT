@@ -104,7 +104,6 @@ export class EstrategiasPageComponent {
   fecha_inicio?:Date;
 
   ngOnInit(): void {
-    this.startSearch();
     this.data_sub = forkJoin([
       this.getData(),
       this.getModalidad(),
@@ -127,6 +126,9 @@ export class EstrategiasPageComponent {
         this.is_loading_meta = false;
         this.is_loading_modalidad = false;
         this.is_loading_estrategia = false;
+      },
+      complete:()=>{
+        this.startSearch();
         this.onLoad(false);
       }
     });
@@ -352,7 +354,7 @@ export class EstrategiasPageComponent {
 
   private startSearch(){
     let search_wait:number = 200;
-    let search_skip:number = 0;
+    let search_skip:number = 1;
 
     this.search_modalidad_sub = this.search_modalidad_subject
       .pipe(

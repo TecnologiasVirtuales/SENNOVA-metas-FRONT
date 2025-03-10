@@ -115,9 +115,9 @@
                 @for (detalle of detallesTable.data; track $index) {
                     <tr>
                         <td>{{detalle.estd_id}}</td>
-                        <td>{{detalle.meta!.met_anio}}</td>
-                        <td>{{detalle.meta!.met_fecha_inicio}} / {{detalle.meta!.met_fecha_fin}}</td>
-                        <td>{{detalle.modalidad!.modalidad}}</td>
+                        <td>{{detalle.meta_formacion!.meta!.met_anio}}</td>
+                        <td>{{detalle.meta_formacion!.meta!.met_fecha_inicio}} / {{detalle.meta_formacion!.meta!.met_fecha_fin}}</td>
+                        <td>{{detalle.meta_formacion!.modalidad!.modalidad}}</td>
                         <td>{{detalle.estrategia!.est_nombre}}</td>
                         <td>{{detalle.estd_operario_meta}}</td>
                         <td>{{detalle.estd_auxiliar_meta}}</td>

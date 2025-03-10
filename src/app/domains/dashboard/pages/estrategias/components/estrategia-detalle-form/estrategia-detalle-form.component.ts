@@ -3,9 +3,11 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EstrategiaDetalleModel } from '@shared/models/estrategia-detalle.model';
 import { EstrategiaModel } from '@shared/models/estrategia.model';
+import { MetaFormacionModel } from '@shared/models/meta-formacion.model';
 import { MetaModel } from '@shared/models/meta.model';
 import { ModalidadModel } from '@shared/models/modalidad.model';
 import { EstrategiasService } from '@shared/services/estrategias.service';
+import { MetasFormacionService } from '@shared/services/metas-formacion.service';
 import { MetasService } from '@shared/services/metas.service';
 import { ModalidadService } from '@shared/services/modalidad.service';
 import { FormStyle } from '@shared/style-clases/focus.style';
@@ -40,7 +42,7 @@ export class EstrategiaDetalleFormComponent extends FormStyle implements OnInit,
 
   private form_builder = inject(FormBuilder);
   private modalidad_service = inject(ModalidadService);
-  private meta_service = inject(MetasService);
+  private meta_service = inject(MetasFormacionService);
   private estrategia_service = inject(EstrategiasService);
   private modal = inject(NzModalRef);
 
@@ -48,7 +50,7 @@ export class EstrategiaDetalleFormComponent extends FormStyle implements OnInit,
   
     detalle?:EstrategiaDetalleModel;
   
-    metas:MetaModel[] = [];
+    metas:MetaFormacionModel[] = [];
     is_loading_meta:boolean = true;
     page_meta:number = 1;
     num_meta:number = 10;
@@ -74,10 +76,7 @@ export class EstrategiaDetalleFormComponent extends FormStyle implements OnInit,
     constructor(){
       super();
       this.form = this.form_builder.group({
-        meta_id: new FormControl(null, [
-          Validators.required
-        ]),
-        modalidad_id: new FormControl(null, [
+        meta_formacion_id: new FormControl(null, [
           Validators.required
         ]),
         estrategia_id: new FormControl(null, [
@@ -123,11 +122,7 @@ export class EstrategiaDetalleFormComponent extends FormStyle implements OnInit,
     }
 
     get field_meta(): FormControl<number> {
-      return this.form.get('meta_id') as FormControl<number>;
-    }
-    
-    get field_modalidad(): FormControl<number> {
-      return this.form.get('modalidad_id') as FormControl<number>;
+      return this.form.get('meta_formacion_id') as FormControl<number>;
     }
     
     get field_estrategia(): FormControl<number> {
@@ -194,15 +189,14 @@ export class EstrategiaDetalleFormComponent extends FormStyle implements OnInit,
     }
 
     ngOnDestroy(): void {
-      
+      this.resetSearchSub();
     }
 
     private configForm() {
       this.detalle = this.modal.getConfig().nzData.detalle;
       if (this.detalle) {
         let {
-          modalidad_id,
-          meta_id,
+          meta_formacion_id: meta_id,
           estrategia_id,
           estd_operario_meta,
           estd_auxiliar_meta,
@@ -214,7 +208,6 @@ export class EstrategiaDetalleFormComponent extends FormStyle implements OnInit,
           estd_bilinguismo,
           estd_sin_bilinguismo
         } = this.detalle;
-        this.field_modalidad.setValue(modalidad_id);
         this.field_meta.setValue(meta_id);
         this.field_estrategia.setValue(estrategia_id);
         this.field_estd_operario_meta.setValue(estd_operario_meta);
@@ -355,7 +348,7 @@ export class EstrategiaDetalleFormComponent extends FormStyle implements OnInit,
 
     private startSearch(){
       let search_wait:number = 200;
-      let search_skip:number = 0;
+      let search_skip:number = 1;
   
       this.search_modalidad_sub = this.search_modalidad_subject
         .pipe(

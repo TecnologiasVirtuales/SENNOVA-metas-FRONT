@@ -98,7 +98,6 @@ export class MetasFormacionPageComponent implements OnInit,OnDestroy{
   fecha_inicio?:Date;
 
   ngOnInit(): void {
-    this.startSearch();
     this.data_sub = forkJoin([
       this.getData(),
       this.getModalidad(),
@@ -111,6 +110,8 @@ export class MetasFormacionPageComponent implements OnInit,OnDestroy{
         this.numero_metas = count;
         let {results:modalidades,count:num_modalidad} = p_modalidad;
         this.modalidades = [...modalidades];
+        console.log(modalidades);
+        
         this.num_modalidad = num_modalidad;
         let {results:metas,count:num_meta} = p_meta;
         this.metas = [...metas];
@@ -121,6 +122,9 @@ export class MetasFormacionPageComponent implements OnInit,OnDestroy{
         this.is_loading_meta = false;
         this.is_loading_centro = false;
         this.is_loading_modalidad = false;
+      },
+      complete:()=>{
+        this.startSearch();
         this.onLoad(false);
       }
     });
@@ -322,7 +326,7 @@ export class MetasFormacionPageComponent implements OnInit,OnDestroy{
 
   private startSearch(){
     let search_wait:number = 200;
-    let search_skip:number = 0;
+    let search_skip:number = 1;
 
     this.search_modalidad_sub = this.search_modalidad_subject
       .pipe(
