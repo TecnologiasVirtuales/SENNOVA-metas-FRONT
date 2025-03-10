@@ -102,8 +102,8 @@ export class ReporteProgramasPageComponent implements OnInit,OnDestroy{
   search_programa_subject: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
 
-  fecha_fin?:Date;
-  fecha_inicio?:Date;
+  fecha_fin?:Date = new Date(new Date().getFullYear(),11,31);
+  fecha_inicio?:Date = new Date(new Date().getFullYear(),0,1);
 
   get filters():{[key:string]:number|string}{
     let filters:{[key:string]:string|number} = {};
@@ -112,8 +112,7 @@ export class ReporteProgramasPageComponent implements OnInit,OnDestroy{
     if(this.centro_formacion) filters['nombre_centro'] = this.centro_formacion;
     if(this.modalidad) filters['modalidad_formacion'] = this.modalidad;
     if(this.programa) filters['nombre_programa_formacion'] = this.programa;
-    if(this.fecha_inicio) filters['fecha_inicio_ficha'] = formatDateToString(this.fecha_inicio);
-    if(this.fecha_fin) filters['fecha_terminacion_ficha'] = formatDateToString(this.fecha_fin);
+    if(this.fecha_inicio && this.fecha_fin) filters['range_date:fecha_terminacion_ficha'] = `${formatDateToString(this.fecha_inicio)},${formatDateToString(this.fecha_fin)}`
     return filters;
   }
 

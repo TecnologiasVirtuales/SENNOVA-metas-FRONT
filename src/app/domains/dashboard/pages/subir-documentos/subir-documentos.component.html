@@ -1,32 +1,41 @@
 <nz-card class="max-w-[600px] w-2/3 mx-auto" [nzTitle]="header">
-    @if (nombre_documento) {
-        <section>
-            <nz-upload 
-                [nzCustomRequest]="onUpload"
-                [nzShowUploadList]="true"
-                [nzFileList]="uploaded_files">
-                <button nz-button>
-                    <i nz-icon nzType="upload"></i> Subir Documento
-                </button>
-            </nz-upload>
+    @if(nombre_documento){
+    <section>
+        <!-- Componente de subida. Se usa currentUploadedFiles para mostrar la lista según el documento seleccionado -->
+        <nz-upload 
+            [nzBeforeUpload]="beforeUpload"
+            [nzShowUploadList]="true"
+            [nzFileList]="currentUploadedFiles">
+            <button nz-button>
+            <i nz-icon nzType="upload"></i> Seleccionar Documento
+            </button>
+        </nz-upload>
+        <!-- Botón para enviar los archivos -->
+        <button nz-button (click)="onSubmit()" [disabled]="!currentUploadedFiles.length">
+            Enviar
+        </button>
         </section>
     }@else {
-        <section class="w-full flex justify-center">
-            <span class="text-gray-300 text-xl">Documento no seleccionado</span>
-        </section>
+        <div class="flex justify-center w-full">
+            <span class="text-[--primary-green-color] font-semibold">Por favor elija el tipo de documento que desea subir</span>
+        </div>
     }
-</nz-card>
 
-
-<ng-template #loadingImg>
+  </nz-card>
+  
+  <ng-template #loadingImg>
     <app-sena-loading [loading]="form_loading"></app-sena-loading>
-</ng-template>
-<ng-template #header>
+  </ng-template>
+  
+  <ng-template #header>
     <section>
-        <nz-select class="select-input"
-            nzPlaceHolder="Por favor seleccione el tipo documento que desea subir"
-            [(ngModel)]="nombre_documento">
-            <nz-option nzLabel="DF14" nzValue="DF14"></nz-option>
-        </nz-select>
+      <nz-select class="select-input"
+        nzPlaceHolder="Por favor seleccione el tipo documento que desea subir"
+        [(ngModel)]="nombre_documento">
+        <nz-option nzLabel="DF14" nzValue="DF14"></nz-option>
+        <nz-option nzLabel="P04" nzValue="P04"></nz-option>
+        <!-- Agrega más opciones si es necesario -->
+      </nz-select>
     </section>
-</ng-template>
+  </ng-template>
+  

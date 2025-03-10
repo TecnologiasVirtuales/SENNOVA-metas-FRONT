@@ -19,9 +19,12 @@ export function getQueryUrl(url: string, data?: QueryUrlModel) {
                 } else {
                     filter_value = filter[key] as string;
                 }
-                filter_value = normalizeString(filter_value);
-                filter_value = filter_value.replace(/ /g, '-').toLowerCase();
+                console.log(filter_value);
+                
+                filter_value = filter_value.split(',').map((val)=>normalizeString(val)).join(',')
 
+                filter_value = filter_value.replace(/ /g, '-').toLowerCase();
+                
                 url += `filters[${key}]=${filter_value}`;
 
                 if (index < array.length - 1) {

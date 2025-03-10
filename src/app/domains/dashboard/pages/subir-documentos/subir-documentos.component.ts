@@ -3,13 +3,15 @@ import { Component, inject, OnDestroy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SenaLoadingComponent } from '@shared/components/sena-loading/sena-loading.component';
 import { Df14Service } from '@shared/services/documents/df14.service';
+import { P04Service } from '@shared/services/documents/p04.service'; // Asegúrate de tener este servicio
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
-import {NzUploadFile, NzUploadModule} from 'ng-zorro-antd/upload'
+import { NzUploadFile, NzUploadModule } from 'ng-zorro-antd/upload';
 import { Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-subir-documentos',
@@ -27,68 +29,104 @@ import { Subscription } from 'rxjs';
     NzButtonModule
   ],
   templateUrl: './subir-documentos.component.html',
-  styleUrl: './subir-documentos.component.css'
+  styleUrls: ['./subir-documentos.component.css']
 })
 export class SubirDocumentosComponent implements OnDestroy {
 
   fb = inject(FormBuilder);
   df14_service = inject(Df14Service);
+  p04_service = inject(P04Service);
 
-  nombre_documento?:string;
+  // Variable que guarda el valor seleccionado del tipo de documento
+  nombre_documento?: string;
 
-  form:FormGroup;
-  fileList?:NzUploadFile[];
-  form_loading:boolean = false;
+  form: FormGroup;
+  form_loading: boolean = false;
 
-  upload_subs:Subscription[] = [];
-  uploaded_files:NzUploadFile[] = [];
+  // Arrays separados para cada tipo de documento
+  uploadedDF14Files: NzUploadFile[] = [];
+  uploadedP04Files: NzUploadFile[] = [];
+
+  upload_subs: Subscription[] = [];
 
   constructor(){
     this.form = this.fb.group({
-      files:new FormControl([],[Validators.required])
-    })
+      files: new FormControl([], [Validators.required])
+    });
   }
 
   ngOnDestroy(): void {
-      if (this.upload_subs.length) this.upload_subs.forEach((sub:Subscription)=>sub.unsubscribe());
+    this.upload_subs.forEach((sub: Subscription) => sub.unsubscribe());
   }
 
-  onUpload = (item:any) =>{
-    const form_data = new FormData();
-    const {file} = item;
-    
-    form_data.append('files',item.file);
-
-    this.upload(item,form_data);
-    return this.upload_subs.at(-1)!;
-  }
-
-  upload(item:any,form_data:FormData){
-    switch (this.nombre_documento) {
-      case 'DF14':
-        this.uploadDF14(item,form_data);
-        break;
-    
-      default:
-        break;
+  // Propiedad para devolver el listado de archivos según el documento seleccionado
+  get currentUploadedFiles(): NzUploadFile[] {
+    if (this.nombre_documento === 'DF14') {
+      return this.uploadedDF14Files;
+    } else if (this.nombre_documento === 'P04') {
+      return this.uploadedP04Files;
     }
+    return [];
   }
 
-  uploadDF14(item:any,form_data:FormData){
-    const upload_sub = this.df14_service.upload(form_data)
+  // Función que intercepta la selección de archivos y evita la subida automática
+  beforeUpload = (file: NzUploadFile): boolean => {
+    if (this.nombre_documento === 'DF14') {
+      this.uploadedDF14Files = [...this.uploadedDF14Files, file];
+    } else if (this.nombre_documento === 'P04') {
+      this.uploadedP04Files = [...this.uploadedP04Files, file];
+    }
+    // Retornar false previene que el archivo se suba de inmediato
+    return false;
+  };
+
+  // Función para enviar todos los archivos manualmente según el tipo de documento
+  onSubmit(): void {
+    if (!this.nombre_documento) {
+      return;
+    }
+  
+    let filesToUpload: NzUploadFile[] = [];
+    let serviceToUse: any;
+  
+    if (this.nombre_documento === 'DF14') {
+      filesToUpload = this.uploadedDF14Files;
+      serviceToUse = this.df14_service;
+    } else if (this.nombre_documento === 'P04') {
+      filesToUpload = this.uploadedP04Files;
+      serviceToUse = this.p04_service;
+    }
+  
+    console.log('Archivos a subir:', filesToUpload);  // Verifica que no esté vacío
+  
+    if (!filesToUpload.length) {
+      return;
+    }
+  
+    const formData = new FormData();
+    filesToUpload.forEach((file: NzUploadFile) => {
+      const fileToUpload = file.originFileObj ? file.originFileObj : file;
+      console.log('Subiendo archivo:', fileToUpload);
+      formData.append('files', fileToUpload as File);
+    });
+  
+    this.form_loading = true;
+  
+    const uploadSub = serviceToUse.upload(formData)
+      .pipe(finalize(() => this.form_loading = false))
       .subscribe({
-        next:(message:any)=>{
-          item.onSuccess(message.message);
-          this.addFileToList(item.file);
+        next: (response: any) => {
+          // Limpia el array correspondiente si la subida fue exitosa
+          if (this.nombre_documento === 'DF14') {
+            this.uploadedDF14Files = [];
+          } else if (this.nombre_documento === 'P04') {
+            this.uploadedP04Files = [];
+          }
         },
-        error:(error:any)=>{
-          item.onError(error.error);
+        error: (error: any) => {
+          console.error(error);
         }
-      })
-    this.upload_subs.push(upload_sub);
-  }
-
-  addFileToList(file:NzUploadFile){
-    this.uploaded_files.push(file);
+      });
+    this.upload_subs.push(uploadSub);
   }
 }

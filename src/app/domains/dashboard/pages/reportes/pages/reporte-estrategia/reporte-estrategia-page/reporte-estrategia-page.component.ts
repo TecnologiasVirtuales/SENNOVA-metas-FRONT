@@ -58,11 +58,11 @@ export class ReporteEstrategiaPageComponent  implements OnInit,OnDestroy{
 
   data_sub?:Subscription;
 
-  fecha_inicio?:Date;
-  fecha_fin?:Date;
+  fecha_fin?:Date = new Date(new Date().getFullYear(),11,31);
+  fecha_inicio?:Date = new Date(new Date().getFullYear(),0,1);
 
   ngOnInit(): void {
-    this.data_sub = forkJoin([
+    forkJoin([
       this.getEstrategia()
     ]).subscribe({
       next:([estrategia_p])=>{
@@ -86,13 +86,9 @@ export class ReporteEstrategiaPageComponent  implements OnInit,OnDestroy{
   get filters():{[key:string]:number|string}{
     let filters:{[key:string]:string|number} = {};
     if(this.estrategia) filters['estrategia.est_nombre'] = this.estrategia;
-    if(this.fecha_inicio){
-      filters['meta.met_fecha_inicio'] = formatDateToString(this.fecha_inicio);
-      filters['fecha_inicio_ficha'] = formatDateToString(this.fecha_inicio);
-    }
-    if(this.fecha_fin){
-      filters['meta.met_fecha_fin'] = formatDateToString(this.fecha_fin);
-      filters['fecha_terminacion_ficha'] = formatDateToString(this.fecha_fin);
+    if(this.fecha_inicio && this.fecha_fin) {
+      filters['range_date:fecha_terminacion_ficha'] = `${formatDateToString(this.fecha_inicio)},${formatDateToString(this.fecha_fin)}`
+      filters['range_date:meta_formacion.meta.met_fecha_fin'] = `${formatDateToString(this.fecha_inicio)},${formatDateToString(this.fecha_fin)}`
     }
     return filters;
   }
@@ -117,14 +113,19 @@ export class ReporteEstrategiaPageComponent  implements OnInit,OnDestroy{
   }
 
   private loadData(){
-    this.data_sub = forkJoin([
+    forkJoin([
       this.getReporte(),
       this.getMetas()
     ])
       .subscribe({
         next:([reporte,metas])=>{
           this.reporte = {...reporte};
-          this.metas = {...metas};                    
+          console.log(this.reportes_nivel);
+          
+          this.metas = {...metas};
+          console.log(this.metas_nivel);
+          
+                         
         }
       });
   }
