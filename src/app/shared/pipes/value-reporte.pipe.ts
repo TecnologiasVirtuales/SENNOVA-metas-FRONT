@@ -7,9 +7,10 @@ import { ReporteChartModel } from '@shared/models/reporte-chart.model';
 })
 export class ValueReportePipe implements PipeTransform {
 
-  transform(reporte: ReporteChartModel,nivel:string,modalidad:string): number {
-    let reporte_nivel = reporte[nivel] as ReporteChartModel;
-    let reporte_modalidad = reporte_nivel[modalidad];
+  transform(reportes: ReporteChartModel[],nivel:string,modalidad:string): number {
+    let index = reportes.findIndex(r=>Object.keys(r).some(k=>k==nivel));
+    let reporte_nivel = reportes[index][nivel] as ReporteChartModel;
+    let reporte_modalidad = reporte_nivel[modalidad];    
     return reporte_modalidad as number;
   }
 

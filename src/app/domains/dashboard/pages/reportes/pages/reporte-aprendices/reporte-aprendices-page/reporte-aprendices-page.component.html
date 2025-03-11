@@ -23,7 +23,12 @@
         <thead>
             <tr>
                 <th>Nombre del aprendiz</th>
-                <th>Numero de documento</th>
+                <th>
+                    Numero de documento
+                    <nz-filter-trigger [(nzVisible)]="buscar_aprendiz" [nzActive]="!!buscar_aprendiz_value" [nzDropdownMenu]="buscarAprendiz">
+                        <ng-icon name="lucideSearch"></ng-icon>
+                    </nz-filter-trigger>
+                </th>
                 <th>Tipo de documento</th>
                 <th>Ficha</th>
                 <th>Programa</th>
@@ -63,3 +68,18 @@
         </div>
     </div>
 </ng-template>
+<nz-dropdown-menu #buscarAprendiz="nzDropdownMenu">
+    <div class="caja-busqueda">
+      <div class="search-box">
+        <input type="number"  
+            nz-input 
+            placeholder="Buscar por documento" 
+            [(ngModel)]="buscar_aprendiz_value" 
+            appOnlyNumbers/>
+        <div class="caja-busqueda_buttons">
+            <button (click)="onSearch()" nzType="primary" class="search-button">Search</button>
+            <button (click)="onResetSearch()" class="button-reset">Reset</button>
+        </div>
+      </div>
+    </div>
+  </nz-dropdown-menu>

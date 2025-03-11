@@ -20,6 +20,21 @@
     @if (mostrar_filtros) {
         <div class="filter-container">
             <section class="filter-sub__container">
+                <h3 class="filter-sub__title">Filtrar por fechas</h3>
+                <nz-date-picker
+                    class="w-1/3"
+                    [(ngModel)]="fecha_inicio"
+                    (ngModelChange)="onChangeInicio()"
+                    nzPlaceHolder="Fecha de inicio"
+                ></nz-date-picker>
+                <nz-date-picker
+                    class="w-1/3"
+                    [(ngModel)]="fecha_fin"
+                    (ngModelChange)="onChangeFin()"
+                    nzPlaceHolder="Fecha de terminación"
+                ></nz-date-picker>
+            </section>
+            <section class="filter-sub__container">
                 <h3 class="filter-sub__title">Filtrar por estado de la ficha</h3>
                 <nz-select 
                     class="filter-sub__select" 
@@ -111,7 +126,7 @@
                     [nzLoading]="is_loading_programas"
                     nzPlaceHolder="Filtrar por programa">
                     @for (programa_item of programas; track $index) {
-                        <nz-option [nzLabel]="programa_item.programa" [nzValue]="programa_item.codigo_programa"></nz-option>
+                        <nz-option [nzLabel]="'V'+programa_item.version_prograna+'-'+programa_item.programa" [nzValue]="programa_item.codigo_programa"></nz-option>
                     }
                 </nz-select>
             </section>

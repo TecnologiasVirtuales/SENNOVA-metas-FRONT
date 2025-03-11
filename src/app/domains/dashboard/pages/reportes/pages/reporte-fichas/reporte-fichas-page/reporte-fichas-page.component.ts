@@ -49,7 +49,6 @@ export class ReporteFichasPageComponent implements OnInit,OnDestroy{
   filters:{[key:string]:number|string} = {};
 
   ngOnInit(): void {
-    this.getData();
   }
 
   ngOnDestroy(): void {

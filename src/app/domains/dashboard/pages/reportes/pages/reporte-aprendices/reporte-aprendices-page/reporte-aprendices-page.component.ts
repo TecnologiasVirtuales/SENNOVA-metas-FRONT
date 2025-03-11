@@ -12,6 +12,13 @@ import { Subscription } from 'rxjs';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { FormsModule } from '@angular/forms';
+import { SearchCellComponent } from '@shared/components/search-cell/search-cell.component';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { lucideSearch } from '@ng-icons/lucide';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { OnlyNumbersDirective } from '@shared/directives/only-numbers.directive';
 
 @Component({
   selector: 'app-reporte-aprendices-page',
@@ -25,12 +32,16 @@ import { FormsModule } from '@angular/forms';
     NzTableModule,
     NzPaginationModule,
     NzSelectModule,
-    FormsModule
+    FormsModule,
+    NzDropDownModule,
+    NzInputModule,
+    OnlyNumbersDirective
   ],
   templateUrl: './reporte-aprendices-page.component.html',
   styleUrl: './reporte-aprendices-page.component.css',
   viewProviders: [provideIcons({ 
-    heroChartPie
+    heroChartPie,
+    lucideSearch
   })]
 })
 export class ReporteAprendicesPageComponent implements OnInit,OnDestroy {
@@ -47,8 +58,10 @@ export class ReporteAprendicesPageComponent implements OnInit,OnDestroy {
 
   filters:{[key:string]:number|string} = {};
 
+  buscar_aprendiz:boolean = false;
+  buscar_aprendiz_value?:number;
+
   ngOnInit(): void {
-    this.getData();
   }
 
   ngOnDestroy(): void {
@@ -56,7 +69,13 @@ export class ReporteAprendicesPageComponent implements OnInit,OnDestroy {
   }
 
   getAprendices(){
-    return this.df14_service.getAprendices({filter:this.filters,page_number:this.page_table,page_size:this.page_size});
+    return this.df14_service.getAprendices({filter:this.filter_aprendiz,page_number:this.page_table,page_size:this.page_size});
+  }
+
+  get filter_aprendiz(){
+    let filters = this.filters;
+    if(this.buscar_aprendiz_value) filters['numero_documento'] = this.buscar_aprendiz_value;
+    return filters;
   }
 
   getData(){
@@ -83,6 +102,16 @@ export class ReporteAprendicesPageComponent implements OnInit,OnDestroy {
 
   sizeChange(){
     this.page_table = 1;
+    this.getData();
+  }
+
+  onSearch(){
+    console.log(this.buscar_aprendiz_value);
+    
+    this.getData();
+  }
+  onResetSearch(){
+    this.buscar_aprendiz_value = undefined;
     this.getData();
   }
 

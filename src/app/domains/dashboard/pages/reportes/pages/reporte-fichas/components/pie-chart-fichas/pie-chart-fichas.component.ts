@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { formatDateToString } from '@shared/functions/date.functions';
 import { DF14CentroFormacionModel, DF14EstadoFichaModel, DF14NivelFormacionModel, DF14ProgramaModel, DF14RegionalModel } from '@shared/models/df14.model';
 import { PaginateModel } from '@shared/models/paginate.model';
 import { ReporteChartModel } from '@shared/models/reporte-chart.model';
@@ -8,6 +9,7 @@ import { Df14Service } from '@shared/services/documents/df14.service';
 import { ChartNonAxisOptions } from '@shared/types/chart-options.type';
 import { ApexNonAxisChartSeries, ChartComponent } from 'ng-apexcharts';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { BehaviorSubject, debounceTime, forkJoin, Observable, skip, Subscription } from 'rxjs';
@@ -21,7 +23,8 @@ import { BehaviorSubject, debounceTime, forkJoin, Observable, skip, Subscription
     NzSelectModule,
     FormsModule,
     NzButtonModule,
-    NzSpinModule
+    NzSpinModule,
+    NzDatePickerModule
   ],
   templateUrl: './pie-chart-fichas.component.html',
   styleUrl: './pie-chart-fichas.component.css'
@@ -86,6 +89,9 @@ export class PieChartFichasComponent implements OnInit,OnDestroy{
   search_niveles_subject:BehaviorSubject<string> = new BehaviorSubject('');
   search_programas_subject:BehaviorSubject<string> = new BehaviorSubject('');
   
+  fecha_fin?: Date = new Date(new Date().getFullYear(), 11, 31);
+  fecha_inicio?: Date = new Date(new Date().getFullYear(), 0, 1);
+
   ngOnInit(): void {
     let data_to_load = [
       this.df14_service.countFichasPorEstado()
@@ -99,6 +105,7 @@ export class PieChartFichasComponent implements OnInit,OnDestroy{
           reporte,
         ])=>{
           this.reporte_fichas = reporte as ReporteChartModel;
+          this.filter.emit(this.filters);
           this.setChartData();
         }
       });
@@ -109,6 +116,26 @@ export class PieChartFichasComponent implements OnInit,OnDestroy{
     this.resetSearch();
   }
 
+  onChangeInicio(): void {
+    this.loadData();
+  }
+
+  onChangeFin(): void {
+    this.loadData();
+  }
+
+  loadData(){
+    this.resetDataSub();
+    this.data_subscription = this.getReportes()
+      .subscribe({
+        next:(reporte)=>{
+          this.reporte_fichas = reporte as ReporteChartModel;
+          this.filter.emit(this.filters);
+          this.setChartData();
+        }
+      });
+  }
+
   get filters():{[key:string]:number|string}{
     let filters:{[key:string]:string|number} = {};
     if(this.regional) filters['regional'] = this.regional;
@@ -116,6 +143,7 @@ export class PieChartFichasComponent implements OnInit,OnDestroy{
     if(this.estado_ficha) filters['estado_ficha'] = this.estado_ficha;
     if(this.centro_formacion) filters['sede'] = this.centro_formacion;
     if(this.codigo_programa) filters['codigo_programa'] = this.codigo_programa;
+    if(this.fecha_inicio && this.fecha_fin) filters['range_date:fecha_terminacion_ficha'] = `${formatDateToString(this.fecha_inicio)},${formatDateToString(this.fecha_fin)}`
     return filters;
   }
 

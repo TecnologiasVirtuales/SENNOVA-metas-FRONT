@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { formatDateToString } from '@shared/functions/date.functions';
 import { DF14CentroFormacionModel, DF14EstadoAprendizModel, DF14NivelFormacionModel, DF14ProgramaModel, DF14RegionalModel, DF14TipoDocumentoModel } from '@shared/models/df14.model';
 import { PaginateModel } from '@shared/models/paginate.model';
 import { ReporteChartModel } from '@shared/models/reporte-chart.model';
@@ -8,6 +9,7 @@ import { Df14Service } from '@shared/services/documents/df14.service';
 import { ChartNonAxisOptions } from '@shared/types/chart-options.type';
 import { ApexNonAxisChartSeries, ChartComponent } from 'ng-apexcharts';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { BehaviorSubject,debounceTime, forkJoin, Observable,skip, Subscription } from 'rxjs';
@@ -21,7 +23,8 @@ import { BehaviorSubject,debounceTime, forkJoin, Observable,skip, Subscription }
     NzSelectModule,
     FormsModule,
     NzButtonModule,
-    NzSpinModule
+    NzSpinModule,
+    NzDatePickerModule
   ],
   templateUrl: './pie-chart-aprentidices.component.html',
   styleUrl: './pie-chart-aprentidices.component.css'
@@ -94,9 +97,12 @@ export class PieChartAprentidicesComponent implements OnInit,OnDestroy{
   search_niveles_subject:BehaviorSubject<string> = new BehaviorSubject('');
   search_program_subject:BehaviorSubject<string> = new BehaviorSubject('');
 
+  fecha_fin?: Date = new Date(new Date().getFullYear(), 11, 31);
+  fecha_inicio?: Date = new Date(new Date().getFullYear(), 0, 1);
+
   ngOnInit(): void {
     let data_to_load = [
-      this.df14_service.countAprendicesPorEstado()
+     this.getReportes()
     ];
     if(this.mostrar_filtros){
       this.startSearch();
@@ -105,8 +111,9 @@ export class PieChartAprentidicesComponent implements OnInit,OnDestroy{
       .subscribe({
         next:([
           reporte,
-        ])=>{
+        ])=>{          
           this.reporte_aprendices = reporte as ReporteChartModel;
+          this.filter.emit(this.filters);
           this.setChartData();
         }
       });
@@ -124,12 +131,33 @@ export class PieChartAprentidicesComponent implements OnInit,OnDestroy{
     if(this.estado_aprendiz) filters['estado_aprendiz'] = this.estado_aprendiz;
     if(this.centro_formacion) filters['sede'] = this.centro_formacion;
     if(this.codigo_programa) filters['codigo_programa'] = this.codigo_programa;
-    if(this.tipo_documento) filters['tipo_documento'] = this.tipo_documento;
+    if(this.tipo_documento) filters['tipo_documento'] = this.tipo_documento;      
+    if(this.fecha_inicio && this.fecha_fin) filters['range_date:fecha_terminacion_ficha'] = `${formatDateToString(this.fecha_inicio)},${formatDateToString(this.fecha_fin)}`
     return filters;
   }
 
   get empty_report():boolean {
     return Object.keys(this.reporte_aprendices).length > 0;
+  }
+
+  onChangeInicio(): void {
+    this.loadData();
+  }
+
+  onChangeFin(): void {
+    this.loadData();
+  }
+
+  loadData(){
+    this.resetDataSub();
+    this.data_subscription = this.getReportes()
+      .subscribe({
+        next:(reporte)=>{
+          this.reporte_aprendices = reporte as ReporteChartModel;
+          this.filter.emit(this.filters);
+          this.setChartData();
+        }
+      });
   }
 
   getReportes(){

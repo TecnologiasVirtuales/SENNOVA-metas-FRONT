@@ -154,6 +154,8 @@ export class ReporteCoberturaPageComponent implements OnInit, OnDestroy {
         const { results: mod, count: count_mod } = p_modalidades;
         this.modalidades = [...mod];
         this.num_modalidad = count_mod;
+        console.log(this.filters);
+        
       }
     });
     this.startSearch();

@@ -103,8 +103,8 @@
                         @for (nivel of niveles; track $index) {
                             <td>
                                 <div class="flex flex-col gap-2" >
-                                    <span class="w-full"> Ejecutado: {{ reportes[$index]|valueReporte:nivel:modalidad}}</span>                              
-                                    <span class="w-full">Meta: {{metas[$index]|valueReporte:nivel:modalidad}}</span>
+                                    <span class="w-full"> Ejecutado: {{ reportes|valueReporte:nivel:modalidad}}</span>                              
+                                    <span class="w-full">Meta: {{metas|valueReporte:nivel:modalidad}}</span>
                                 </div>
                             </td>
                         }
