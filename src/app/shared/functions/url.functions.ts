@@ -19,7 +19,6 @@ export function getQueryUrl(url: string, data?: QueryUrlModel) {
                 } else {
                     filter_value = filter[key] as string;
                 }
-                console.log(filter_value);
                 
                 filter_value = filter_value.split(',').map((val)=>normalizeString(val)).join(',')
 

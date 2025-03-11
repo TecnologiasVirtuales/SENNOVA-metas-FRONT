@@ -109,9 +109,7 @@ export class MetasFormacionPageComponent implements OnInit,OnDestroy{
         this.metas_formacion = [...results];
         this.numero_metas = count;
         let {results:modalidades,count:num_modalidad} = p_modalidad;
-        this.modalidades = [...modalidades];
-        console.log(modalidades);
-        
+        this.modalidades = [...modalidades];        
         this.num_modalidad = num_modalidad;
         let {results:metas,count:num_meta} = p_meta;
         this.metas = [...metas];

@@ -1,4 +1,40 @@
 <nz-card [nzTitle]="cardTitle">
+    <div class="flex gap-2 py-3 px-2">
+        <nz-date-picker
+            class="w-1/2"
+            [(ngModel)]="fecha_inicio"
+            (ngModelChange)="onChangeInicio()"
+            nzPlaceHolder="Fecha de inicio"
+        ></nz-date-picker>
+        <nz-date-picker
+            class="w-1/2"
+            [(ngModel)]="fecha_fin"
+            (ngModelChange)="onChangeFin()"
+            nzPlaceHolder="Fecha de terminación"
+        ></nz-date-picker>
+    </div>
+    <div class="flex gap-2 justify-center">
+        <nz-select
+            class="w-1/4"
+            [(ngModel)]="centro_formacion"
+            (ngModelChange)="onChangeCentro()"
+            (nzScrollToBottom)="onScrollCentros()"
+            (nzOnSearch)="onSearchCentros($event)"
+            [nzAllowClear]="true"
+            [nzShowSearch]="true"
+            [nzServerSearch]="true"
+            [nzDropdownRender]="loadingCentro"
+            [nzLoading]="is_loading_centro"
+            nzPlaceHolder="Centro de formación">
+            @for (centro of centros; track $index) {
+                <nz-option [nzLabel]="centro.nombre_centro" [nzValue]="centro.nombre_centro"></nz-option>
+            }
+            <ng-template #loadingCentro>
+                <nz-spin [nzSpinning]="is_loading_centro">
+                </nz-spin>
+            </ng-template>
+        </nz-select>
+    </div>
     <app-colores-porcentaje></app-colores-porcentaje>
     <nz-tabset nzCentered>
         @for (item of tabs; track $index) {

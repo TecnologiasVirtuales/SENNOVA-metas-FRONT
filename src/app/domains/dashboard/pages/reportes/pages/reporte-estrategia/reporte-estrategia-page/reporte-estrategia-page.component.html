@@ -12,6 +12,8 @@
             (ngModelChange)="onChangeFin()"
             nzPlaceHolder="Fecha de terminación"
         ></nz-date-picker>
+    </div>
+    <div class="flex gap-2 justify-center">
         <nz-select
             class="w-1/4"
             [(ngModel)]="estrategia"
@@ -29,6 +31,26 @@
             }
             <ng-template #loadingEstrategia>
                 <nz-spin [nzSpinning]="is_loading_estrategia">
+                </nz-spin>
+            </ng-template>
+        </nz-select>
+        <nz-select
+            class="w-1/4"
+            [(ngModel)]="centro_formacion"
+            (ngModelChange)="onChangeCentro()"
+            (nzScrollToBottom)="onScrollCentros()"
+            (nzOnSearch)="onSearchCentros($event)"
+            [nzAllowClear]="true"
+            [nzShowSearch]="true"
+            [nzServerSearch]="true"
+            [nzDropdownRender]="loadingCentro"
+            [nzLoading]="is_loading_centro"
+            nzPlaceHolder="Centro de formación">
+            @for (centro of centros; track $index) {
+                <nz-option [nzLabel]="centro.nombre_centro" [nzValue]="centro.nombre_centro"></nz-option>
+            }
+            <ng-template #loadingCentro>
+                <nz-spin [nzSpinning]="is_loading_centro">
                 </nz-spin>
             </ng-template>
         </nz-select>
@@ -65,7 +87,7 @@
                             @for (nivel of niveles; track $index) {
                                 <td>
                                     <div class="flex flex-col gap-2" >
-                                        <!-- <span class="w-full"> Ejecutado: {{ reportes_nivel[$index]|valueReporte:nivel:modalidad}}</span>                               -->
+                                        <span class="w-full"> Ejecutado: {{ reportes_nivel[$index]|valueReporte:nivel:modalidad}}</span>                              
                                         <span class="w-full">Meta: {{metas_nivel[$index]|valueReporte:nivel:modalidad}}</span>
                                     </div>
                                 </td>

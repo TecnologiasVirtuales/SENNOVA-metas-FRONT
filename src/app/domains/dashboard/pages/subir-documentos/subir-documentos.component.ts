@@ -95,10 +95,7 @@ export class SubirDocumentosComponent implements OnDestroy {
     } else if (this.nombre_documento === 'P04') {
       filesToUpload = this.uploadedP04Files;
       serviceToUse = this.p04_service;
-    }
-  
-    console.log('Archivos a subir:', filesToUpload);  // Verifica que no esté vacío
-  
+    }  
     if (!filesToUpload.length) {
       return;
     }
@@ -106,7 +103,6 @@ export class SubirDocumentosComponent implements OnDestroy {
     const formData = new FormData();
     filesToUpload.forEach((file: NzUploadFile) => {
       const fileToUpload = file.originFileObj ? file.originFileObj : file;
-      console.log('Subiendo archivo:', fileToUpload);
       formData.append('files', fileToUpload as File);
     });
   
