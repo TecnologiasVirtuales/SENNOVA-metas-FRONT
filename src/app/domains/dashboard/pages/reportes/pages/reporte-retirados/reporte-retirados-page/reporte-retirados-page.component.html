@@ -215,7 +215,17 @@
             [nzShowPagination]="false">
             <thead>
                 <tr>
-                    <th>N. Ficha</th>
+                    <th>
+                        N. Ficha
+                        <app-search-cell
+                            [visible]="buscar_ficha"
+                            (search)="onSearchByFicha($event)"
+                            (reset)="onResetSearchFicha()"
+                            [searchValue]="buscar_ficha_value"
+                            type="number"
+                            placeHolder="Buscar por ficha"
+                        ></app-search-cell>
+                    </th>
                     <th>Programa</th>
                     <th>Fechas</th>
                     <th>Estado</th>

@@ -2,7 +2,11 @@
     nz-col
     [nzSpan]="24"
     [nzTitle]="pageTitle">
-    <app-pie-chart-aprentidices (filter)="onFilter($event)" [mostrar_filtros]="true">
+    <app-pie-chart-aprentidices 
+        [numero_documento]="buscar_aprendiz_value"
+        [numero_ficha]="buscar_ficha_value"
+        (filter)="onFilter($event)" 
+        [mostrar_filtros]="true">
     </app-pie-chart-aprentidices>
     <div class="flex justify-between py-2">
         <span class="text-lime-600 text-2xl">Aprendices sena: {{numero_aprendices}}</span>
@@ -25,12 +29,27 @@
                 <th>Nombre del aprendiz</th>
                 <th>
                     Numero de documento
-                    <nz-filter-trigger [(nzVisible)]="buscar_aprendiz" [nzActive]="!!buscar_aprendiz_value" [nzDropdownMenu]="buscarAprendiz">
-                        <ng-icon name="lucideSearch"></ng-icon>
-                    </nz-filter-trigger>
+                    <app-search-cell
+                        [visible]="buscar_aprendiz"
+                        (search)="onSearchByDocument($event)"
+                        (reset)="onResetSearchDocument()"
+                        [searchValue]="buscar_aprendiz_value"
+                        type="number"
+                        placeHolder="Buscar por documento"
+                    ></app-search-cell>
                 </th>
                 <th>Tipo de documento</th>
-                <th>Ficha</th>
+                <th>
+                    Ficha
+                    <app-search-cell
+                        [visible]="buscar_ficha"
+                        (search)="onSearchByFicha($event)"
+                        (reset)="onResetSearchFicha()"
+                        [searchValue]="buscar_ficha_value"
+                        type="number"
+                        placeHolder="Buscar por ficha"
+                    ></app-search-cell>
+                </th>
                 <th>Programa</th>
                 <th>Estado del aprendiz</th>
             </tr>
@@ -68,18 +87,3 @@
         </div>
     </div>
 </ng-template>
-<nz-dropdown-menu #buscarAprendiz="nzDropdownMenu">
-    <div class="caja-busqueda">
-      <div class="search-box">
-        <input type="number"  
-            nz-input 
-            placeholder="Buscar por documento" 
-            [(ngModel)]="buscar_aprendiz_value" 
-            appOnlyNumbers/>
-        <div class="caja-busqueda_buttons">
-            <button (click)="onSearch()" nzType="primary" class="search-button">Search</button>
-            <button (click)="onResetSearch()" class="button-reset">Reset</button>
-        </div>
-      </div>
-    </div>
-  </nz-dropdown-menu>

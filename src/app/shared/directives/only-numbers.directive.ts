@@ -30,9 +30,7 @@ export class OnlyNumbersDirective {
   onPaste(event: ClipboardEvent) {
     event.preventDefault();
     const clipboardData = event.clipboardData?.getData('text') || '';
-    const soloNumeros = clipboardData.replace(/\D/g, '');
-    console.log('pegando');
-    
+    const soloNumeros = clipboardData.replace(/\D/g, '');    
     document.execCommand('insertText', false, soloNumeros);
   }
 

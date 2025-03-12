@@ -6,22 +6,3 @@
 .page-title h1{
     @apply text-[--primary-green-color] text-2xl;
 }
-
-.caja-busqueda{
-    @apply flex flex-col gap-2 p-2;
-    @apply bg-white shadow-md;
-}
-
-.caja-busqueda_buttons{
-    @apply flex justify-end gap-1;
-}
-
-.caja-busqueda_buttons .search-button{
-    @apply bg-[--primary-green-color] text-white;
-    @apply px-2 py-1 rounded-sm;
-}
-
-.caja-busqueda_buttons .button-reset{
-    @apply border border-[--primary-green-color] text-[--primary-green-color];
-    @apply px-2 py-1 rounded-sm;
-}

@@ -177,7 +177,17 @@
                 [nzShowPagination]="false">
                 <thead>
                     <tr>
-                        <th class="flex justify-center items-center">N. Ficha</th>
+                        <th class="flex justify-center items-center">
+                            N. Ficha
+                            <app-search-cell
+                                [visible]="buscar_ficha"
+                                (search)="onSearchByFicha($event)"
+                                (reset)="onResetSearchFicha()"
+                                [searchValue]="buscar_ficha_value"
+                                type="number"
+                                placeHolder="Buscar por ficha"
+                            ></app-search-cell>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>

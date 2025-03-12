@@ -13,12 +13,9 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { FormsModule } from '@angular/forms';
 import { SearchCellComponent } from '@shared/components/search-cell/search-cell.component';
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { lucideSearch } from '@ng-icons/lucide';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { OnlyNumbersDirective } from '@shared/directives/only-numbers.directive';
 
 @Component({
   selector: 'app-reporte-aprendices-page',
@@ -35,7 +32,7 @@ import { OnlyNumbersDirective } from '@shared/directives/only-numbers.directive'
     FormsModule,
     NzDropDownModule,
     NzInputModule,
-    OnlyNumbersDirective
+    SearchCellComponent
   ],
   templateUrl: './reporte-aprendices-page.component.html',
   styleUrl: './reporte-aprendices-page.component.css',
@@ -61,6 +58,9 @@ export class ReporteAprendicesPageComponent implements OnInit,OnDestroy {
   buscar_aprendiz:boolean = false;
   buscar_aprendiz_value?:number;
 
+  buscar_ficha:boolean = false;
+  buscar_ficha_value?:number;
+
   ngOnInit(): void {
   }
 
@@ -73,8 +73,9 @@ export class ReporteAprendicesPageComponent implements OnInit,OnDestroy {
   }
 
   get filter_aprendiz(){
-    let filters = this.filters;
+    let filters = {...this.filters};
     if(this.buscar_aprendiz_value) filters['numero_documento'] = this.buscar_aprendiz_value;
+    if(this.buscar_ficha_value) filters['ficha'] = this.buscar_ficha_value;
     return filters;
   }
 
@@ -105,14 +106,19 @@ export class ReporteAprendicesPageComponent implements OnInit,OnDestroy {
     this.getData();
   }
 
-  onSearch(){
-    console.log(this.buscar_aprendiz_value);
-    
-    this.getData();
+  onSearchByDocument(search:string){
+    this.buscar_aprendiz_value = parseInt(search);    
   }
-  onResetSearch(){
-    this.buscar_aprendiz_value = undefined;
-    this.getData();
+  onResetSearchDocument(){
+    this.buscar_aprendiz_value = undefined;    
+  }
+
+  onSearchByFicha(search:string){
+    this.buscar_ficha_value = parseInt(search);
+  }
+
+  onResetSearchFicha(){
+    this.buscar_ficha_value = undefined;
   }
 
   resetDataSub(){

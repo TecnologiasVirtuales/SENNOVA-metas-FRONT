@@ -12,6 +12,7 @@ import { heroChartPie } from '@ng-icons/heroicons/outline';
 import { Df14Service } from '@shared/services/documents/df14.service';
 import { Subscription } from 'rxjs';
 import { DF14FichaModel } from '@shared/models/df14.model';
+import { SearchCellComponent } from '@shared/components/search-cell/search-cell.component';
 
 @Component({
   selector: 'app-reporte-fichas-page',
@@ -26,6 +27,7 @@ import { DF14FichaModel } from '@shared/models/df14.model';
     NzPaginationModule,
     NzSelectModule,
     FormsModule,
+    SearchCellComponent
   ],
   templateUrl: './reporte-fichas-page.component.html',
   styleUrl: './reporte-fichas-page.component.css',
@@ -47,6 +49,9 @@ export class ReporteFichasPageComponent implements OnInit,OnDestroy{
   page_size:number = 10;
 
   filters:{[key:string]:number|string} = {};
+
+  buscar_ficha:boolean = false;
+  buscar_ficha_value?:number;
 
   ngOnInit(): void {
   }
@@ -88,6 +93,14 @@ export class ReporteFichasPageComponent implements OnInit,OnDestroy{
 
   resetDataSub(){
     if(this.data_subscription) this.data_subscription.unsubscribe();
+  }
+
+  onSearchByFicha(search:string){
+    this.buscar_ficha_value = parseInt(search);
+  }
+
+  onResetSearchFicha(){
+    this.buscar_ficha_value = undefined;
   }
 
 }

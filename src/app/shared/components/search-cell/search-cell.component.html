@@ -1,1 +1,27 @@
-<p>search-cell works!</p>
+<nz-filter-trigger [(nzVisible)]="visible" [nzActive]="!!searchValue" [nzDropdownMenu]="buscar">
+    <ng-icon name="lucideSearch"></ng-icon>
+</nz-filter-trigger>
+<nz-dropdown-menu #buscar="nzDropdownMenu">
+    <div class="caja-busqueda">
+      <div class="search-box">
+        @switch (type) {
+            @case ('text') {
+                <input type="text"  
+                [placeholder]="placeHolder" 
+                [(ngModel)]="searchValue" 
+                />
+            }
+            @case ('number') {
+                <input type="number"  
+                    [placeholder]="placeHolder" 
+                    [(ngModel)]="searchValue" 
+                    appOnlyNumbers/>
+            }
+        }
+        <div class="caja-busqueda_buttons">
+            <button (click)="onSearch()" nzType="primary" class="search-button">Search</button>
+            <button (click)="onResetSearch()" class="button-reset">Reset</button>
+        </div>
+      </div>
+    </div>
+  </nz-dropdown-menu>

@@ -3,6 +3,7 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { lucideTable2 } from '@ng-icons/lucide';
+import { SearchCellComponent } from '@shared/components/search-cell/search-cell.component';
 import { formatDateToString } from '@shared/functions/date.functions';
 import { P04CentroFormacionModel, P04DesercionesModel, P04FichaModel, P04JornadaModel, P04ModalidadModel, P04MunicipioModel, P04NivelModel, P04ProgramaModel, P04RegionalModel } from '@shared/models/p04.model';
 import { PaginateModel } from '@shared/models/paginate.model';
@@ -31,7 +32,8 @@ import { BehaviorSubject, debounceTime, forkJoin, Observable, skip, Subscription
     FormsModule,
     NzDatePickerModule,
     NzInputModule,
-    NzSpinModule
+    NzSpinModule,
+    SearchCellComponent
   ],
   templateUrl: './reporte-retirados-page.component.html',
   styleUrl: './reporte-retirados-page.component.css',
@@ -116,6 +118,9 @@ export class ReporteRetiradosPageComponent implements OnInit,OnDestroy{
   fecha_fin?:Date = new Date(new Date().getFullYear(),11,31);
   fecha_inicio?:Date = new Date(new Date().getFullYear(),0,1);
 
+  buscar_ficha:boolean = false;
+  buscar_ficha_value?:number;
+
   get filters():{[key:string]:number|string}{
     let filters:{[key:string]:string|number} = {};
     if(this.regional) filters['nombre_regional'] = this.regional;
@@ -126,6 +131,7 @@ export class ReporteRetiradosPageComponent implements OnInit,OnDestroy{
     if(this.modalidad) filters['modalidad_formacion'] = this.modalidad;
     if(this.programa) filters['nombre_programa_formacion'] = this.programa;
     if(this.fecha_inicio && this.fecha_fin) filters['range_date:fecha_terminacion_ficha'] = `${formatDateToString(this.fecha_inicio)},${formatDateToString(this.fecha_fin)}`
+    if(this.buscar_ficha_value) filters['identificador_ficha'] = this.buscar_ficha_value;
     return filters;
   }
 
@@ -162,6 +168,16 @@ export class ReporteRetiradosPageComponent implements OnInit,OnDestroy{
   }
 
   onChangeFin(){
+    this.loadData();
+  }
+
+  onSearchByFicha(search:string){
+    this.buscar_ficha_value = parseInt(search);
+    this.loadData();
+  }
+
+  onResetSearchFicha(){
+    this.buscar_ficha_value = undefined;
     this.loadData();
   }
 

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { formatDateToString } from '@shared/functions/date.functions';
 import { DF14CentroFormacionModel, DF14EstadoFichaModel, DF14NivelFormacionModel, DF14ProgramaModel, DF14RegionalModel } from '@shared/models/df14.model';
@@ -29,9 +29,10 @@ import { BehaviorSubject, debounceTime, forkJoin, Observable, skip, Subscription
   templateUrl: './pie-chart-fichas.component.html',
   styleUrl: './pie-chart-fichas.component.css'
 })
-export class PieChartFichasComponent implements OnInit,OnDestroy{
+export class PieChartFichasComponent implements OnInit,OnChanges,OnDestroy{
 
   @Input() mostrar_filtros:boolean = false;
+  @Input() numero_ficha?:number;
 
   @Output() filter:EventEmitter<{[key:string]:number|string}> = new EventEmitter();
 
@@ -111,6 +112,11 @@ export class PieChartFichasComponent implements OnInit,OnDestroy{
       });
   }
 
+  ngOnChanges(changes: SimpleChanges): void {    
+    if(changes['numero_ficha'] && changes['numero_ficha'].firstChange)return;
+    this.loadData();
+  }
+
   ngOnDestroy(): void {
     this.resetDataSub();
     this.resetSearch();
@@ -144,6 +150,7 @@ export class PieChartFichasComponent implements OnInit,OnDestroy{
     if(this.centro_formacion) filters['sede'] = this.centro_formacion;
     if(this.codigo_programa) filters['codigo_programa'] = this.codigo_programa;
     if(this.fecha_inicio && this.fecha_fin) filters['range_date:fecha_terminacion_ficha'] = `${formatDateToString(this.fecha_inicio)},${formatDateToString(this.fecha_fin)}`
+    if(this.numero_ficha) filters['ficha'] = this.numero_ficha;
     return filters;
   }
 

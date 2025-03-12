@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { formatDateToString } from '@shared/functions/date.functions';
 import { DF14CentroFormacionModel, DF14EstadoAprendizModel, DF14NivelFormacionModel, DF14ProgramaModel, DF14RegionalModel, DF14TipoDocumentoModel } from '@shared/models/df14.model';
@@ -29,9 +29,11 @@ import { BehaviorSubject,debounceTime, forkJoin, Observable,skip, Subscription }
   templateUrl: './pie-chart-aprentidices.component.html',
   styleUrl: './pie-chart-aprentidices.component.css'
 })
-export class PieChartAprentidicesComponent implements OnInit,OnDestroy{
+export class PieChartAprentidicesComponent implements OnInit,OnChanges,OnDestroy{
   
   @Input() mostrar_filtros:boolean = false;
+  @Input() numero_ficha?:number;
+  @Input() numero_documento?:number;
 
   @Output() filter:EventEmitter<{[key:string]:number|string}> = new EventEmitter();
 
@@ -119,6 +121,12 @@ export class PieChartAprentidicesComponent implements OnInit,OnDestroy{
       });
   }
 
+  ngOnChanges(changes: SimpleChanges): void {    
+    if(changes['numero_ficha'] && changes['numero_ficha'].firstChange)return;
+    if(changes['numero_documento'] && changes['numero_documento'].firstChange)return;
+    this.loadData();
+  }
+
   ngOnDestroy(): void {
     this.resetDataSub();
     this.resetSearch(); 
@@ -133,6 +141,8 @@ export class PieChartAprentidicesComponent implements OnInit,OnDestroy{
     if(this.codigo_programa) filters['codigo_programa'] = this.codigo_programa;
     if(this.tipo_documento) filters['tipo_documento'] = this.tipo_documento;      
     if(this.fecha_inicio && this.fecha_fin) filters['range_date:fecha_terminacion_ficha'] = `${formatDateToString(this.fecha_inicio)},${formatDateToString(this.fecha_fin)}`
+    if(this.numero_documento) filters['numero_documento'] = this.numero_documento;
+    if(this.numero_ficha) filters['ficha'] = this.numero_ficha;
     return filters;
   }
 

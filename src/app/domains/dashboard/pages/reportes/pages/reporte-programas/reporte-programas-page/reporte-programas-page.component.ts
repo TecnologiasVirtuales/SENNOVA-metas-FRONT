@@ -17,8 +17,8 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { Subscription, BehaviorSubject, forkJoin, Observable, skip, debounceTime } from 'rxjs';
 import { InfoFichaComponent } from '../components/info-ficha/info-ficha.component';
-import { Data } from '@angular/router';
 import { formatDateToString } from '@shared/functions/date.functions';
+import { SearchCellComponent } from '@shared/components/search-cell/search-cell.component';
 
 @Component({
   selector: 'app-reporte-programas-page',
@@ -35,7 +35,8 @@ import { formatDateToString } from '@shared/functions/date.functions';
     NzDatePickerModule,
     NzInputModule,
     NzSpinModule,
-    InfoFichaComponent
+    InfoFichaComponent,
+    SearchCellComponent
   ],
   templateUrl: './reporte-programas-page.component.html',
   styleUrl: './reporte-programas-page.component.css',
@@ -105,6 +106,9 @@ export class ReporteProgramasPageComponent implements OnInit,OnDestroy{
   fecha_fin?:Date = new Date(new Date().getFullYear(),11,31);
   fecha_inicio?:Date = new Date(new Date().getFullYear(),0,1);
 
+  buscar_ficha:boolean = false;
+  buscar_ficha_value?:number;
+
   get filters():{[key:string]:number|string}{
     let filters:{[key:string]:string|number} = {};
     if(this.regional) filters['nombre_regional'] = this.regional;
@@ -113,6 +117,7 @@ export class ReporteProgramasPageComponent implements OnInit,OnDestroy{
     if(this.modalidad) filters['modalidad_formacion'] = this.modalidad;
     if(this.programa) filters['nombre_programa_formacion'] = this.programa;
     if(this.fecha_inicio && this.fecha_fin) filters['range_date:fecha_terminacion_ficha'] = `${formatDateToString(this.fecha_inicio)},${formatDateToString(this.fecha_fin)}`
+    if(this.buscar_ficha_value) filters['identificador_ficha'] = this.buscar_ficha_value;
     return filters;
   }
 
@@ -154,6 +159,16 @@ export class ReporteProgramasPageComponent implements OnInit,OnDestroy{
   }
 
   onChangeFin(){
+    this.loadData();
+  }
+
+  onSearchByFicha(search:string){
+    this.buscar_ficha_value = parseInt(search);
+    this.loadData();
+  }
+
+  onResetSearchFicha(){
+    this.buscar_ficha_value = undefined;
     this.loadData();
   }
 

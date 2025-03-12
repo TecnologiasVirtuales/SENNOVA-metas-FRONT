@@ -2,7 +2,10 @@
     nz-col
     [nzSpan]="24"
     [nzTitle]="pageTitle">
-    <app-pie-chart-fichas (filter)="onFilter($event)" [mostrar_filtros]="true">
+    <app-pie-chart-fichas
+        [numero_ficha]="buscar_ficha_value"
+        (filter)="onFilter($event)" 
+        [mostrar_filtros]="true">
     </app-pie-chart-fichas>
     <div class="flex justify-between py-2">
         <span class="text-lime-600 text-2xl">Fichas sena: {{numero_fichas}}</span>
@@ -26,7 +29,17 @@
         [nzShowPagination]="false">
         <thead>
             <tr>
-                <th>Ficha</th>
+                <th>
+                    Ficha
+                    <app-search-cell
+                        [visible]="buscar_ficha"
+                        (search)="onSearchByFicha($event)"
+                        (reset)="onResetSearchFicha()"
+                        [searchValue]="buscar_ficha_value"
+                        type="number"
+                        placeHolder="Buscar por ficha"
+                    ></app-search-cell>
+                </th>
                 <th>Programa</th>
                 <th>Estado de la ficha</th>
             </tr>
