@@ -140,7 +140,7 @@ export class EstrategiasPageComponent {
 
   get filters():{[key:string]:string|number}{
     let filters:{[key:string]:string|number} = {};
-    if(this.meta) filters['meta.met_anio'] = this.meta;
+    if(this.meta) filters['meta_formacion.meta.met_anio'] = this.meta;
     if(this.modalidad) filters['modalidad.modalidad'] = this.modalidad;
     if(this.estrategia) filters['estrategia.est_nombre'] = this.estrategia;
     if(this.fecha_inicio) filters['meta.met_fecha_inicio'] = formatDateToString(this.fecha_inicio);

@@ -7,14 +7,22 @@
         class="usuario-table"
         #usuarioTable
         [nzData]="usuarios"
+        [nzLoading]="loading"
+        [nzShowPagination]="false"
+        nzBordered
         >
         <thead>
             <tr>
                 <th nzCustomFilter>
                     Documento
-                    <nz-filter-trigger [(nzVisible)]="search_status" [nzActive]="search_value.length > 0" [nzDropdownMenu]="menu">
-                        <ng-icon name="lucideSearch"></ng-icon>
-                    </nz-filter-trigger>
+                    <app-search-cell
+                        [visible]="buscar_usuario"
+                        (search)="onSearch($event)"
+                        (reset)="onResetSearch()"
+                        [searchValue]="documento_usuario"
+                        type="number"
+                        placeHolder="Buscar por documento"
+                    ></app-search-cell>
                 </th>
                 <th>
                     Tipo de documento
@@ -31,62 +39,51 @@
                 <th>
                     Estado
                 </th>
-                <th>
-                    Roles
-                </th>
-                <th>
-                    Actions
-                </th>
+ 
             </tr>
         </thead>
         <tbody>
             @for (usuario of usuarioTable.data; track $index) {
+                
                 <tr>
-                    {{usuario.per_documento}}
-                </tr>
-                <tr>
-                    {{usuario.per_tipo_documento|tipoDocumento}}
-                </tr>
-                <tr>
-                    {{usuario.per_nombres}}
-                </tr>
-                <tr>
-                    {{usuario.per_apellidos}}
-                </tr>
-                <tr>
-                    {{usuario.email}}
-                </tr>
-                <tr>
-                    @if (usuario.is_active) {
-                        <strong>Activo</strong>
-                    }@else {
-                        <strong>Inactivo</strong>
-                    }
-                </tr>
-                <tr>
-                    @for (rol of usuario.roles; track $index) {
-                        <strong>{{rol.name}}</strong>
-                        @if (rol.id !== usuario.roles!.at(-1)!.id) {
-                            <nz-divider nzOrientation="left"></nz-divider>
+                    <td>
+                        {{usuario.per_documento}}
+                    </td>
+                    <td>
+                        {{usuario.per_tipo_documento|tipoDocumento}}
+                    </td>
+                    <td>
+                        {{usuario.per_nombres}}
+                    </td>
+                    <td>
+                        {{usuario.per_apellidos}}
+                    </td>
+                    <td>
+                        {{usuario.email}}
+                    </td>
+                    <td>
+                        @if (usuario.is_active) {
+                            <strong>Activo</strong>
+                        }@else {
+                            <strong>Inactivo</strong>
                         }
-                    }@empty {
-                        No tiene roles asignados
-                    }
+                    </td>
+    
                 </tr>
+
             }
         </tbody>
-
     </nz-table>
-</nz-card>
-<nz-dropdown-menu #menu="nzDropdownMenu">
-    <div class="ant-table-filter-dropdown">
-      <div class="search-box">
-        <input type="text" nz-input placeholder="Search name" [(ngModel)]="search_value" />
-        <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">Search</button>
-        <button nz-button nzSize="small" (click)="resetSearch()">Reset</button>
-      </div>
+    <div class="flex py-3 w-full justify-end">
+        <nz-pagination
+            (nzPageIndexChange)="changePage($event)"
+            [nzHideOnSinglePage]="true"
+            [nzPageIndex]="page"
+            [nzTotal]="num_usuarios"
+            [nzPageSize]="page_size">
+        </nz-pagination>
     </div>
-  </nz-dropdown-menu>
+</nz-card>
 <ng-template #pageTitle>
     <nz-space class="page-title" nzAlign="center">
         <div *nzSpaceItem>

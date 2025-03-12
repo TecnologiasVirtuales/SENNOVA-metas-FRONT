@@ -17,12 +17,12 @@ export const side_routes:Routes = [
                 pathMatch:'full',
                 redirectTo:'modalidades'
             },
-            // {
-            //     path:'usuarios',
-            //     title:'Gestión de usuarios',
-            //     data:{breadcrumb:'Gestión de usuarios',icon:'heroUserGroupSolid'},
-            //     loadComponent:()=>import('@domains/dashboard/pages/usuario/usuario-page/usuario-page.component').then(c=>c.UsuarioPageComponent)
-            // },
+            {
+                path:'usuarios',
+                title:'Gestión de usuarios',
+                data:{breadcrumb:'Gestión de usuarios',icon:'heroUserGroupSolid'},
+                loadComponent:()=>import('@domains/dashboard/pages/usuario/usuario-page/usuario-page.component').then(c=>c.UsuarioPageComponent)
+            },
             {
                 path:'modalidades',
                 title:'Gestión de Modalidades',
