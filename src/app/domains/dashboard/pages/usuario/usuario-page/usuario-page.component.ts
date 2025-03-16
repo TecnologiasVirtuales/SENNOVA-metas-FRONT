@@ -17,6 +17,7 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { Subscription } from 'rxjs';
+import { UsuarioActionsComponent } from '../components/usuario-actions/usuario-actions.component';
 
 @Component({
   selector: 'app-usuario-page',
@@ -34,7 +35,8 @@ import { Subscription } from 'rxjs';
     TipoDocumentoPipe,
     NzDividerModule,
     SearchCellComponent,
-    NzPaginationModule
+    NzPaginationModule,
+    UsuarioActionsComponent
   ],
   templateUrl: './usuario-page.component.html',
   styleUrl: './usuario-page.component.css',
@@ -99,6 +101,13 @@ export class UsuarioPageComponent implements OnInit,OnDestroy{
 
   private resetDataSub(){
     if(this.data_sub) this.data_sub.unsubscribe();
+  }
+
+  onUpdate(data:{usuario:PersonaModel, index:number}) {    
+    let {usuario,index} = data;
+    let usuarios = [...this.usuarios];
+    usuarios[index] = usuario;
+    this.usuarios = [...usuarios];
   }
 
   onSearch(search:string){

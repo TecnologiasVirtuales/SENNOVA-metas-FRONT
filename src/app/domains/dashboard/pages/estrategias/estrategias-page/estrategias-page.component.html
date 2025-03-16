@@ -166,6 +166,7 @@
         <app-estrategia-detalle-actions 
             type_actions="actualizar" 
             (update)="onUpdate($event)"
+            (setLoading)="onLoad($event)"
             [icons]="true" 
             [index]="i" 
             [detalle]="detalle">
@@ -173,6 +174,7 @@
         <app-estrategia-detalle-actions 
             type_actions="eliminar" 
             (delete)="onDelete($event)"
+            (setLoading)="onLoad($event)"
             [icons]="true" 
             [index]="i" 
             [detalle]="detalle">

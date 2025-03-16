@@ -1,1 +1,32 @@
-<p>usuario-roles-form works!</p>
+<form class="form-container" nz-form [formGroup]="form">
+  
+<!-- Select de Meta -->
+<nz-form-item nz-col nzSpan="20">
+    <nz-form-control>
+    <nz-form-label nzFor="roles" class="form-label" nzRequired>
+        <span class="form-label_text" nz-typography>Roles</span>
+    </nz-form-label>
+    <nz-input-group class="form-group">
+        <nz-select
+        nzId="roles"
+        [formControl]="field_roles"
+        (nzScrollToBottom)="onScrollRol()"
+        (nzOnSearch)="onSearchRol($event)"
+        [nzAllowClear]="true"
+        [nzShowSearch]="true"
+        [nzServerSearch]="true"
+        nzMode="multiple"
+        [nzDropdownRender]="loadingRol"
+        [nzLoading]="is_loading_rol"
+        nzPlaceHolder="Elija la meta de formación">
+        @for (rol of roles; track $index) {
+            <nz-option [nzLabel]="rol.rol_nombre" [nzValue]="rol.rol_id"></nz-option>
+        }
+        </nz-select>
+        <ng-template #loadingRol>
+        <nz-spin [nzSpinning]="is_loading_rol"></nz-spin>
+        </ng-template>
+    </nz-input-group>
+    </nz-form-control>
+</nz-form-item>
+</form>

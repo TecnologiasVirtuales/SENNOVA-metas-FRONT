@@ -1,1 +1,34 @@
-<p>usuario-actions works!</p>
+@switch (type_actions) {
+    @case ('roles') {
+        <button [ngClass]="{'no-title':!show_title}" class="create-button button" (click)="openRoleForm()">
+            <ng-container *ngTemplateOutlet="titleTemplate" ></ng-container>
+        </button>
+    }
+    @case ('toggle') {
+        <button 
+            [ngClass]="{
+                'no-title':!show_title,
+                'update-button':usuario && !usuario.is_active,
+                'delete-button':usuario && usuario.is_active
+            }"
+            class="button"
+            (click)="onToggle()">
+            <ng-container *ngTemplateOutlet="titleTemplate" ></ng-container>
+        </button>
+    }
+}
+
+<ng-template #titleTemplate>
+    <div class="title-container">
+        @if (icons||!show_title) {
+            <ng-icon [name]="icon"></ng-icon>
+        }
+        @if(show_title){
+            <span>{{title}}</span>
+        }
+    </div>
+</ng-template>
+
+<ng-template #saveFooter>
+    <app-modal-footer type="save" [saveDisabled]="disabled" [loading]="save_loading" (save)="handleGuardar()" (cancel)="handleCancelar()"></app-modal-footer>
+</ng-template>

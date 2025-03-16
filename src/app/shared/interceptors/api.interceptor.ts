@@ -8,7 +8,7 @@ export const apiInterceptor: HttpInterceptorFn = (req, next) => {
   switch(paths.at(0)){
     case 'api':
       req = req.clone({
-        url:`${api_url}/${req.url}`
+        url:`${api_url}${req.url}`
       })
       break;
     default:

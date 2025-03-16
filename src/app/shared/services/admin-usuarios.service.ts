@@ -5,6 +5,7 @@ import { getQueryUrl } from '@shared/functions/url.functions';
 import { PaginateModel } from '@shared/models/paginate.model';
 import { PersonaModel } from '@shared/models/persona.model';
 import { QueryUrlModel } from '@shared/models/query-url.model';
+import { RolePersonaModel } from '@shared/models/role.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,13 +22,18 @@ export class AdminUsuariosService {
   }
 
   toggleUser(document:number) {
-    let url: string = `${this.url}desactivar/${document}`;
+    let url: string = `${this.url}desactivar/${document}/`;
     return this.http.post<PersonaModel>(url,{});
   }
 
   create(usuario:RegisterDto){
     let url: string = `${this.url}registrar`;
     return this.http.post<PersonaModel>(url,usuario);
+  }
+
+  userRoles(document:number){
+    let url:string = `${this.url}roles/${document}/`;
+    return this.http.get<RolePersonaModel[]>(url);
   }
 
 }

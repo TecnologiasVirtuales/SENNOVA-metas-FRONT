@@ -98,7 +98,7 @@ export class EstrategiaDetalleActionsComponent {
     .subscribe({
       next:()=>{
         const {form} = this.instance!;
-        this.disabled = form.invalid;    
+        this.disabled = form.invalid;        
       }
     });
   }

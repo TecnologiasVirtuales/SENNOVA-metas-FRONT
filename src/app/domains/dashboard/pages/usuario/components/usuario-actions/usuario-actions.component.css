@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.title-container{
+    @apply flex gap-1 justify-center items-center w-full;
+}
+
+.button{
+    @apply font-semibold p-2 rounded-md; 
+}
+
+.create-button {
+    @apply text-white;
+    @apply bg-[--primary-green-color] ;
+}
+
+.create-button.no-title {
+    @apply rounded-full min-w-8;
+}
+
+.update-button{
+    @apply text-[--primary-green-color];
+    @apply border border-[--primary-green-color];
+}
+
+.update-button.no-title{
+    @apply border-none;
+}
+
+.delete-button {
+    @apply text-[--primary-red-color];
+    @apply border border-[--primary-red-color];
+}
+
+.delete-button.no-title {
+    @apply border-none;
+}
