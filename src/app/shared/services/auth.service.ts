@@ -48,8 +48,8 @@ export class AuthService {
       }));
   }
 
-  register(formData:RegisterDto){
-    return this.http.post<MessageInfoModel>(`${this.url}`,formData);
+  update_profile(formData:RegisterDto){
+    return this.http.post<MessageInfoModel>(`${this.url}/profile_update`,formData).pipe();
   }
 
 }

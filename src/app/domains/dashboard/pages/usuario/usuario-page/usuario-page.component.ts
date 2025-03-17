@@ -103,6 +103,11 @@ export class UsuarioPageComponent implements OnInit,OnDestroy{
     if(this.data_sub) this.data_sub.unsubscribe();
   }
 
+  onCreateUsuario(usuario:PersonaModel){
+    this.usuarios = [...this.usuarios,usuario];
+  }
+  
+
   onUpdate(data:{usuario:PersonaModel, index:number}) {    
     let {usuario,index} = data;
     let usuarios = [...this.usuarios];

@@ -1,15 +1,70 @@
 <form class="form-container" nz-form [formGroup]="form">
     <nz-form-item nz-col nzSpan="20">
         <nz-form-control 
-            [nzErrorTip]="nombreErrors">
+            [nzErrorTip]="documentoErrors">
             <nz-form-label 
-                nzFor="nombre" 
+                nzFor="per_documento" 
                 class="form-label"
                 nzRequired>
                 <span 
                     class="form-label_text" 
                     nz-typography>
-                    Nombre
+                    Documento
+                </span>
+            </nz-form-label>
+            <nz-input-group 
+                class="form-group">
+                <input 
+                    class="form-input" 
+                    (focus)="onFocus($event)" 
+                    (blur)="onBlur($event)" 
+                    type="number" 
+                    nz-input 
+                    formControlName="per_documento"
+                    appOnlyNumbers
+                    placeholder="Escriba el documento del usuario" 
+                    id="per_documento" 
+                    nz-typography/>
+            </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item nz-col nzSpan="20">
+        <nz-form-control 
+            [nzErrorTip]="tipoDocumentoErrors">
+            <nz-form-label 
+                nzFor="per_documento_id" 
+                class="form-label"
+                nzRequired>
+                <span 
+                    class="form-label_text" 
+                    nz-typography>
+                    Tipo de Documento
+                </span>
+            </nz-form-label>
+            <nz-input-group 
+                class="form-group">
+                <nz-select
+                    nzId="per_documento_id"
+                    nzPlaceHolder="tipo de documento"
+                    formControlName="per_tipo_documento">
+                    @for (tipo_d of tipo_documento_keys; track $index) {
+                        <nz-option [nzLabel]="tipos_documento[tipo_d]" [nzValue]="tipo_d"></nz-option>
+                    }
+                </nz-select>
+            </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item nz-col nzSpan="20">
+        <nz-form-control 
+            [nzErrorTip]="nombreErrors">
+            <nz-form-label 
+                nzFor="per_nombres" 
+                class="form-label"
+                nzRequired>
+                <span 
+                    class="form-label_text" 
+                    nz-typography>
+                    Nombres
                 </span>
             </nz-form-label>
             <nz-input-group 
@@ -20,29 +75,169 @@
                     (blur)="onBlur($event)" 
                     type="text" 
                     nz-input 
-                    formControlName="field_nombre"
-                    placeholder="Escriba el nombre de la estrategia" 
-                    id="nombre" 
+                    formControlName="per_nombres"
+                    placeholder="Escriba el nombre del usuario" 
+                    id="per_nombres" 
+                    nz-typography/>
+            </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item nz-col nzSpan="20">
+        <nz-form-control 
+            [nzErrorTip]="apellidoErrors">
+            <nz-form-label 
+                nzFor="per_apellidos" 
+                class="form-label"
+                nzRequired>
+                <span 
+                    class="form-label_text" 
+                    nz-typography>
+                    Apellidos
+                </span>
+            </nz-form-label>
+            <nz-input-group 
+                class="form-group">
+                <input 
+                    class="form-input" 
+                    (focus)="onFocus($event)" 
+                    (blur)="onBlur($event)" 
+                    type="text" 
+                    nz-input 
+                    formControlName="per_apellidos"
+                    placeholder="Escriba el apellido del usuario" 
+                    id="per_apellidos" 
+                    nz-typography/>
+            </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item nz-col nzSpan="20">
+        <nz-form-control 
+            [nzErrorTip]="telefonoErrors">
+            <nz-form-label 
+                nzFor="per_telefono" 
+                class="form-label"
+                nzRequired>
+                <span 
+                    class="form-label_text" 
+                    nz-typography>
+                    Teléfono
+                </span>
+            </nz-form-label>
+            <nz-input-group 
+                class="form-group">
+                <input 
+                    class="form-input" 
+                    (focus)="onFocus($event)" 
+                    (blur)="onBlur($event)" 
+                    type="number" 
+                    nz-input 
+                    formControlName="per_telefono"
+                    appOnlyNumbers
+                    placeholder="Escriba el teléfono del usuario" 
+                    id="per_telefono" 
+                    nz-typography/>
+            </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item nz-col nzSpan="20">
+        <nz-form-control 
+            [nzErrorTip]="emailErrors">
+            <nz-form-label 
+                nzFor="email" 
+                class="form-label"
+                nzRequired>
+                <span 
+                    class="form-label_text" 
+                    nz-typography>
+                    Correo electrónico
+                </span>
+            </nz-form-label>
+            <nz-input-group 
+                class="form-group">
+                <input 
+                    class="form-input" 
+                    (focus)="onFocus($event)" 
+                    (blur)="onBlur($event)" 
+                    type="email" 
+                    nz-input 
+                    formControlName="email"
+                    placeholder="Escriba el correo electrónico del usuario" 
+                    id="email" 
                     nz-typography/>
             </nz-input-group>
         </nz-form-control>
     </nz-form-item>
 </form>
 
+<ng-template #tipoDocumentoErrors>
+    @if (form.get('per_tipo_documento')!.hasError('required')) {
+        <div nz-col nzSpan="24">
+            <span nz-typography nzType="danger">El tipo de documento es obligatorio</span>
+        </div>
+    }
+</ng-template>
+
+<ng-template #documentoErrors>
+    @if (form.get('per_documento')!.hasError('required')) {
+        <div nz-col nzSpan="24">
+            <span nz-typography nzType="danger">El documento del usuario es obligatorio</span>
+        </div>
+    }
+</ng-template>
+
+<ng-template #telefonoErrors>
+    @if (form.get('per_telefono')!.hasError('required')) {
+        <div nz-col nzSpan="24">
+            <span nz-typography nzType="danger">El teléfono del usuario es obligatorio</span>
+        </div>
+    }
+</ng-template>
+
+<ng-template #emailErrors>
+    @if (form.get('email')!.hasError('required')) {
+        <div nz-col nzSpan="24">
+            <span nz-typography nzType="danger">El correo del usuario es obligatorio</span>
+        </div>
+    }
+    @if (form.get('email')!.hasError('email')) {
+        <div nz-col nzSpan="24">
+            <span nz-typography nzType="danger">El correo digitado es invalido</span>
+        </div>
+    }
+</ng-template>
+
+
 <ng-template #nombreErrors>
     @if (form.get('per_nombre')!.hasError('required') || form.get('per_nombre')!.hasError('whitespace')) {
         <div nz-col nzSpan="24">
-            <span nz-typography nzType="danger">El nombre de la estrategia es obligatorio</span>
+            <span nz-typography nzType="danger">El nombre del usuario es obligatorio</span>
         </div>
     }
     @if (form.get('per_nombre')!.hasError('maxlength')) {
         <div nz-col nzSpan="24">
-            <span nz-typography nzType="danger">El nombre de la estrategia debe tener maximo 60 caracteres</span>
+            <span nz-typography nzType="danger">El nombre del usuario debe tener maximo 60 caracteres</span>
         </div>
     }
     @if (form.get('per_nombre')!.hasError('minlength')) {
         <div nz-col nzSpan="24">
-            <span nz-typography nzType="danger">El nombre de la estrategia debe tener minimo 5 caracteres</span>
+            <span nz-typography nzType="danger">El nombre del usuario debe tener minimo 5 caracteres</span>
+        </div>
+    }
+</ng-template>
+<ng-template #apellidoErrors>
+    @if (form.get('per_apellido')!.hasError('required') || form.get('per_apellido')!.hasError('whitespace')) {
+        <div nz-col nzSpan="24">
+            <span nz-typography nzType="danger">El apellido del usuario es obligatorio</span>
+        </div>
+    }
+    @if (form.get('per_apellido')!.hasError('maxlength')) {
+        <div nz-col nzSpan="24">
+            <span nz-typography nzType="danger">El apellido del usuario debe tener maximo 60 caracteres</span>
+        </div>
+    }
+    @if (form.get('per_apellido')!.hasError('minlength')) {
+        <div nz-col nzSpan="24">
+            <span nz-typography nzType="danger">El apellido del usuario debe tener minimo 5 caracteres</span>
         </div>
     }
 </ng-template>

@@ -13,6 +13,8 @@ import { Subscription } from 'rxjs';
 import { UsuarioRolesFormComponent } from '../usuario-roles-form/usuario-roles-form.component';
 import { AdminRolesUsuarioService } from '@shared/services/admin-roles-usuario.service';
 import { ChangeRolesDto } from '@shared/dto/auth/change-roles.dto';
+import { UsuarioFormComponent } from '../usuario-form/usuario-form.component';
+import { RegisterDto } from '@shared/dto/auth/register.dto';
 
 
 @Component({
@@ -44,7 +46,7 @@ export class UsuarioActionsComponent implements OnInit,OnDestroy{
   @ViewChild('alertFooter', { static: true }) footerAlertTemplate!: TemplateRef<any>;
   @ViewChild('alertContent', { static: true }) contentAlertTemplate!: TemplateRef<any>;
   
-  @Input() type_actions:'actualizar'|'eliminar'|'crear'|'toggle'|'roles' = 'crear';
+  @Input() type_actions:'actualizar'|'eliminar'|'registrar'|'toggle'|'roles' = 'registrar';
   @Input() long_title:boolean = false;
   @Input() icons:boolean = false;
   @Input() show_title:boolean = true;
@@ -68,7 +70,7 @@ export class UsuarioActionsComponent implements OnInit,OnDestroy{
   valid_sub?:Subscription;
   modal_sub?:Subscription;
 
-  instance?:UsuarioRolesFormComponent;
+  instance?:UsuarioRolesFormComponent|UsuarioFormComponent;
   modal?:NzModalRef;
 
   get title(){
@@ -85,8 +87,8 @@ export class UsuarioActionsComponent implements OnInit,OnDestroy{
     switch (this.type_actions) {
       case 'actualizar':
         return ;
-      case 'crear':
-        return 'lucidePlus';
+      case 'registrar':
+        return 'lucideUserPlus';
       case 'eliminar':
         return 'lucideTrash';
       case 'toggle':
@@ -129,10 +131,32 @@ export class UsuarioActionsComponent implements OnInit,OnDestroy{
           case this.instance instanceof UsuarioRolesFormComponent:
             this.changeRoles(form);
             break;
+          case this.instance instanceof UsuarioFormComponent:
+            this.type_actions === 'actualizar' 
+              ? '' 
+              : this.registrarUsuario(form);
+            break;
         }
         return this.loadingStatus(false);
       }
     });
+  }
+
+  openRegisterForm(){
+    this.modal = this.modal_service.create({
+      nzTitle:this.title,
+      nzContent:UsuarioFormComponent,
+      nzViewContainerRef:this.view_container_ref,
+      nzData:{actualizar_perfil:this.type_actions === 'actualizar'},
+      nzFooter:this.footerSaveTemplate,
+      nzWidth:'500px',
+      nzDraggable:true,
+      nzMaskClosable:false,
+      nzClosable:false
+    });
+    this.instance = this.modal.getContentComponent();
+    this.startModalSub();
+    this.startValidSub();
   }
 
   openRoleForm(){
@@ -151,6 +175,19 @@ export class UsuarioActionsComponent implements OnInit,OnDestroy{
     this.instance = this.modal.getContentComponent();
     this.startModalSub();
     this.startValidSub();
+  }
+
+  private registrarUsuario(form:RegisterDto){
+    this.loadingStatus(true);
+    this.usuario_service.create(form)
+    .subscribe({
+      next:(usuario)=>{
+        this.create.emit(usuario);
+      },
+      complete:()=>{
+        this.loadingStatus(false);
+      }
+    })
   }
 
   private changeRoles(form:ChangeRolesDto){

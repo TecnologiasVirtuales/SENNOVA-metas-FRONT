@@ -19,8 +19,8 @@ export class OnlyNumbersDirective {
     }
 
     // Permitir solo dígitos del 0 al 9
-    const esNumero = /^[0-9]$/.test(teclaPresionada);
-    if (!esNumero) {
+    const esNumero = /\D/g.test(teclaPresionada);
+    if (esNumero) {
       event.preventDefault();
     }
   }

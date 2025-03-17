@@ -28,7 +28,8 @@
                                     (focus)="onFocus($event)" 
                                     (blur)="onBlur($event)" 
                                     type="number" 
-                                    nz-input 
+                                    nz-input
+                                    *appOnlyNumbers
                                     formControlName="per_documento"
                                     placeholder="Escriba su documento de identidad" id="documento" nz-typography/>
                             </nz-input-group>

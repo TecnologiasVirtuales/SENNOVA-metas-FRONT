@@ -12,6 +12,7 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzFlexModule } from 'ng-zorro-antd/flex';
 import { Router } from '@angular/router';
 import { FormStyle } from '@shared/style-clases/focus.style';
+import { OnlyNumbersDirective } from '@shared/directives/only-numbers.directive';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +27,8 @@ import { FormStyle } from '@shared/style-clases/focus.style';
     NzGridModule,
     NzFlexModule,
     NzTypographyModule,
-    NgIconComponent
+    NgIconComponent,
+    OnlyNumbersDirective
   ],
   templateUrl: './login.component.html',
   styleUrls: [

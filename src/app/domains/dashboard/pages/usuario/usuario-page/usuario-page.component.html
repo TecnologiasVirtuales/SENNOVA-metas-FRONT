@@ -2,7 +2,8 @@
     nz-col
     nzSpan="24"
     [nzTitle]="pageTitle"
-    nzBorderless>
+    nzBorderless
+    [nzExtra]="actionButton">
     <nz-table
         class="usuario-table"
         #usuarioTable
@@ -118,3 +119,13 @@
 <ng-template #loadingImg>
     <app-sena-loading [loading]="loading"></app-sena-loading>
 </ng-template>
+<ng-template #actionButton>
+    <div class="flex gap-2">
+        <app-usuario-actions 
+            [icons]="true" 
+            [long_title]="true"
+            (create)="onCreateUsuario($event)">
+        </app-usuario-actions>
+    </div>
+</ng-template>
+
