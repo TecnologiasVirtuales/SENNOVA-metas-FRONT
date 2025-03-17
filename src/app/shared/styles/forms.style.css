@@ -90,7 +90,7 @@
 /* Estilo general del select */
 ::ng-deep .ant-select-selector {
     border: var(--primary-green-color) 1px solid;
-    height: 30px; /* Ajusta el alto igual que el input */
+    min-height: 30px; /* Ajusta el alto igual que el input */
     font-size: 1.3rem; /* Misma fuente que el input */
     display: flex;
     align-items: center; /* Alinear el texto verticalmente */
