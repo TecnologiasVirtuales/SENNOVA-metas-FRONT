@@ -5,6 +5,7 @@ export interface PersonaModel {
     per_documento:number;
     email:string;
     per_tipo_documento:TipoDocumentoEnum;
+    per_telefono:string;
     per_nombres:string;
     per_apellidos:string;
     is_superuser:boolean;

@@ -1,0 +1,50 @@
+<form class="form-container" nz-form [formGroup]="form">
+    <nz-form-item nz-col nzSpan="20">
+        <nz-form-control 
+            [nzErrorTip]="nombreErrors">
+            <nz-form-label 
+                nzFor="nombre" 
+                class="form-label"
+                nzRequired>
+                <span 
+                    class="form-label_text" 
+                    nz-typography>
+                    Nombre
+                </span>
+            </nz-form-label>
+            <nz-input-group 
+                class="form-group">
+                <input 
+                    class="form-input" 
+                    (focus)="onFocus($event)" 
+                    (blur)="onBlur($event)" 
+                    type="text" 
+                    nz-input 
+                    formControlName="field_nombre"
+                    placeholder="Escriba el nombre de la estrategia" 
+                    id="nombre" 
+                    nz-typography/>
+            </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+</form>
+
+<ng-template #nombreErrors>
+    @if (form.get('per_nombre')!.hasError('required') || form.get('per_nombre')!.hasError('whitespace')) {
+        <div nz-col nzSpan="24">
+            <span nz-typography nzType="danger">El nombre de la estrategia es obligatorio</span>
+        </div>
+    }
+    @if (form.get('per_nombre')!.hasError('maxlength')) {
+        <div nz-col nzSpan="24">
+            <span nz-typography nzType="danger">El nombre de la estrategia debe tener maximo 60 caracteres</span>
+        </div>
+    }
+    @if (form.get('per_nombre')!.hasError('minlength')) {
+        <div nz-col nzSpan="24">
+            <span nz-typography nzType="danger">El nombre de la estrategia debe tener minimo 5 caracteres</span>
+        </div>
+    }
+</ng-template>
+
+
