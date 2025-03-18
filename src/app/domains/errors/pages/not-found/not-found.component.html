@@ -1,1 +1,19 @@
-<p>not-found works!</p>
+<div class="flex justify-center items-center h-[100vh]">
+    <nz-result [nzIcon]="icon" [nzTitle]="title">
+        <ng-template #icon>
+            <div class="flex justify-center mx-auto">
+                <div class="logo-sena scale-150">
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #title>
+            <div class="flex flex-col items-center justify-center text-2xl font-semibold">
+                <span class="text-lg text-[--primary-green-color]">ERROR 404</span>
+                <h1 class="text-[--primary-green-color]">La pagina que esta buscando no existe</h1>
+            </div>
+        </ng-template>
+        <div nz-result-extra>
+          <app-go-to-dashboard-button></app-go-to-dashboard-button>
+        </div>
+    </nz-result>
+</div>

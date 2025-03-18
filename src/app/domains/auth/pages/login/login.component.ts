@@ -77,20 +77,18 @@ export class LoginComponent extends FormStyle {
   }
 
   submitForm(){
-    const {value} = this.form;
+    const { value } = this.form;
     this.loading = true;
-    const login_sub = this.authService.login(value)
+    this.authService.login(value)
       .subscribe({
-        next:()=>{
-          this.router.navigate(['/dashboard'])
+        next: () => {
+          this.router.navigate(['/dashboard']);
         },
-        error:()=>{
+        error: () => {
           this.loading = false;
-          login_sub.unsubscribe();
         },
-        complete:()=>{
+        complete: () => {
           this.loading = false;
-          login_sub.unsubscribe();
         }
       });
   }

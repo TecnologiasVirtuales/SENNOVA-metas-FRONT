@@ -1,30 +1,37 @@
 import { computed, inject } from '@angular/core';
-import { toObservable } from '@angular/core/rxjs-interop';
 import { CanActivateFn, Router, UrlTree } from '@angular/router';
 import { AuthService } from '@shared/services/auth.service';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { combineLatest, Observable } from 'rxjs';
+import { filter, map, take } from 'rxjs/operators';
 
-export const rolesGuard: CanActivateFn = (route, state): boolean | UrlTree => {
+export const rolesGuard: CanActivateFn = (route, state): Observable<boolean | UrlTree> => {
   const authService = inject(AuthService);
   const router = inject(Router);
-
   const allowedRoles: string[] = route.data['roles'] || [];
 
-  const user = authService.usuario;
-  const roles = authService.roles();
-  const super_user = computed(()=>user() ? user()!.is_superuser : false)  
-
-  if(Boolean(user())) return false;
-  
-  if (super_user()) {
-    return true;
-  }
-
-  const allowed = allowedRoles.map(r => r.toLowerCase());
-  const userRoles = roles.map(r => r.toLowerCase());
-
-  const hasAllowedRole = allowed.some(r => userRoles.includes(r));
-  
-  if(!hasAllowedRole) router.navigate(['/errors','401']);
-
-  return true;
+  return combineLatest({
+    loading: toObservable(authService.loading_user),
+    roles: toObservable(authService.roles),
+    user: toObservable(authService.usuario)
+  }).pipe(
+    // Espera a que loading sea false y que el usuario esté definido.
+    filter(({ loading, user }) => {
+      console.log('loading:', loading, 'user:', user);
+      return loading === false && !!user;
+    }),
+    take(1),
+    map(({ roles, user }) => {
+      if (!user) {
+        return router.createUrlTree(['/errors', '401']);
+      }
+      if (user.is_superuser) {
+        return true;
+      }
+      const allowed = allowedRoles.map(r => r.toLowerCase());
+      const userRoles = roles.map(r => r.toLowerCase());
+      const hasAllowedRole = allowed.some(r => userRoles.includes(r));
+      return hasAllowedRole ? true : router.createUrlTree(['/errors', '401']);
+    })
+  );
 };

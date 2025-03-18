@@ -7,7 +7,7 @@ import { MessageInfoModel } from '@shared/models/message-info.model';
 import { TokenModel } from '@shared/models/token.model';
 import { PersonaModel } from '@shared/models/persona.model';
 import { TokenService } from './token.service';
-import { map, tap } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -32,16 +32,26 @@ export class AuthService {
   loading_user = signal<boolean>(true);
 
   login(credentials:LoginDto){
-    return this.http.post<TokenModel>(`${this.url}/login`,credentials)
-      .pipe(map((token)=>{
+    return this.http.post<TokenModel>(`${this.url}/login`, credentials).pipe(
+      tap(token => {
         this.token_service.setToken(token);
+        // Indica que se está cargando el usuario.
         this.loading_user.set(true);
-        return token;
-      }));
+      }),
+      // Cambia al observable de la petición para obtener el usuario
+      switchMap(() => this.me()),
+      tap(usuario => {
+        this.usuario.set(usuario);
+        // Una vez obtenido el usuario, se marca que la carga finalizó.
+        this.loading_user.set(false);
+      })
+    );
   }
 
   me(){
-    return this.http.get<PersonaModel>(`${this.url}/me`);
+    return this.http.get<PersonaModel>(`${this.url}/me`).pipe(tap(()=>{
+      console.log('aca');
+    }));
   }
 
   refresh(token:RefreshDto){

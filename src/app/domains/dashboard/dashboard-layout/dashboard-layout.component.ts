@@ -34,8 +34,10 @@ export class DashboardLayoutComponent implements OnInit{
   sidebarCollapsed:boolean = false;
   loading_user = this.auth_service.loading_user;
 
+  user = this.auth_service.usuario;
+
   ngOnInit(): void {
-    if(this.token_service.getToken()){
+    if(this.token_service.getToken() && !Boolean(this.user())){
       const usuario_sub = this.auth_service.me()
         .subscribe({
           next:(usuario)=>{

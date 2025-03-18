@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.button{
+    @apply px-3 py-2;
+    @apply border border-[--primary-green-color] rounded-md;
+}
+
+.button-content{
+    @apply flex gap-1 justify-center items-center;
+    @apply text-[--primary-green-color] underline;
+}
