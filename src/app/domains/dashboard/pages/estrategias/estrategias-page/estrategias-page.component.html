@@ -108,7 +108,7 @@
                     <th>Profundicación tecnica</th>
                     <th>Con Bilingüismo</th>
                     <th>Sin Bilingüismo</th>
-                    <th *appCanUseActions class="bilinguismo-table_actions">Acciones</th>
+                    <th *appCanUseActions="allowed_actions" class="bilinguismo-table_actions">Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -127,7 +127,7 @@
                         <td>{{detalle.estd_profundizacion_tecnica_meta}}</td>
                         <td>{{detalle.estd_bilinguismo}}</td>
                         <td>{{detalle.estd_sin_bilinguismo}}</td>
-                        <td *appCanUseActions>
+                        <td *appCanUseActions="allowed_actions">
                             <ng-container *ngTemplateOutlet="updateDelete; context:{detalle,$index}"></ng-container>
                         </td>
                     </tr>

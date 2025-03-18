@@ -41,18 +41,14 @@ import { lucideDoorOpen } from '@ng-icons/lucide';
     lucideDoorOpen
   })]
 })
-export class TopNavBarComponent implements OnInit{
+export class TopNavBarComponent{
 
   auth_service = inject(AuthService);
   token_service = inject(TokenService);
 
   usuario = this.auth_service.usuario;
+  roles = this.auth_service.roles;
   loading_user = this.auth_service.loading_user;
-
-  ngOnInit(): void {
-    console.log(this.usuario());
-    
-  }
 
   onLogOut(){
     const refresh:RefreshDto = {

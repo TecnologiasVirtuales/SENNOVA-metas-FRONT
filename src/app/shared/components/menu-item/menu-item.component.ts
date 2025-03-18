@@ -54,4 +54,12 @@ export class MenuItemComponent implements OnInit{
       this.path = [...this.path,path!];
     }
   }
+  
+  get path_roles():string[]{
+    let {data} = this.route;
+    if(!data) return [];
+    let {roles} = data;
+    if(!roles) return [];
+    return roles;
+  }
 }

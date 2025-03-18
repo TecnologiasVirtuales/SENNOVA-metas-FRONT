@@ -11,7 +11,13 @@
     overflow: hidden;
 }
 
+::ng-deep .ant-menu-submenu span,
+::ng-deep .ant-menu-submenu a{
+    @apply text-[--primary-green-color];
+}
+
 ::ng-deep .side-menu_item:hover,
+.menu-item__active,
 ::ng-deep .menu-item_active a::before {
     background-color: var(--primary-green-color-transparent);
 }

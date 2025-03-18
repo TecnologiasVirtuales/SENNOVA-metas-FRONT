@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { LoginDto } from '@shared/dto/auth/login.dto';
 import { RefreshDto } from '@shared/dto/auth/refresh.dto';
 import { RegisterDto } from '@shared/dto/auth/register.dto';
@@ -20,6 +20,15 @@ export class AuthService {
   private url = `api/auth`;
 
   usuario = signal<PersonaModel|undefined>(undefined);
+  roles = computed(()=>{
+    if(this.usuario() && this.usuario()!.roles){
+      let {roles} = this.usuario()!;
+      let roles_usuario = roles ?? [];
+      return roles_usuario.map(r=>r.rol_nombre);
+    }else{
+      return [];
+    }
+  });
   loading_user = signal<boolean>(true);
 
   login(credentials:LoginDto){

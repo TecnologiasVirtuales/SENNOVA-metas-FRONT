@@ -103,6 +103,8 @@ export class EstrategiasPageComponent {
   fecha_fin?:Date;
   fecha_inicio?:Date;
 
+  allowed_actions:string[] = ['admin'];
+
   ngOnInit(): void {
     this.data_sub = forkJoin([
       this.getData(),

@@ -51,6 +51,8 @@ export class MetasPageComponent implements OnInit, OnDestroy {
 
   loading:boolean = true;
 
+  allowed_actions:string[] = ['admin'];
+
   ngOnInit(): void {
     this.loadData();
   }

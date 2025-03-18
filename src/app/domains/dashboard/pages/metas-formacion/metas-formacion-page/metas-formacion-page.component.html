@@ -99,7 +99,7 @@
                 <th>Profundicación tecnica</th>
                 <th>Con Bilingüismo</th>
                 <th>Sin Bilingüismo</th>
-                <th *appCanUseActions class="bilinguismo-table_actions">Acciones</th>
+                <th *appCanUseActions="allowed_actions" class="bilinguismo-table_actions">Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -118,7 +118,7 @@
                     <td>{{meta.met_formacion_profundizacion_tecnica}}</td>
                     <td>{{meta.met_formacion_bilinguismo}}</td>
                     <td>{{meta.met_formacion_sin_bilinguismo}}</td>
-                    <td *appCanUseActions>
+                    <td *appCanUseActions="allowed_actions">
                         <ng-container *ngTemplateOutlet="updateDelete; context:{meta,$index}"></ng-container>
                     </td>
                 </tr>
@@ -165,7 +165,7 @@
     <app-metas-formacion-actions
         (create)="onCreate($event)"
         (setLoading)="onLoad($event)"
-        *appCanUseActions>
+        *appCanUseActions="allowed_actions">
     </app-metas-formacion-actions>
 </ng-template>
 

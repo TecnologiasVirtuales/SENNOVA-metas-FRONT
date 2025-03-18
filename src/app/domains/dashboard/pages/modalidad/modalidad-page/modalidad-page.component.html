@@ -16,7 +16,7 @@
             <tr>
                 <th>Código</th>
                 <th>Nombre</th>
-                <th *appCanUseActions class="modalidad-table_actions">Actions</th>
+                <th *appCanUseActions="allowed_actions" class="modalidad-table_actions">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -28,7 +28,7 @@
                     <td>
                         {{modalidad.modalidad}}
                     </td>
-                    <td *appCanUseActions>
+                    <td *appCanUseActions="allowed_actions">
                         <app-modalidad-actions 
                             [modalidad]="modalidad"
                             [index]="$index"
@@ -67,7 +67,7 @@
 </ng-template>
 <ng-template #actionButton>
     <app-modalidad-actions
-        *appCanUseActions
+        *appCanUseActions="allowed_actions"
         (create)="onCreate($event)" 
         (setLoading)="onLoad($event)">
     </app-modalidad-actions>

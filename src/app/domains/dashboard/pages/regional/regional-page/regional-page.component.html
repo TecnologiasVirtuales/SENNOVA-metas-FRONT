@@ -16,7 +16,7 @@
             <tr>
                 <th>Código</th>
                 <th>Nombre</th>
-                <th *appCanUseActions class="regional-table_actions">Actions</th>
+                <th *appCanUseActions="allowed_actions" class="regional-table_actions">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -28,7 +28,7 @@
                     <td>
                         {{regional.regional}}
                     </td>
-                    <td *appCanUseActions>
+                    <td *appCanUseActions="allowed_actions">
                         <app-regional-actions 
                             [regional]="regional"
                             [index]="$index"
@@ -67,7 +67,7 @@
 </ng-template>
 <ng-template #actionButton>
     <app-regional-actions
-        *appCanUseActions
+        *appCanUseActions="allowed_actions"
         (create)="onCreate($event)" 
         (setLoading)="onLoad($event)">
     </app-regional-actions>

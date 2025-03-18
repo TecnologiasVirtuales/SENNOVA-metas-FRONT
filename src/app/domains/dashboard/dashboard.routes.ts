@@ -11,12 +11,6 @@ export const routes: Routes = [
                 pathMatch:'full',
                 redirectTo:'reportes'
             },
-            {
-                path:'perfil',
-                title:'Perfil',
-                data:{breadcrumb:'Perfil'},
-                loadComponent:()=>import('@domains/dashboard/pages/profile/profile.component').then(c=>c.ProfileComponent)
-            },
             ...side_routes
         ]
     },

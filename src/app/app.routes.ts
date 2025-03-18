@@ -16,5 +16,14 @@ export const routes: Routes = [
         data:{breadcrumb:'Dashboard'},
         canMatch:[authenticatedGuard],
         loadChildren:()=>import('@domains/dashboard/dashboard.routes').then(r=>r.routes)
-    }
+    },
+    {
+        path:'errors',
+        loadChildren:()=>import('@domains/errors/error.routes').then(r=>r.routes)
+    },
+    {
+        path:'**',
+        pathMatch:'full',
+        redirectTo:'errors'
+    },
 ];

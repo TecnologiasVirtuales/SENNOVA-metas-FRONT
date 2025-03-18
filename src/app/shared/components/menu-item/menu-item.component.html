@@ -3,8 +3,10 @@
         routerLinkActive="menu-item__active"
         [routerLinkActiveOptions]="{ exact: false }" 
         #rla="routerLinkActive" nz-submenu 
-        [nzTitle]="title" *appCanUseActions 
+        [nzTitle]="title" 
+        *appCanUseActions="path_roles" 
         [nzOpen]="rla.isActive">
+        <a [routerLink]="path" style="display: none;"></a>
         @for (option of route.children; track $index) {
             <li>
                 <app-menu-item [route]="option" [path]="path" [collapsed]="collapsed"></app-menu-item>
@@ -21,7 +23,7 @@
         nz-popover
         [nzPopoverContent]="popOver"
         [routerLink]="path"
-        *appCanUseActions>
+        *appCanUseActions="path_roles">
         <ng-icon [name]="route.data?.['icon']"></ng-icon>
         @if (!collapsed) {
             <span nz-typography> {{route.title}}</span>
@@ -31,7 +33,7 @@
 
 <ng-template #title>
     <div class="flex gap-2 justify-between items-center">
-        <ng-icon [name]="route.data?.['icon']"></ng-icon>
+        <ng-icon class="text-[--primary-green-color]" [name]="route.data?.['icon']"></ng-icon>
         @if (!collapsed) {
             <span nz-typography> {{route.title}}</span>
         }

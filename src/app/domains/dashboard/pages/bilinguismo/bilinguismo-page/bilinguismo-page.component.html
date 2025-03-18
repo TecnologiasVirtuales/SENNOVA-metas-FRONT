@@ -19,7 +19,7 @@
                 <th>Modalidad</th>
                 <th>Programa</th>
                 <th>Duración</th>
-                <th *appCanUseActions class="bilinguismo-table_actions">Acciones</th>
+                <th *appCanUseActions="allowed_actions" class="bilinguismo-table_actions">Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -79,7 +79,7 @@
 </ng-template>
 <ng-template #actionButton>
     <app-bilinguismo-actions
-        *appCanUseActions
+        *appCanUseActions="allowed_actions"
         (create)="onCreate($event)" 
         (setLoading)="onLoad($event)">
     </app-bilinguismo-actions>

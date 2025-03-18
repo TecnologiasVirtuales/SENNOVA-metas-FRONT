@@ -16,7 +16,7 @@
             <tr>
                 <th>Código</th>
                 <th>Nombre</th>
-                <th *appCanUseActions class="centro-table_actions">Actions</th>
+                <th *appCanUseActions="allowed_actions" class="centro-table_actions">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -28,7 +28,7 @@
                     <td>
                         {{centro_formacion.centro_de_formacion}}
                     </td>
-                    <td *appCanUseActions>
+                    <td *appCanUseActions="allowed_actions">
                         <app-centro-formacion-actions 
                             [centro_formacion]="centro_formacion"
                             [index]="$index"
@@ -67,7 +67,7 @@
 </ng-template>
 <ng-template #actionButton>
     <app-centro-formacion-actions
-        *appCanUseActions
+        *appCanUseActions="allowed_actions"
         (create)="onCreate($event)" 
         (setLoading)="onLoad($event)">
     </app-centro-formacion-actions>
