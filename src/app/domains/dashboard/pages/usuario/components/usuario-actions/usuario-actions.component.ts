@@ -15,6 +15,7 @@ import { AdminRolesUsuarioService } from '@shared/services/admin-roles-usuario.s
 import { ChangeRolesDto } from '@shared/dto/auth/change-roles.dto';
 import { UsuarioFormComponent } from '../usuario-form/usuario-form.component';
 import { RegisterDto } from '@shared/dto/auth/register.dto';
+import { AuthService } from '@shared/services/auth.service';
 
 
 @Component({
@@ -59,6 +60,7 @@ export class UsuarioActionsComponent implements OnInit,OnDestroy{
 
   private usuario_service = inject(AdminUsuariosService);
   private roles_usuario_service = inject(AdminRolesUsuarioService);
+  private auth_service = inject(AuthService);
 
   private modal_service = inject(NzModalService);
   private view_container_ref = inject(ViewContainerRef);
@@ -77,6 +79,14 @@ export class UsuarioActionsComponent implements OnInit,OnDestroy{
     let action:string = this.type_actions;
     if(this.type_actions==='toggle') action = this.usuario!.is_active ? 'Desactivar' : 'Activar';
     let title:string = `${action}${this.long_title?' usuario':''}`;
+    if(this.type_actions==='actualizar') title = title.split(' ').map((w,i)=>{
+      if(i == title.split(' ').length){
+        console.log(i);
+        return 'Perfil'
+      }
+      return w;
+    }).join(' ');
+
     title = title.split(' ').map((w)=>{
       return w.split('').map((c,i)=>i==0?c.toUpperCase():c).join('');
     }).join(' ');
@@ -86,7 +96,7 @@ export class UsuarioActionsComponent implements OnInit,OnDestroy{
   get icon(){
     switch (this.type_actions) {
       case 'actualizar':
-        return ;
+        return 'lucideSquarePen';
       case 'registrar':
         return 'lucideUserPlus';
       case 'eliminar':
@@ -133,7 +143,7 @@ export class UsuarioActionsComponent implements OnInit,OnDestroy{
             break;
           case this.instance instanceof UsuarioFormComponent:
             this.type_actions === 'actualizar' 
-              ? '' 
+              ? this.actualizarUsuario(form)
               : this.registrarUsuario(form);
             break;
         }
@@ -189,12 +199,30 @@ export class UsuarioActionsComponent implements OnInit,OnDestroy{
       }
     })
   }
+  private actualizarUsuario(form:RegisterDto){
+    this.loadingStatus(true);
+    this.auth_service.updateProfile(form)
+      .subscribe({
+        complete:()=>{
+          this.loadingStatus(false);
+        }
+      })
+  }
 
   private changeRoles(form:ChangeRolesDto){
     if(!this.usuario) return;
     let {per_documento} = this.usuario;
     this.roles_usuario_service.changeRoles(per_documento,form)
       .subscribe({
+        next:()=>{
+          let usuario = this.auth_service.usuario();
+          if(usuario && usuario.per_documento === this.usuario?.per_documento){
+            this.auth_service.me().subscribe((usuario)=>{
+              this.auth_service.usuario.set(usuario);
+            });
+          }
+
+        },
         complete:()=>{
           this.loadingStatus(false);
         }

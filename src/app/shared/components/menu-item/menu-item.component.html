@@ -14,7 +14,7 @@
     
 }@else if(route.title){
     <a 
-        class="menu-item"
+        class="menu-item menu-item_anchor"
         routerLinkActive="menu-item__active"
         nz-menu-item
         nzMatchRouter
@@ -28,6 +28,7 @@
         }
     </a>
 }
+
 <ng-template #title>
     <div class="flex gap-2 justify-between items-center">
         <ng-icon [name]="route.data?.['icon']"></ng-icon>

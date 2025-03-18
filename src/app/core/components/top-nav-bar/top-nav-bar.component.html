@@ -1,40 +1,41 @@
-<nav nz-flex nzJustify="space-between" nzAlign="center">
-    <div nz-col nzSpan="3">
+<nav class="nav-container">
+    <div class="nav-container__logo">
         <div class="logo-sena">
         </div>
     </div>
-    <div nz-col nzSpan="10">
-        <div nz-row nzJustify="center">
-            <h4 class="title">METAS</h4>
-        </div>
-    </div>
-    <div nz-col nzSpan="3">
-        <div class="profile-menu" nz-dropdown [nzDropdownMenu]="menuPerfil" nz-flex nzJustify="end" nzAlign="center" nzGap="middle">
-            <div class="profile-menu_descripcion" nz-col nzSpan="16">
-                <div nz-row nzJustify="start">
-                    <div nz-col nzSpan="20">
-                        <span class="nombre" nz-typography>{{usuario()?.per_nombres}} {{usuario()?.per_apellidos}}</span>
-                    </div>
-                    <div nz-col nzSpan="20">
-                        <span class="rol" nz-typography>{{ usuario()?.roles?.[0]?.rol_nombre || ''}}</span>
-                    </div>
-                </div>
+    <div class="nav-container__title">
+        <h4>METAS</h4>
+        <div class="container-title__user">
+            <span class="title-user__name">{{usuario()?.per_nombres}} {{usuario()?.per_apellidos ?? ''}}</span>
+            <div class="title-user__roles">
+                @for (rol of usuario()?.roles; track $index) {
+                    <span class="title-user__rol">{{rol.rol_nombre}}
+                        @if (usuario()?.roles!.length - 1 != $index) {
+                            ,
+                        }
+                    </span>
+                }
             </div>
         </div>
-        <nz-dropdown-menu #menuPerfil>
-            <ul class="menu-list" nz-menu>
-                <!-- <li nz-menu-item [routerLink]="['/dashboard','perfil']">
-                    <a nz-typography>
-                        Perfil
-                    </a>
-                </li> -->
-                <li class="menu-list_divider" nz-menu-divider></li>
-                <li nz-menu-item (click)="onLogOut()">
-                    <a nz-typography>
-                        Cerrar Sesión
-                    </a>
-                </li>
-            </ul>
-        </nz-dropdown-menu>
+    </div>
+    <div class="nav-container__menu">
+        <ul class="flex gap-1 justify-end">
+            <li>
+                <app-usuario-actions
+                    [usuario]="usuario()"
+                    [icons]="true"
+                    [long_title]="true"
+                    [type_actions]="'actualizar'">
+                </app-usuario-actions>
+            </li>
+            <li>
+                <button
+                    (click)="onLogOut()" 
+                    class="logout-button button">
+                    <ng-icon name="lucideDoorOpen"></ng-icon>
+                    <span>Cerrar Sesión</span>
+                </button>
+            </li>
+        </ul>
     </div>
 </nav>

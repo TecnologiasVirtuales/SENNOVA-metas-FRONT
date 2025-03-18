@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -13,6 +13,9 @@ import { AuthService } from '@shared/services/auth.service';
 import { RefreshDto } from '@shared/dto/auth/refresh.dto';
 import { TokenService } from '@shared/services/token.service';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
+import { UsuarioActionsComponent } from '@domains/dashboard/pages/usuario/components/usuario-actions/usuario-actions.component';
+import { NgIconComponent, NgIconsModule, provideIcons } from '@ng-icons/core';
+import { lucideDoorOpen } from '@ng-icons/lucide';
 
 @Component({
   selector: 'app-top-nav-bar',
@@ -28,18 +31,28 @@ import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
     NzTypographyModule,
     NzDropDownModule,
     NzDividerModule,
-    NzSkeletonModule
+    NzSkeletonModule,
+    UsuarioActionsComponent,
+    NgIconComponent
   ],
   templateUrl: './top-nav-bar.component.html',
-  styleUrl: './top-nav-bar.component.css'
+  styleUrl: './top-nav-bar.component.css',
+  viewProviders: [provideIcons({ 
+    lucideDoorOpen
+  })]
 })
-export class TopNavBarComponent {
+export class TopNavBarComponent implements OnInit{
 
   auth_service = inject(AuthService);
   token_service = inject(TokenService);
 
   usuario = this.auth_service.usuario;
   loading_user = this.auth_service.loading_user;
+
+  ngOnInit(): void {
+    console.log(this.usuario());
+    
+  }
 
   onLogOut(){
     const refresh:RefreshDto = {

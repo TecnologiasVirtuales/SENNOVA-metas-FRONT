@@ -4,6 +4,16 @@
             <ng-container *ngTemplateOutlet="titleTemplate" ></ng-container>
         </button>
     }
+    @case ('actualizar') {
+        <button 
+        [ngClass]="{
+            'no-title':!show_title,
+        }"
+        class="update-button button"
+        (click)="openRegisterForm()">
+        <ng-container *ngTemplateOutlet="titleTemplate" ></ng-container>
+    </button>
+    }
     @case ('roles') {
         <button [ngClass]="{'no-title':!show_title}" class="create-button button" (click)="openRoleForm()">
             <ng-container *ngTemplateOutlet="titleTemplate" ></ng-container>

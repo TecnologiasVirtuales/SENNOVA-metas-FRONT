@@ -26,7 +26,6 @@ import { Subscription } from 'rxjs';
     NzFormModule,
     NzSelectModule,
     OnlyNumbersDirective,
-    ReplacePipe
   ],
   templateUrl: './usuario-form.component.html',
   styleUrls: [

@@ -27,7 +27,7 @@ export class AdminUsuariosService {
   }
 
   create(usuario:RegisterDto){
-    let url: string = `${this.url}registrer`;
+    let url: string = `${this.url}register`;
     return this.http.post<PersonaModel>(url,usuario);
   }
 

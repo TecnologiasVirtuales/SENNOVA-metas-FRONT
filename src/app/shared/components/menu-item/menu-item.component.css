@@ -2,9 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
-.menu-item {
-    padding: 1em !important;
+::ng-deep .menu-item_anchor,
+::ng-deep .menu-item_anchor span {
+    color: var(--primary-green-color);
 }
-::ng-deep .ant-menu-submenu-title{
-    padding-left: 1em !important;
+
+::ng-deep .side-menu_item {
+    overflow: hidden;
+}
+
+::ng-deep .side-menu_item:hover,
+::ng-deep .menu-item_active a::before {
+    background-color: var(--primary-green-color-transparent);
+}
+::ng-deep .ant-menu-submenu-title,
+::ng-deep .ant-menu-item{
+    padding: 15px !important;
+}
+
+::ng-deep .ant-menu-item::after {
+    border-right: var(--primary-green-color) solid 3px !important;
+}
+
+::ng-deep .menu-item_anchor::before {
+    color: var(--primary-green-color) !important;
+}
+
+::ng-deep .side-menu_item:hover .menu-item_anchor,
+::ng-deep .side-menu_item:hover .menu-item_anchor span {
+    color: var(--tertiary-green-color);
+}
+
+::ng-deep .menu-item_text {
+    text-overflow: ellipsis;
 }

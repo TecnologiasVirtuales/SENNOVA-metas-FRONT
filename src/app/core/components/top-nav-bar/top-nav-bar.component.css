@@ -1,55 +1,51 @@
-nav {
-    height: 100%;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.nav-container{
+    @apply flex flex-wrap py-2 px-4 w-fit;
+    @apply items-center;
 }
 
-.divider{
-    background-color: var(--primary-green-color);
+.nav-container__logo{
+    @apply w-1/4 mr-auto flex justify-center;
 }
 
-.title{
-    font-size: 2rem;
-    color: var(--primary-green-color);
+.nav-container__title{
+    @apply flex flex-col gap-1;
+    @apply w-1/4 text-center;
 }
 
-.menu-avatar_icon{
-    background-color: var(--primary-green-color);
-    color: var(--primary-white-color);
+.nav-container__title h4{
+    @apply text-xl text-[--primary-green-color] font-semibold;
 }
 
-.profile-menu_descripcion{
-    line-height: normal;
-    font-weight: 700;
-    font-size: 0.8rem;
-    line-break: auto;
+.container-title__user {
+    @apply flex flex-col justify-center;
 }
 
-.profile-menu_descripcion .nombre{
-    color: var(--primary-green-color);
+.title-user__name{
+    @apply text-base text-[--primary-green-color] font-semibold;
 }
 
-.profile-menu_descripcion .rol{
-    color: var(--secondary-green-color);
+.title-user__rol{
+    @apply text-sm text-[--tertiary-green-color];
 }
 
-.menu-list a{
-    text-decoration: none;
-    color: var(--primary-black-color);
+.title-user__roles{
+    @apply flex flex-wrap justify-center gap-1;
 }
 
-.menu-list li:hover {
-    background-color: var(--primary-green-color-transparent);
+.nav-container__menu{
+    @apply flex justify-end w-2/6;
 }
 
-.menu-list li:hover a{
-    color: var(--primary-green-color);
+.button{
+    @apply border rounded-md px-3 py-2;
+    @apply flex justify-center items-center gap-1;
 }
 
-.menu-list_divider{
-    background-color: var(--primary-green-color);
-}
-
-@media (max-width:949px) {
-    .profile-menu_descripcion{
-        display: none;
-    }
+.logout-button {
+    @apply text-[--primary-red-color];
+    @apply border border-[--primary-red-color];
 }

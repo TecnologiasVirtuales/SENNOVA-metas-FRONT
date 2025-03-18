@@ -7,7 +7,7 @@ import { MessageInfoModel } from '@shared/models/message-info.model';
 import { TokenModel } from '@shared/models/token.model';
 import { PersonaModel } from '@shared/models/persona.model';
 import { TokenService } from './token.service';
-import { map } from 'rxjs';
+import { map, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class AuthService {
 
   private url = `api/auth`;
 
-  usuario = signal<PersonaModel|null>(null);
+  usuario = signal<PersonaModel|undefined>(undefined);
   loading_user = signal<boolean>(true);
 
   login(credentials:LoginDto){
@@ -43,13 +43,16 @@ export class AuthService {
     return this.http.post<MessageInfoModel>(`${this.url}/logout`,token)
       .pipe(map((message)=>{
         this.token_service.deleteToken();
-        this.usuario.set(null);
+        this.usuario.set(undefined);
         return message;
       }));
   }
 
-  update_profile(formData:RegisterDto){
-    return this.http.post<MessageInfoModel>(`${this.url}/profile_update`,formData).pipe();
+  updateProfile(formData:RegisterDto){
+    return this.http.put<MessageInfoModel>(`${this.url}/profile_update`,formData)
+      .pipe(tap(()=>{
+        this.me().subscribe((usuario)=>this.usuario.set(usuario));
+      }));
   }
 
 }

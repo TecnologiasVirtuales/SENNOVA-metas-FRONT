@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 nz-layout {
     min-height: 100vh;
 }
@@ -5,6 +9,15 @@ nz-layout {
 nz-header {
     background-color: var(--primary-white-color);
     border-bottom: var(--primary-green-color) solid 1px;
+    @apply flex h-fit justify-center;
+}
+
+app-top-nav-bar{
+    @apply w-full;
+}
+
+::ng-deep .nav-container{
+    width: 100% !important;
 }
 
 nz-sider{

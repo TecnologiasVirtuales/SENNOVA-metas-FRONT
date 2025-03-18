@@ -208,34 +208,34 @@
 
 
 <ng-template #nombreErrors>
-    @if (form.get('per_nombre')!.hasError('required') || form.get('per_nombre')!.hasError('whitespace')) {
+    @if (form.get('per_nombres')!.hasError('required') || form.get('per_nombres')!.hasError('whitespace')) {
         <div nz-col nzSpan="24">
             <span nz-typography nzType="danger">El nombre del usuario es obligatorio</span>
         </div>
     }
-    @if (form.get('per_nombre')!.hasError('maxlength')) {
+    @if (form.get('per_nombres')!.hasError('maxlength')) {
         <div nz-col nzSpan="24">
             <span nz-typography nzType="danger">El nombre del usuario debe tener maximo 60 caracteres</span>
         </div>
     }
-    @if (form.get('per_nombre')!.hasError('minlength')) {
+    @if (form.get('per_nombres')!.hasError('minlength')) {
         <div nz-col nzSpan="24">
             <span nz-typography nzType="danger">El nombre del usuario debe tener minimo 5 caracteres</span>
         </div>
     }
 </ng-template>
 <ng-template #apellidoErrors>
-    @if (form.get('per_apellido')!.hasError('required') || form.get('per_apellido')!.hasError('whitespace')) {
+    @if (form.get('per_apellidos')!.hasError('required') || form.get('per_apellidos')!.hasError('whitespace')) {
         <div nz-col nzSpan="24">
             <span nz-typography nzType="danger">El apellido del usuario es obligatorio</span>
         </div>
     }
-    @if (form.get('per_apellido')!.hasError('maxlength')) {
+    @if (form.get('per_apellidos')!.hasError('maxlength')) {
         <div nz-col nzSpan="24">
             <span nz-typography nzType="danger">El apellido del usuario debe tener maximo 60 caracteres</span>
         </div>
     }
-    @if (form.get('per_apellido')!.hasError('minlength')) {
+    @if (form.get('per_apellidos')!.hasError('minlength')) {
         <div nz-col nzSpan="24">
             <span nz-typography nzType="danger">El apellido del usuario debe tener minimo 5 caracteres</span>
         </div>
