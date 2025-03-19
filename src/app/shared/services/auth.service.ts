@@ -8,6 +8,7 @@ import { TokenModel } from '@shared/models/token.model';
 import { PersonaModel } from '@shared/models/persona.model';
 import { TokenService } from './token.service';
 import { map, switchMap, tap } from 'rxjs';
+import { PasswordConfirmDto, RequestPassChangeDto } from '@shared/dto/auth/change-password';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +44,14 @@ export class AuthService {
         this.loading_user.set(false);
       })
     );
+  }
+
+  sendRecoverEmail(credentials:RequestPassChangeDto){
+    return this.http.post<MessageInfoModel>(`${this.url}/recover-password`, credentials);
+  }
+
+  passwordChange(credentials:PasswordConfirmDto){
+    return this.http.post<MessageInfoModel>(`${this.url}/recover-password-confirm`, credentials);
   }
 
   me(){

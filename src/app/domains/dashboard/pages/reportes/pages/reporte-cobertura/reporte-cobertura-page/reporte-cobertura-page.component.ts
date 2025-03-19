@@ -34,7 +34,6 @@ import { DoubleToIntStringPipe } from '@shared/pipes/double-to-int-string.pipe';
     NzInputModule,
     NzSpinModule,
     ColombiaMapComponent,
-    DoubleToIntStringPipe
   ],
   templateUrl: './reporte-cobertura-page.component.html',
   styleUrls: ['./reporte-cobertura-page.component.css'],
