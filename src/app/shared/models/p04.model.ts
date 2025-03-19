@@ -32,10 +32,12 @@ export interface P04RegionalModel {
 }
 
 export interface P04MunicipioModel {
+  codigo_municipio_curso:string;
   nombre_municipio_curso: string;
 }
 
 export interface P04DepartamentoModel {
+  codigo_departamento_curso:string;
   nombre_departamento_curso: string;
 }
 

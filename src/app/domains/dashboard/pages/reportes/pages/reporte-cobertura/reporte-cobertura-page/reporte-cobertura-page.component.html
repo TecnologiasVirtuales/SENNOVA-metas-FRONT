@@ -115,7 +115,7 @@
             [nzLoading]="is_loading_departamento"
             nzPlaceHolder="Departamento">
             @for (dep of departamentos; track $index) {
-                <nz-option [nzLabel]="dep.nombre_departamento_curso" [nzValue]="dep.nombre_departamento_curso"></nz-option>
+                <nz-option [nzLabel]="dep.nombre_departamento_curso" [nzValue]="dep.codigo_departamento_curso"></nz-option>
             }
             <ng-template #loadingDep>
                 <nz-spin [nzSpinning]="is_loading_departamento">
@@ -136,7 +136,7 @@
             [disabled]="!departamento"
             nzPlaceHolder="Municipios">
             @for (muni of municipios; track $index) {
-                <nz-option [nzLabel]="muni.nombre_municipio_curso" [nzValue]="muni.nombre_municipio_curso"></nz-option>
+                <nz-option [nzLabel]="muni.nombre_municipio_curso" [nzValue]="muni.codigo_municipio_curso"></nz-option>
             }
             <ng-template #loadingMuni>
                 <nz-spin [nzSpinning]="is_loading_municipio">

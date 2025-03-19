@@ -16,6 +16,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { ColombiaMapComponent } from '@shared/components/colombia-map/colombia-map.component';
 import { lucideGlobe } from '@ng-icons/lucide';
+import { DoubleToIntStringPipe } from '@shared/pipes/double-to-int-string.pipe';
 
 @Component({
   selector: 'app-reporte-cobertura-page',
@@ -32,7 +33,8 @@ import { lucideGlobe } from '@ng-icons/lucide';
     NzDatePickerModule,
     NzInputModule,
     NzSpinModule,
-    ColombiaMapComponent
+    ColombiaMapComponent,
+    DoubleToIntStringPipe
   ],
   templateUrl: './reporte-cobertura-page.component.html',
   styleUrls: ['./reporte-cobertura-page.component.css'],
@@ -121,8 +123,8 @@ export class ReporteCoberturaPageComponent implements OnInit, OnDestroy {
     let filters: { [key: string]: string | number } = {};
     if (this.regional) filters['nombre_regional'] = this.regional;
     if (this.centro_formacion) filters['nombre_centro'] = this.centro_formacion;
-    if (this.departamento) filters['nombre_departamento_curso'] = this.departamento;
-    if (this.municipio) filters['nombre_municipio_curso'] = this.municipio;
+    if (this.departamento) filters['codigo_departamento_curso'] = this.departamento;
+    if (this.municipio) filters['codigo_municipio_curso'] = this.municipio;
     if (this.nivel_formacion) filters['nivel_formacion'] = this.nivel_formacion;
     if (this.modalidad) filters['modalidad_formacion'] = this.modalidad;
     if (this.programa) filters['nombre_programa_formacion'] = this.programa;
@@ -153,9 +155,7 @@ export class ReporteCoberturaPageComponent implements OnInit, OnDestroy {
         this.num_departamento = count_dep;
         const { results: mod, count: count_mod } = p_modalidades;
         this.modalidades = [...mod];
-        this.num_modalidad = count_mod;
-        console.log(this.filters);
-        
+        this.num_modalidad = count_mod;        
       }
     });
     this.startSearch();
@@ -267,9 +267,9 @@ export class ReporteCoberturaPageComponent implements OnInit, OnDestroy {
     if (!this.departamento) {
       this.municipios = [];
       this.municipio = undefined;
-      return this.p04_service.getMunicipios({ filter: { nombre_departamento_curso: '' }, page_number: this.page_municipio });
+      return this.p04_service.getMunicipios({ filter: { codigo_departamento_curso: '' }, page_number: this.page_municipio });
     }
-    let filters: { [key: string]: string | number } = { nombre_departamento_curso: this.departamento };
+    let filters: { [key: string]: string | number } = { codigo_departamento_curso: this.departamento };
     if (this.search_municipio && this.search_municipio.length > 0)
       filters['nombre_municipio_curso'] = this.search_municipio;
     return this.p04_service.getMunicipios({ filter: filters, page_number: this.page_municipio });
@@ -321,7 +321,7 @@ export class ReporteCoberturaPageComponent implements OnInit, OnDestroy {
     this.loadData();
   }
 
-  onChangeMunicipio(): void {
+  onChangeMunicipio(): void {    
     this.loadData();
   }
   

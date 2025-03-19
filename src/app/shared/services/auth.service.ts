@@ -35,23 +35,18 @@ export class AuthService {
     return this.http.post<TokenModel>(`${this.url}/login`, credentials).pipe(
       tap(token => {
         this.token_service.setToken(token);
-        // Indica que se está cargando el usuario.
         this.loading_user.set(true);
       }),
-      // Cambia al observable de la petición para obtener el usuario
       switchMap(() => this.me()),
       tap(usuario => {
         this.usuario.set(usuario);
-        // Una vez obtenido el usuario, se marca que la carga finalizó.
         this.loading_user.set(false);
       })
     );
   }
 
   me(){
-    return this.http.get<PersonaModel>(`${this.url}/me`).pipe(tap(()=>{
-      console.log('aca');
-    }));
+    return this.http.get<PersonaModel>(`${this.url}/me`);
   }
 
   refresh(token:RefreshDto){

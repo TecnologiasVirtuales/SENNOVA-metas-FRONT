@@ -81,7 +81,6 @@ export class UsuarioActionsComponent implements OnInit,OnDestroy{
     let title:string = `${action}${this.long_title?' usuario':''}`;
     if(this.type_actions==='actualizar') title = title.split(' ').map((w,i)=>{
       if(i == title.split(' ').length){
-        console.log(i);
         return 'Perfil'
       }
       return w;

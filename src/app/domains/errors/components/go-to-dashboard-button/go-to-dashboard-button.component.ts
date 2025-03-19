@@ -24,7 +24,6 @@ export class GoToDashboardButtonComponent {
 
   goToDashboard(){
     if(this.button_clicked)return;
-    console.log('volviendo');
     this.button_clicked = true;
     this.route.navigate(['dashboard','reportes']);
   }

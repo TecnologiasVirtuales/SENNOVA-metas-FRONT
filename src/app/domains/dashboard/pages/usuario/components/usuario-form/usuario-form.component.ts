@@ -109,9 +109,7 @@ export class UsuarioFormComponent extends FormStyle implements OnInit,OnDestroy{
       this.form.setValidators(passwordsMatchValidator);
       this.pass_sub = this.form.get('per_documento')!.valueChanges
           .subscribe({
-            next: (value) => {
-              console.log(value);
-              
+            next: (value) => {              
               this.form.get('password')!.setValue(value);
               this.form.get('password2')!.setValue(value);
             }

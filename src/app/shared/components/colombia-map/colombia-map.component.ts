@@ -69,23 +69,17 @@ export class ColombiaMapComponent implements OnDestroy, OnInit, OnChanges, After
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // Asegurarse de que la información de los departamentos ya esté cargada
     if (this.departamentos) {
-      // Si cambia el departamento seleccionado
       if (changes['selected_departamento'] && this.selected_departamento) {
-        // Buscar el feature que corresponda al departamento seleccionado
         const deptFeature = this.departamentos.features.find((d: any) =>
-          d.properties.DPTO_CNMBR === this.selected_departamento
+          d.properties.DPTO_CCDGO === this.selected_departamento
         );
         if (deptFeature) {
-          // Renderiza el departamento: se filtran sus municipios y se centra la proyección
           this.mostrarDepartamento(deptFeature);
         } else {
-          // Opcional: si no se encuentra el departamento, se puede mostrar el mapa completo
           this.mostrarPais();
         }
       }
-      // Si cambia el municipio seleccionado, actualiza los colores
       if (changes['selected_municipio'] && this.selected_municipio) {
         this.updateMapColors();
       }
@@ -120,6 +114,12 @@ export class ColombiaMapComponent implements OnDestroy, OnInit, OnChanges, After
             this.mapData,
             this.mapData.objects.MGN_ANM_MPIOS
           ) as unknown as FeatureCollection<Geometry>;
+
+          this.municipios.features.forEach((feature: any) => {
+            if (feature.properties && feature.properties.MPIO_CCDGO) {
+              feature.properties.MPIO_CCDGO = parseInt(feature.properties.MPIO_CCDGO, 10).toString();
+            }
+          });
 
           if (this.departamentos.features) {
             // Guarda los parámetros de renderización para poder re-dibujar al cambiar el tamaño.
@@ -184,14 +184,14 @@ export class ColombiaMapComponent implements OnDestroy, OnInit, OnChanges, After
       .attr('fill', (d: any) => this.getFillColor(d))
       .attr('stroke', 'var(--primary-green-color)')
       .attr('stroke-width', 1)
-      .on('click', (event, d: any) => {
-        if (d.properties && d.properties.MPIO_CNMBR) {
+      .on('click', (event, d: any) => {        
+        if (d.properties && d.properties.MPIO_CCDGO) {
           // Actualiza la selección y emite el valor.
-          this.selected_municipio = d.properties.MPIO_CNMBR;
+          this.selected_municipio = d.properties.MPIO_CCDGO;
           this.nombre_municipio.emit(this.selected_municipio);
-        } else if (d.properties && d.properties.DPTO_CNMBR) {
-          this.nombre_departamento.emit(d.properties.DPTO_CNMBR);
-          if (d.properties.DPTO_CNMBR === 'BOGOTÁ, D.C.') {
+        } else if (d.properties && d.properties.DPTO_CCDGO) {
+          this.nombre_departamento.emit(d.properties.DPTO_CCDGO);
+          if (d.properties.DPTO_CCDGO === 'BOGOTÁ, D.C.') {
             this.nombre_municipio.emit(this.selected_municipio);
           }
         }
@@ -200,14 +200,14 @@ export class ColombiaMapComponent implements OnDestroy, OnInit, OnChanges, After
           .attr('fill', (d2: any) => this.getFillColor(d2));
 
         // Si se hizo click en un departamento, muestra sus municipios.
-        if (d.properties && d.properties.DPTO_CNMBR) {
+        if (d.properties && d.properties.DPTO_CCDGO) {
           this.mostrarDepartamento(d);
         }
       })
       .on('mouseover', (event, d: any) => {
         tooltip.style('visibility', 'visible')
           .text(d.properties?.DPTO_CNMBR ? d.properties.DPTO_CNMBR : d.properties.MPIO_CNMBR);
-        if (!(this.selected_municipio && d.properties.MPIO_CNMBR === this.selected_municipio)) {
+        if (!(this.selected_municipio && d.properties.MPIO_CCDGO === this.selected_municipio)) {
           d3.select(event.target)
             .attr('fill', 'var(--secondary-green-color)');
         }
@@ -224,7 +224,7 @@ export class ColombiaMapComponent implements OnDestroy, OnInit, OnChanges, After
   }
 
   private getFillColor(d: any): string {
-    return (this.selected_municipio && d.properties.MPIO_CNMBR === this.selected_municipio)
+    return (this.selected_municipio && d.properties.MPIO_CCDGO === this.selected_municipio)
       ? 'var(--primary-green-color)'
       : 'var(--primary-white-color)';
   }

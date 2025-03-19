@@ -15,9 +15,7 @@ export const rolesGuard: CanActivateFn = (route, state): Observable<boolean | Ur
     roles: toObservable(authService.roles),
     user: toObservable(authService.usuario)
   }).pipe(
-    // Espera a que loading sea false y que el usuario esté definido.
     filter(({ loading, user }) => {
-      console.log('loading:', loading, 'user:', user);
       return loading === false && !!user;
     }),
     take(1),
