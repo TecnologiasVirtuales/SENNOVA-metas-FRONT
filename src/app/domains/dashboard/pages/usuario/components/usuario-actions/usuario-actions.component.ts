@@ -271,7 +271,7 @@ export class UsuarioActionsComponent implements OnInit,OnDestroy{
         next:(usuario)=>{
           this.update.emit({usuario:usuario,index:this.index!});
           let {is_active} = usuario;
-          title = is_active ? 'Desactivación' : 'Activación';
+          title = !is_active ? 'Desactivación' : 'Activación';
           this.loadingStatus(false);
         },
         complete:()=>{
