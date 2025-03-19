@@ -13,6 +13,7 @@ import { NivelFormacionService } from '@shared/services/nivel-formacion.service'
 import { ModalidadFormComponent } from '@domains/dashboard/pages/modalidad/components/modalidad-form/modalidad-form.component';
 import { ModalidadDto } from '@shared/dto/modalidad/modalidad.dto';
 import { NivelFormacionDto } from '@shared/dto/nivel-formacion/nivel-formacion.dto';
+import { NotificationNoteService } from '@shared/services/notification-note.service';
 
 @Component({
   selector: 'app-nivel-formacion-actions',
@@ -34,7 +35,7 @@ export class NivelFormacionActionsComponent implements OnInit,OnDestroy{
   @ViewChild('alertFooter', { static: true }) footerAlertTemplate!: TemplateRef<any>;
   @ViewChild('alertContent', { static: true }) contentAlertTemplate!: TemplateRef<any>;
 
-
+  private notification_service = inject(NotificationNoteService);
   private modal_service = inject(NzModalService);
   private view_container_ref = inject(ViewContainerRef);
   private nivel_formacion_service = inject(NivelFormacionService);
@@ -147,11 +148,13 @@ export class NivelFormacionActionsComponent implements OnInit,OnDestroy{
           this.loadingStatus(false);
           this.modal?.close();
           deleteSub.unsubscribe()
+          this.notification_service.error('Eliminación fallida','Error al eliminar el nivel');
         },
         complete:()=>{
           this.loadingStatus(false);
           this.modal?.close();
-          deleteSub.unsubscribe()
+          deleteSub.unsubscribe();
+          this.notification_service.success('Eliminación existosa','El nivel fue eliminado con exito');
         }
       });
   }
@@ -166,10 +169,12 @@ export class NivelFormacionActionsComponent implements OnInit,OnDestroy{
         error:()=>{
           this.loadingStatus(false);
           editSub.unsubscribe();
+          this.notification_service.error('Edición fallida','Error al editar el nivel');
         },
         complete:()=>{
           this.loadingStatus(false);
-          editSub.unsubscribe()
+          editSub.unsubscribe();
+          this.notification_service.success('Edición existosa','El nivel fue editada con exito');
         }
       });
   }
@@ -184,10 +189,12 @@ export class NivelFormacionActionsComponent implements OnInit,OnDestroy{
         error:()=>{
           this.loadingStatus(false);
           createSub.unsubscribe();
+          this.notification_service.error('Creación fallida','Error al crear el nivel');
         },
         complete:()=>{
           this.loadingStatus(false);
           createSub.unsubscribe();
+          this.notification_service.success('Creación existosa','El nivel fue creada con exito');
         }
       })    
   }

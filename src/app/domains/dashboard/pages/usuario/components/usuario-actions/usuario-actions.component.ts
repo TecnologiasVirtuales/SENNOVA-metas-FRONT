@@ -16,6 +16,7 @@ import { ChangeRolesDto } from '@shared/dto/auth/change-roles.dto';
 import { UsuarioFormComponent } from '../usuario-form/usuario-form.component';
 import { RegisterDto } from '@shared/dto/auth/register.dto';
 import { AuthService } from '@shared/services/auth.service';
+import { NotificationNoteService } from '@shared/services/notification-note.service';
 
 
 @Component({
@@ -58,6 +59,7 @@ export class UsuarioActionsComponent implements OnInit,OnDestroy{
   @Output() update:EventEmitter<{usuario:PersonaModel,index:number}> = new EventEmitter();
   @Output() setLoading:EventEmitter<boolean> = new EventEmitter();
 
+  private notification_service = inject(NotificationNoteService);
   private usuario_service = inject(AdminUsuariosService);
   private roles_usuario_service = inject(AdminRolesUsuarioService);
   private auth_service = inject(AuthService);
@@ -195,6 +197,11 @@ export class UsuarioActionsComponent implements OnInit,OnDestroy{
       },
       complete:()=>{
         this.loadingStatus(false);
+        this.notification_service.success('Registro existoso','El usuario fue registrado con exito');
+      },
+      error:()=>{
+        this.loadingStatus(false);
+        this.notification_service.error('Registro fallido','Error al registrar el usaurio');
       }
     })
   }
@@ -204,6 +211,11 @@ export class UsuarioActionsComponent implements OnInit,OnDestroy{
       .subscribe({
         complete:()=>{
           this.loadingStatus(false);
+          this.notification_service.success('Actualización existosa','Tu información fue actualizada con exito');
+        },
+        error:()=>{
+          this.loadingStatus(false);
+          this.notification_service.error('Actualización fallida','Error al actualizar tu información');
         }
       })
   }
@@ -224,6 +236,11 @@ export class UsuarioActionsComponent implements OnInit,OnDestroy{
         },
         complete:()=>{
           this.loadingStatus(false);
+          this.notification_service.success('Registro existoso','Los roles se modificaron con exito');
+        },
+        error:()=>{
+          this.loadingStatus(false);
+          this.notification_service.error('Registro fallido','Error al modificar los roles');
         }
       });
   }
@@ -248,11 +265,22 @@ export class UsuarioActionsComponent implements OnInit,OnDestroy{
     this.loadingStatus(true);
     this.resetDataSub();
     let {per_documento} = this.usuario!;
+    let title = '';
     this.data_sub = this.usuario_service.toggleUser(per_documento)
       .subscribe({
         next:(usuario)=>{
           this.update.emit({usuario:usuario,index:this.index!});
+          let {is_active} = usuario;
+          title = is_active ? 'Desactivación' : 'Activación';
           this.loadingStatus(false);
+        },
+        complete:()=>{
+          this.loadingStatus(false);
+          this.notification_service.success(`${title} exitosa`,`La ${title.toLowerCase()} fue un exito`);
+        },
+        error:()=>{
+          this.loadingStatus(false);
+          this.notification_service.error(`${title} fallida`,`La ${title.toLowerCase()} fallo`);
         }
       });
   }

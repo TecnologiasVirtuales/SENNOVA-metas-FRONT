@@ -11,6 +11,7 @@ import { NzModalModule, NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { Subscription } from 'rxjs';
 import { CentroFormacionFormComponent } from '../centro-formacion-form/centro-formacion-form.component';
 import { CentroFormacionDto } from '@shared/dto/centro-formacion/centro-formacion.dto';
+import { NotificationNoteService } from '@shared/services/notification-note.service';
 
 @Component({
   selector: 'app-centro-formacion-actions',
@@ -32,7 +33,7 @@ export class CentroFormacionActionsComponent {
   @ViewChild('alertFooter', { static: true }) footerAlertTemplate!: TemplateRef<any>;
   @ViewChild('alertContent', { static: true }) contentAlertTemplate!: TemplateRef<any>;
 
-
+  private notification_service = inject(NotificationNoteService);
   private modal_service = inject(NzModalService);
   private view_container_ref = inject(ViewContainerRef);
   private centro_formacion_service = inject(CentroFormacionService);
@@ -144,12 +145,14 @@ export class CentroFormacionActionsComponent {
         error:()=>{
           this.loadingStatus(false);
           this.modal?.close();
-          deleteSub.unsubscribe()
+          deleteSub.unsubscribe();
+          this.notification_service.error('Eliminación fallida','El centro de formación no pudo ser eliminado');
         },
         complete:()=>{
           this.loadingStatus(false);
           this.modal?.close();
-          deleteSub.unsubscribe()
+          deleteSub.unsubscribe();
+          this.notification_service.success('Eliminación existosa','El centro de formación fue eliminado con exito');
         }
       });
   }
@@ -164,10 +167,12 @@ export class CentroFormacionActionsComponent {
         error:()=>{
           this.loadingStatus(false);
           editSub.unsubscribe();
+          this.notification_service.error('Edición fallida','El centro de formación no pudo ser editado');
         },
         complete:()=>{
           this.loadingStatus(false);
-          editSub.unsubscribe()
+          editSub.unsubscribe();
+          this.notification_service.success('Edición existosa','El centro de formación fue editado con exito');
         }
       });
   }
@@ -182,10 +187,12 @@ export class CentroFormacionActionsComponent {
         error:()=>{
           this.loadingStatus(false);
           createSub.unsubscribe();
+          this.notification_service.error('Creación fallida','El centro de formación no pudo ser creado');
         },
         complete:()=>{
           this.loadingStatus(false);
           createSub.unsubscribe();
+          this.notification_service.success('Creación exitosa','El centro de formación fue creado con exito');
         }
       })    
   }

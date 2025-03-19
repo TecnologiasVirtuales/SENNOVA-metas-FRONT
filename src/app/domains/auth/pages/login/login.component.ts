@@ -13,6 +13,7 @@ import { NzFlexModule } from 'ng-zorro-antd/flex';
 import { Router, RouterModule } from '@angular/router';
 import { FormStyle } from '@shared/style-clases/focus.style';
 import { OnlyNumbersDirective } from '@shared/directives/only-numbers.directive';
+import { NotificationNoteService } from '@shared/services/notification-note.service';
 
 @Component({
   selector: 'app-login',
@@ -48,6 +49,7 @@ export class LoginComponent extends FormStyle {
   private authService = inject(AuthService);
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
+  private notification_service = inject(NotificationNoteService);
 
   @ViewChild('submitButton') submit_button:ElementRef = {} as ElementRef;
 
@@ -86,9 +88,11 @@ export class LoginComponent extends FormStyle {
           this.router.navigate(['/dashboard']);
         },
         error: () => {
+          this.notification_service.error('Credenciales incorrectas','No se pudo iniciar sesión');
           this.loading = false;
         },
         complete: () => {
+          this.notification_service.success('Bienvenido','Sesión iniciada correctamente');
           this.loading = false;
         }
       });

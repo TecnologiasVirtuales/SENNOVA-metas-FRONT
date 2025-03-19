@@ -11,6 +11,7 @@ import { NzFlexModule } from 'ng-zorro-antd/flex';
 import { NzModalModule, NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { Subscription } from 'rxjs';
 import { EstrategiaFormComponent } from '../estrategia-form/estrategia-form.component';
+import { NotificationNoteService } from '@shared/services/notification-note.service';
 
 @Component({
   selector: 'app-estrategia-actions',
@@ -37,6 +38,7 @@ export class EstrategiaActionsComponent implements OnInit,OnDestroy{
   @ViewChild('alertFooter', { static: true }) footerAlertTemplate!: TemplateRef<any>;
   @ViewChild('alertContent', { static: true }) contentAlertTemplate!: TemplateRef<any>;
   
+  private notification_service = inject(NotificationNoteService);
   private modal_service = inject(NzModalService);
   private view_container_ref = inject(ViewContainerRef);
   private estrategia_service = inject(EstrategiasService);
@@ -143,6 +145,12 @@ export class EstrategiaActionsComponent implements OnInit,OnDestroy{
         next:(response)=>{
           this.create.emit(response);
           this.loadingStatus(false);
+        },
+        complete:()=>{
+          this.notification_service.success('Creación existosa','La estrategia fue creada con exito');
+        },
+        error:()=>{
+          this.notification_service.error('Creación fallida','Error al crear la estrategia');
         }
       });
   }
@@ -155,6 +163,12 @@ export class EstrategiaActionsComponent implements OnInit,OnDestroy{
         next:(response)=>{
           this.update.emit({estrategia:response,index:this.index!});
           this.loadingStatus(false);
+        },
+        complete:()=>{
+          this.notification_service.success('Edición existosa','La estrategia fue editada con exito');
+        },
+        error:()=>{
+          this.notification_service.error('Edición fallida','Error al editar la estrategia');
         }
       });
   }
@@ -168,6 +182,12 @@ export class EstrategiaActionsComponent implements OnInit,OnDestroy{
           this.delete.emit(this.index!);
           this.modal?.close();
           this.loadingStatus(false);
+        },
+        complete:()=>{
+          this.notification_service.success('Eliminación existosa','La estrategia fue eliminada con exito');
+        },
+        error:()=>{
+          this.notification_service.error('Eliminación fallida','Error al eliminar la estrategia');
         }
       });
   }

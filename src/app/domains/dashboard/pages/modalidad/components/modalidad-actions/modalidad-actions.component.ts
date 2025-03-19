@@ -11,6 +11,7 @@ import {NzIconModule} from 'ng-zorro-antd/icon'
 import { ModalFooterComponent } from '@shared/components/modal-footer/modal-footer.component';
 import { Subscription } from 'rxjs';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { NotificationNoteService } from '@shared/services/notification-note.service';
 
 @Component({
   selector: 'app-modalidad-actions',
@@ -33,7 +34,7 @@ export class ModalidadActionsComponent implements OnInit,OnDestroy {
   @ViewChild('alertFooter', { static: true }) footerAlertTemplate!: TemplateRef<any>;
   @ViewChild('alertContent', { static: true }) contentAlertTemplate!: TemplateRef<any>;
 
-
+  private notification_service = inject(NotificationNoteService);
   private modal_service = inject(NzModalService);
   private view_container_ref = inject(ViewContainerRef);
   private modalidad_service = inject(ModalidadService);
@@ -145,12 +146,14 @@ export class ModalidadActionsComponent implements OnInit,OnDestroy {
         error:()=>{
           this.loadingStatus(false);
           this.modal?.close();
-          deleteSub.unsubscribe()
+          deleteSub.unsubscribe();
+          this.notification_service.error('Eliminación fallida','Error al eliminar la modalidad');
         },
         complete:()=>{
           this.loadingStatus(false);
           this.modal?.close();
-          deleteSub.unsubscribe()
+          deleteSub.unsubscribe();
+          this.notification_service.success('Eliminación existosa','La modalidad fue eliminada con exito');
         }
       });
   }
@@ -165,10 +168,12 @@ export class ModalidadActionsComponent implements OnInit,OnDestroy {
         error:()=>{
           this.loadingStatus(false);
           editSub.unsubscribe();
+          this.notification_service.error('Edición fallida','Error al editar la modalidad');
         },
         complete:()=>{
           this.loadingStatus(false);
-          editSub.unsubscribe()
+          editSub.unsubscribe();
+          this.notification_service.success('Edición existosa','La modalidad fue editada con exito');
         }
       });
   }
@@ -183,10 +188,12 @@ export class ModalidadActionsComponent implements OnInit,OnDestroy {
         error:()=>{
           this.loadingStatus(false);
           createSub.unsubscribe();
+          this.notification_service.error('Creación fallida','Error al crear la modalidad');
         },
         complete:()=>{
           this.loadingStatus(false);
           createSub.unsubscribe();
+          this.notification_service.success('Creación existosa','La modalidad fue creada con exito');
         }
       })    
   }

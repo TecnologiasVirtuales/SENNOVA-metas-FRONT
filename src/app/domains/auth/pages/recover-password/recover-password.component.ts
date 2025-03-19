@@ -6,6 +6,7 @@ import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { heroEye, heroEyeSlash, heroLockClosed } from '@ng-icons/heroicons/outline';
 import { OnlyNumbersDirective } from '@shared/directives/only-numbers.directive';
 import { AuthService } from '@shared/services/auth.service';
+import { NotificationNoteService } from '@shared/services/notification-note.service';
 import { FormStyle } from '@shared/style-clases/focus.style';
 import { passwordsMatchValidator } from '@shared/validators/password.validator';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -29,7 +30,6 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
     NzFlexModule,
     NzTypographyModule,
     NgIconComponent,
-    OnlyNumbersDirective,
     RouterModule
   ],
   templateUrl: './recover-password.component.html',
@@ -44,6 +44,7 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
   })]
 })
 export class RecoverPasswordComponent extends FormStyle implements OnInit{
+  private notification_service = inject(NotificationNoteService);
   private authService = inject(AuthService);
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
@@ -93,10 +94,12 @@ export class RecoverPasswordComponent extends FormStyle implements OnInit{
           this.router.navigate(['/auth','inicio-sesion']);
         },
         error: () => {
+          this.notification_service.error('Ocurrio un error','No fue posible cambiar la contraseña.');
           this.loading = false;
         },
         complete: () => {
           this.loading = false;
+          this.notification_service.success('Proceso exitoso','La contraseña fue cambiada con exito.');
         }
       });
   }

@@ -6,6 +6,7 @@ import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { heroIdentification } from '@ng-icons/heroicons/outline';
 import { OnlyNumbersDirective } from '@shared/directives/only-numbers.directive';
 import { AuthService } from '@shared/services/auth.service';
+import { NotificationNoteService } from '@shared/services/notification-note.service';
 import { FormStyle } from '@shared/style-clases/focus.style';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzFlexModule } from 'ng-zorro-antd/flex';
@@ -41,6 +42,7 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
   })]
 })
 export class SendRecoverCodeComponent extends FormStyle{
+  private notification_service = inject(NotificationNoteService);
   private authService = inject(AuthService);
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
@@ -67,9 +69,11 @@ export class SendRecoverCodeComponent extends FormStyle{
           this.router.navigate(['/auth','inicio-sesion']);
         },
         error: () => {
+          this.notification_service.error('Ocurrio un error','No fue posible enviar la solicitud');
           this.loading = false;
         },
         complete: () => {
+          this.notification_service.success('Proceso exitoso','por favor revisa tu correo electrónico');
           this.loading = false;
         }
       });

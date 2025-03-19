@@ -10,6 +10,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzModalModule, NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { Subscription } from 'rxjs';
 import { BilinguismoFormComponent } from '../bilinguismo-form/bilinguismo-form.component';
+import { NotificationNoteService } from '@shared/services/notification-note.service';
 
 @Component({
   selector: 'app-bilinguismo-actions',
@@ -32,6 +33,7 @@ export class BilinguismoActionsComponent implements OnInit,OnDestroy{
   @ViewChild('alertFooter', { static: true }) footerAlertTemplate!: TemplateRef<any>;
   @ViewChild('alertContent', { static: true }) contentAlertTemplate!: TemplateRef<any>;
 
+  private notification_service = inject(NotificationNoteService);
   private modal_service = inject(NzModalService);
   private view_container_ref = inject(ViewContainerRef);
   private bilinguismo_service = inject(BilinguismoService);
@@ -121,6 +123,12 @@ export class BilinguismoActionsComponent implements OnInit,OnDestroy{
         next:(response)=>{
           this.create.emit(response);
           this.loadingStatus(false);
+        },
+        complete:()=>{
+          this.notification_service.success('Creación existosa','El programa fue creado con exito');
+        },
+        error:()=>{
+          this.notification_service.error('Creación fallida','El programa no pudo ser creado');
         }
       });
   }
@@ -133,6 +141,12 @@ export class BilinguismoActionsComponent implements OnInit,OnDestroy{
         next:(response)=>{
           this.update.emit({bilinguismo:response,index:this.index!});
           this.loadingStatus(false);
+        },
+        complete:()=>{
+          this.notification_service.success('Edición existosa','El programa fue editado con exito');
+        },
+        error:()=>{
+          this.notification_service.error('Edición fallida','El programa no pudo ser editado');
         }
       });
   }
@@ -146,6 +160,12 @@ export class BilinguismoActionsComponent implements OnInit,OnDestroy{
           this.delete.emit(this.index!);
           this.modal?.close();
           this.loadingStatus(false);
+        },
+        complete:()=>{
+          this.notification_service.success('Eliminación existosa','El programa fue eliminado con exito');
+        },
+        error:()=>{
+          this.notification_service.error('Eliminación fallida','El programa no pudo ser eliminado');
         }
       });
   }

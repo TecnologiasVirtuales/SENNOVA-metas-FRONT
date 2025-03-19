@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, 
 import { SenaLoadingComponent } from '@shared/components/sena-loading/sena-loading.component';
 import { Df14Service } from '@shared/services/documents/df14.service';
 import { P04Service } from '@shared/services/documents/p04.service'; // Asegúrate de tener este servicio
+import { NotificationNoteService } from '@shared/services/notification-note.service';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -33,6 +34,7 @@ import { finalize } from 'rxjs/operators';
 })
 export class SubirDocumentosComponent implements OnDestroy {
 
+  private notification_service = inject(NotificationNoteService);
   fb = inject(FormBuilder);
   df14_service = inject(Df14Service);
   p04_service = inject(P04Service);
@@ -112,15 +114,17 @@ export class SubirDocumentosComponent implements OnDestroy {
       .pipe(finalize(() => this.form_loading = false))
       .subscribe({
         next: (response: any) => {
-          // Limpia el array correspondiente si la subida fue exitosa
           if (this.nombre_documento === 'DF14') {
             this.uploadedDF14Files = [];
           } else if (this.nombre_documento === 'P04') {
             this.uploadedP04Files = [];
           }
         },
-        error: (error: any) => {
-          console.error(error);
+        complete:()=>{
+          this.notification_service.success('Carga existosa','Los documentos se cargaron con exito');
+        },
+        error: () => {
+          this.notification_service.error('Carga fallida','Error al cargar los documentos');
         }
       });
     this.upload_subs.push(uploadSub);

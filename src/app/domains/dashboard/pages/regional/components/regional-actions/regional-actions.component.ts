@@ -11,6 +11,7 @@ import { NzModalModule, NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { Subscription } from 'rxjs';
 import { RegionalFormComponent } from '../regional-form/regional-form.component';
 import { RegionalDto } from '@shared/dto/regional/regional.dto';
+import { NotificationNoteService } from '@shared/services/notification-note.service';
 
 @Component({
   selector: 'app-regional-actions',
@@ -32,7 +33,7 @@ export class RegionalActionsComponent {
   @ViewChild('alertFooter', { static: true }) footerAlertTemplate!: TemplateRef<any>;
   @ViewChild('alertContent', { static: true }) contentAlertTemplate!: TemplateRef<any>;
 
-
+  private notification_service = inject(NotificationNoteService);
   private modal_service = inject(NzModalService);
   private view_container_ref = inject(ViewContainerRef);
   private regional_service = inject(RegionalService);
@@ -144,12 +145,14 @@ export class RegionalActionsComponent {
         error:()=>{
           this.loadingStatus(false);
           this.modal?.close();
-          deleteSub.unsubscribe()
+          deleteSub.unsubscribe();
+          this.notification_service.error('Eliminación fallida','Error al eliminar la regional');
         },
         complete:()=>{
           this.loadingStatus(false);
           this.modal?.close();
-          deleteSub.unsubscribe()
+          deleteSub.unsubscribe();
+          this.notification_service.success('Eliminación existosa','La regional fue eliminada con exito');
         }
       });
   }
@@ -164,10 +167,12 @@ export class RegionalActionsComponent {
         error:()=>{
           this.loadingStatus(false);
           editSub.unsubscribe();
+          this.notification_service.error('Edición fallida','Error al editar la regional');
         },
         complete:()=>{
           this.loadingStatus(false);
-          editSub.unsubscribe()
+          editSub.unsubscribe();
+          this.notification_service.success('Edición existosa','La regional fue editada con exito');
         }
       });
   }
@@ -182,10 +187,12 @@ export class RegionalActionsComponent {
         error:()=>{
           this.loadingStatus(false);
           createSub.unsubscribe();
+          this.notification_service.error('Creación fallida','Error al crear la regional');
         },
         complete:()=>{
           this.loadingStatus(false);
           createSub.unsubscribe();
+          this.notification_service.success('Creación existosa','La regional fue creada con exito');
         }
       })    
   }

@@ -10,6 +10,7 @@ import { ModalFooterComponent } from '@shared/components/modal-footer/modal-foot
 import { MetasFormacionFormComponent } from '../metas-formacion-form/metas-formacion-form.component';
 import { MetaFormacionModel } from '@shared/models/meta-formacion.model';
 import { MetasFormacionService } from '@shared/services/metas-formacion.service';
+import { NotificationNoteService } from '@shared/services/notification-note.service';
 
 @Component({
   selector: 'app-metas-formacion-actions',
@@ -32,6 +33,7 @@ export class MetasFormacionActionsComponent implements OnInit, OnDestroy {
   @ViewChild('alertFooter', { static: true }) footerAlertTemplate!: TemplateRef<any>;
   @ViewChild('alertContent', { static: true }) contentAlertTemplate!: TemplateRef<any>;
 
+  private notification_service = inject(NotificationNoteService);
   private modal_service = inject(NzModalService);
   private view_container_ref = inject(ViewContainerRef);
   private metasFormacionService = inject(MetasFormacionService);
@@ -120,6 +122,12 @@ export class MetasFormacionActionsComponent implements OnInit, OnDestroy {
         next: (response) => {
           this.create.emit(response);
           this.loadingStatus(false);
+        },
+        complete:()=>{
+          this.notification_service.success('Creación existosa','La meta fue creada con exito');
+        },
+        error:()=>{
+          this.notification_service.error('Creación fallida','Error al crear la meta');
         }
       });
   }
@@ -132,6 +140,12 @@ export class MetasFormacionActionsComponent implements OnInit, OnDestroy {
         next: (response) => {
           this.update.emit({ metaFormacion: response, index: this.index! });
           this.loadingStatus(false);
+        },
+        complete:()=>{
+          this.notification_service.success('Edición existosa','La meta fue editada con exito');
+        },
+        error:()=>{
+          this.notification_service.error('Edición fallida','Error al editar la meta');
         }
       });
   }
@@ -145,6 +159,12 @@ export class MetasFormacionActionsComponent implements OnInit, OnDestroy {
           this.delete.emit(this.index!);
           this.modal?.close();
           this.loadingStatus(false);
+        },
+        complete:()=>{
+          this.notification_service.success('Eliminación existosa','La meta fue eliminada con exito');
+        },
+        error:()=>{
+          this.notification_service.error('Eliminación fallida','Error al eliminar la meta');
         }
       });
   }
