@@ -5,4 +5,5 @@
 ::ng-deep .card {
     @apply shadow-gray-500 shadow-sm;
     @apply hover:shadow-[--primary-green-color] hover:shadow-lg;
+    @apply flex flex-col justify-center items-center;
 }
