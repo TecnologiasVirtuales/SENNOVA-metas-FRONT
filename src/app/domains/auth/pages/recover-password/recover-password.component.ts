@@ -8,7 +8,7 @@ import { OnlyNumbersDirective } from '@shared/directives/only-numbers.directive'
 import { AuthService } from '@shared/services/auth.service';
 import { NotificationNoteService } from '@shared/services/notification-note.service';
 import { FormStyle } from '@shared/style-clases/focus.style';
-import { passwordsMatchValidator } from '@shared/validators/password.validator';
+import { passwordChartsValidators, passwordsMatchValidator } from '@shared/validators/password.validator';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzFlexModule } from 'ng-zorro-antd/flex';
 import { NzFormModule } from 'ng-zorro-antd/form';
@@ -64,7 +64,13 @@ export class RecoverPasswordComponent extends FormStyle implements OnInit{
     super();
     this.form = this.formBuilder.group({
       token:new FormControl(''),
-      password: new FormControl(null,[Validators.required]),
+      password: new FormControl(null,[
+        Validators.required,
+        Validators.minLength(16),
+        passwordChartsValidators.hasSpecialChar(),
+        passwordChartsValidators.hasUppercase(),
+        passwordChartsValidators.hasDigit()
+      ]),
       password2: new FormControl(null,[Validators.required])
     });      
   }
