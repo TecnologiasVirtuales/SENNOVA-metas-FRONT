@@ -61,7 +61,6 @@ export class SubirDocumentosComponent implements OnDestroy {
     this.upload_subs.forEach((sub: Subscription) => sub.unsubscribe());
   }
 
-  // Propiedad para devolver el listado de archivos según el documento seleccionado
   get currentUploadedFiles(): NzUploadFile[] {
     if (this.nombre_documento === 'DF14') {
       return this.uploadedDF14Files;
@@ -71,18 +70,23 @@ export class SubirDocumentosComponent implements OnDestroy {
     return [];
   }
 
-  // Función que intercepta la selección de archivos y evita la subida automática
   beforeUpload = (file: NzUploadFile): boolean => {
     if (this.nombre_documento === 'DF14') {
       this.uploadedDF14Files = [...this.uploadedDF14Files, file];
     } else if (this.nombre_documento === 'P04') {
       this.uploadedP04Files = [...this.uploadedP04Files, file];
     }
-    // Retornar false previene que el archivo se suba de inmediato
     return false;
   };
 
-  // Función para enviar todos los archivos manualmente según el tipo de documento
+  onFileListChange(event:NzUploadFile[]){
+    if (this.nombre_documento === 'DF14') {
+      this.uploadedDF14Files = [...event];
+    } else if(this.nombre_documento === 'P04'){
+      this.uploadedP04Files = [...event];
+    }
+  }
+
   onSubmit(): void {
     if (!this.nombre_documento) {
       return;

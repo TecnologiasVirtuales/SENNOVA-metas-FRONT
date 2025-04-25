@@ -2,32 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
-/*
-    ant-select
-    select-input
-    ant-select-show-arrow
-    ant-select-single 
-    ng-tns-c364634890-1 
-    ant-select-focused 
-    ant-select-open
-*/
-
 .select-input{
     @apply w-full;
+}
+
+::ng-deep .ant-upload{
+    border: 2px;
+    border-color: green !important;
 }
 
 ::ng-deep .ant-select-single{
    background-color: red !important;
 }
 
-/*
-    ant-select-item 
-    ant-select-item-option
-    ant-select-item-option-selected
-    ng-star-inserted
-    ant-select-item-option-active
-*/
-
 ::ng-deep .ant-select-item-option-selected:not(.ant-select-item-option-disabled){
-    @apply bg-red-200;
+    @apply bg-[--primary-green-color-transparent];
+}
+
+.upload-container{
+    @apply flex flex-col justify-center items-center gap-2;
+}
+
+.upload-submit{
+    @apply w-1/2 p-2;
+    @apply flex justify-center items-center;
+    @apply bg-[--primary-green-color];
+    /*hover*/
+    @apply hover:bg-[--tertiary-green-color];
+}
+
+.upload-submit__disabled {
+    @apply bg-[--primary-green-color-transparent];
+    /*hover*/
+    @apply hover:bg-[--primary-green-color-transparent];
+}
+
+.upload-submit__text{
+    @apply text-white;
+}
+.upload-submit__disabled .upload-submit__text{
+    @apply text-[--primary-green-color];
 }

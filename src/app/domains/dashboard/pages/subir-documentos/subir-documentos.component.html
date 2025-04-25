@@ -1,20 +1,20 @@
 <nz-card class="max-w-[600px] w-2/3 mx-auto" [nzTitle]="header">
     @if(nombre_documento){
-    <section>
-        <!-- Componente de subida. Se usa currentUploadedFiles para mostrar la lista según el documento seleccionado -->
-        <nz-upload 
+    <section class="upload-container">
+        <nz-upload
+            class="upload-file"
             [nzBeforeUpload]="beforeUpload"
             [nzShowUploadList]="true"
-            [nzFileList]="currentUploadedFiles">
+            [nzFileList]="currentUploadedFiles"
+            (nzFileListChange)="onFileListChange($event)">
             <button nz-button>
             <i nz-icon nzType="upload"></i> Seleccionar Documento
             </button>
         </nz-upload>
-        <!-- Botón para enviar los archivos -->
-        <button nz-button (click)="onSubmit()" [disabled]="!currentUploadedFiles.length">
-            Enviar
+        <button [ngClass]="{'upload-submit__disabled':!currentUploadedFiles.length}" class="upload-submit" nz-button (click)="onSubmit()" [disabled]="!currentUploadedFiles.length">
+            <span class="upload-submit__text">Subir documento</span>
         </button>
-        </section>
+      </section>
     }@else {
         <div class="flex justify-center w-full">
             <span class="text-[--primary-green-color] font-semibold">Por favor elija el tipo de documento que desea subir</span>
@@ -34,7 +34,6 @@
         [(ngModel)]="nombre_documento">
         <nz-option nzLabel="DF14" nzValue="DF14"></nz-option>
         <nz-option nzLabel="P04" nzValue="P04"></nz-option>
-        <!-- Agrega más opciones si es necesario -->
       </nz-select>
     </section>
   </ng-template>
