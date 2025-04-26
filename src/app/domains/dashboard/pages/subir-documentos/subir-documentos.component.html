@@ -1,20 +1,25 @@
 <nz-card class="max-w-[600px] w-2/3 mx-auto" [nzTitle]="header">
     @if(nombre_documento){
-    <section class="upload-container">
-        <nz-upload
-            class="upload-file"
-            [nzBeforeUpload]="beforeUpload"
-            [nzShowUploadList]="true"
-            [nzFileList]="currentUploadedFiles"
-            (nzFileListChange)="onFileListChange($event)">
-            <button nz-button>
-            <i nz-icon nzType="upload"></i> Seleccionar Documento
-            </button>
-        </nz-upload>
-        <button [ngClass]="{'upload-submit__disabled':!currentUploadedFiles.length}" class="upload-submit" nz-button (click)="onSubmit()" [disabled]="!currentUploadedFiles.length">
-            <span class="upload-submit__text">Subir documento</span>
-        </button>
-      </section>
+      <nz-spin [nzIndicator]="loadingImg" [nzSpinning]="form_loading">
+
+        <section class="upload-container">
+              <nz-upload
+                  class="upload-file"
+                  [nzBeforeUpload]="beforeUpload"
+                  [nzShowUploadList]="true"
+                  [nzFileList]="currentUploadedFiles"
+                  (nzFileListChange)="onFileListChange($event)">
+                  <button nz-button>
+                    <i nz-icon nzType="upload"></i> Seleccionar Documento
+                  </button>
+              </nz-upload>
+              <button [ngClass]="{'upload-submit__disabled':!currentUploadedFiles.length}" class="upload-submit" nz-button (click)="onSubmit()" [disabled]="!currentUploadedFiles.length">
+                  <span class="upload-submit__text">Subir documento</span>
+              </button>
+
+          </section>
+      </nz-spin>
+
     }@else {
         <div class="flex justify-center w-full">
             <span class="text-[--primary-green-color] font-semibold">Por favor elija el tipo de documento que desea subir</span>
