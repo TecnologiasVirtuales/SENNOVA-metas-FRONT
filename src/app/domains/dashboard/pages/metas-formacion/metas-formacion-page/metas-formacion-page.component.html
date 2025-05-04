@@ -119,7 +119,7 @@
                     <td>{{meta.met_formacion_bilinguismo}}</td>
                     <td>{{meta.met_formacion_sin_bilinguismo}}</td>
                     <td *appCanUseActions="allowed_actions">
-                        <ng-container *ngTemplateOutlet="updateDelete; context:{meta,$index}"></ng-container>
+                        <ng-container *ngTemplateOutlet="updateDelete; context:{meta:meta,index:$index}"></ng-container>
                     </td>
                 </tr>
             }
