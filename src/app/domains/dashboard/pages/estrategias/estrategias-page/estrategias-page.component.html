@@ -128,7 +128,7 @@
                         <td>{{detalle.estd_bilinguismo}}</td>
                         <td>{{detalle.estd_sin_bilinguismo}}</td>
                         <td *appCanUseActions="allowed_actions">
-                            <ng-container *ngTemplateOutlet="updateDelete; context:{detalle,$index}"></ng-container>
+                            <ng-container *ngTemplateOutlet="updateDelete; context:{detalle:detalle,index:$index}"></ng-container>
                         </td>
                     </tr>
                 }
