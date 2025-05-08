@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 import { DisabledTimeFn, NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { FormStyle } from '@shared/style-clases/focus.style';
 import { formatDateToString } from '@shared/functions/date.functions';
+import { validateDate } from '@shared/validators/date.validator';
 
 @Component({
   selector: 'app-metas-form',
@@ -74,30 +75,37 @@ export class MetasFormComponent extends FormStyle implements OnInit, OnDestroy {
       met_total_otras_poblaciones:new FormControl(null,[
         Validators.required,
         Validators.min(1),
+        Validators.max(1000000000)
       ]),
       met_total_victimas:new FormControl(null,[
         Validators.required,
         Validators.min(1),
+        Validators.max(1000000000)
       ]),
       met_total_desplazados_violencia:new FormControl(null,[
         Validators.required,
         Validators.min(1),
+        Validators.max(1000000000)
       ]),
       met_total_hechos_victimizantes:new FormControl(null,[
         Validators.required,
         Validators.min(1),
+        Validators.max(1000000000)
       ]),
       met_total_titulada:new FormControl(null,[
         Validators.required,
         Validators.min(1),
+        Validators.max(1000000000)
       ]),
       met_total_complementaria:new FormControl(null,[
         Validators.required,
         Validators.min(1),
+        Validators.max(1000000000)
       ]),
       met_total_poblacion_vulnerable:new FormControl(null,[
         Validators.required,
         Validators.min(1),
+        Validators.max(1000000000)
       ]),
       per_documento:new FormControl(null),
     });
@@ -105,6 +113,7 @@ export class MetasFormComponent extends FormStyle implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.meta = this.modal.getConfig().nzData.meta;
+    this.form.addValidators(validateDate)
     this.field_per_documento.setValue(this.usuario()!.per_documento);
     if (this.meta) {
       const {

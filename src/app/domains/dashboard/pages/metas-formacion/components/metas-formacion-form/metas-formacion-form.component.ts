@@ -85,39 +85,48 @@ export class MetasFormacionFormComponent extends FormStyle implements OnInit, On
       ]),
       met_formacion_operario: new FormControl(null, [
         Validators.required,
-        Validators.min(0)
+        Validators.min(0),
+        Validators.max(1000000000)
       ]),
       met_formacion_auxiliar: new FormControl(null, [
         Validators.required,
-        Validators.min(0)
+        Validators.min(0),
+        Validators.max(1000000000)
       ]),
       met_formacion_tecnico: new FormControl(null, [
         Validators.required,
-        Validators.min(0)
+        Validators.min(0),
+        Validators.max(1000000000)
       ]),
       met_formacion_profundizacion_tecnica: new FormControl(null, [
         Validators.required,
-        Validators.min(0)
+        Validators.min(0),
+        Validators.max(1000000000)
       ]),
       met_formacion_tecnologo: new FormControl(null, [
         Validators.required,
-        Validators.min(0)
+        Validators.min(0),
+        Validators.max(1000000000)
       ]),
       met_formacion_evento: new FormControl(null, [
         Validators.required,
-        Validators.min(0)
+        Validators.min(0),
+        Validators.max(1000000000)
       ]),
       met_formacion_curso_especial: new FormControl(null, [
         Validators.required,
-        Validators.min(0)
+        Validators.min(0),
+        Validators.max(1000000000)
       ]),
       met_formacion_bilinguismo: new FormControl(null, [
         Validators.required,
-        Validators.min(0)
+        Validators.min(0),
+        Validators.max(1000000000)
       ]),
       met_formacion_sin_bilinguismo: new FormControl(null, [
         Validators.required,
-        Validators.min(0)
+        Validators.min(0),
+        Validators.max(1000000000)
       ])
     });
   }

@@ -56,6 +56,11 @@
         </nz-input-group>
       </nz-form-control>
     </nz-form-item>
+    @if(form.hasError('invalidDate')){
+      <div nz-col class="w-full flex justify-center items-center">
+        <span class="text-red-600" nz-typography nzType="danger">La fecha de fin debe ser posterior a la fecha de inicio</span>
+      </div>
+    }
   
     <!-- Campo: Año -->
     <nz-form-item nz-col nzSpan="20">
@@ -286,6 +291,11 @@
         <span nz-typography nzType="danger">El total de otras poblaciones debe ser al menos 1</span>
       </div>
     }
+    @if (field_total_otras_poblaciones.hasError('max')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de otras poblaciones es demaciado grande</span>
+      </div>
+    }
   </ng-template>
   
   <ng-template #erroresTotalVictimas>
@@ -297,6 +307,11 @@
     @if (field_total_victimas.hasError('min')) {
       <div nz-col nzSpan="24">
         <span nz-typography nzType="danger">El total de víctimas debe ser al menos 1</span>
+      </div>
+    }
+    @if (field_total_victimas.hasError('max')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">EL total de víctimas es demaciado grande</span>
       </div>
     }
   </ng-template>
@@ -312,6 +327,11 @@
         <span nz-typography nzType="danger">El total de desplazados por violencia debe ser al menos 1</span>
       </div>
     }
+    @if (field_total_desplazados_violencia.hasError('max')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">EL total de desplazados es demaciado grande</span>
+      </div>
+    }
   </ng-template>
   
   <ng-template #erroresTotalHechosVictimizantes>
@@ -323,6 +343,11 @@
     @if (field_total_hechos_victimizantes.hasError('min')) {
       <div nz-col nzSpan="24">
         <span nz-typography nzType="danger">El total de hechos victimizantes debe ser al menos 1</span>
+      </div>
+    }
+    @if (field_total_hechos_victimizantes.hasError('max')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">EL total de hechos victimizantes es demaciado grande</span>
       </div>
     }
   </ng-template>
@@ -338,6 +363,11 @@
         <span nz-typography nzType="danger">El total titulada debe ser al menos 1</span>
       </div>
     }
+    @if (field_total_titulada.hasError('max')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">EL total de titulada es demaciado grande</span>
+      </div>
+    }
   </ng-template>
   
   <ng-template #erroresTotalComplementaria>
@@ -351,6 +381,11 @@
         <span nz-typography nzType="danger">El total complementaria debe ser al menos 1</span>
       </div>
     }
+    @if (field_total_complementaria.hasError('max')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">EL total de complementaria es demaciado grande</span>
+      </div>
+    }
   </ng-template>
   
   <ng-template #erroresTotalPoblacionVulnerable>
@@ -362,6 +397,11 @@
     @if (field_total_poblacion_vulnerable.hasError('min')) {
       <div nz-col nzSpan="24">
         <span nz-typography nzType="danger">El total de población vulnerable debe ser al menos 1</span>
+      </div>
+    }
+    @if (field_total_poblacion_vulnerable.hasError('max')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">EL total de población vulnerable es demaciado grande</span>
       </div>
     }
   </ng-template>  

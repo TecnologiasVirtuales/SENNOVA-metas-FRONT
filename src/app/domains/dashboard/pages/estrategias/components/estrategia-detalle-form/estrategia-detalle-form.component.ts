@@ -84,39 +84,48 @@ export class EstrategiaDetalleFormComponent extends FormStyle implements OnInit,
         ]),
         estd_operario_meta:new FormControl(null, [
           Validators.required,
-          Validators.min(0)
+          Validators.min(0),
+          Validators.max(1000000000)
         ]),
         estd_auxiliar_meta:new FormControl(null, [
           Validators.required,
-          Validators.min(0)
+          Validators.min(0),
+          Validators.max(1000000000)
         ]),
         estd_tecnico_meta:new FormControl(null, [
           Validators.required,
-          Validators.min(0)
+          Validators.min(0),
+          Validators.max(1000000000)
         ]),
         estd_profundizacion_tecnica_meta:new FormControl(null, [
           Validators.required,
-          Validators.min(0)
+          Validators.min(0),
+          Validators.max(1000000000)
         ]),
         estd_tecnologo:new FormControl(null, [
           Validators.required,
-          Validators.min(0)
+          Validators.min(0),
+          Validators.max(1000000000)
         ]),
         estd_evento:new FormControl(null, [
           Validators.required,
-          Validators.min(0)
+          Validators.min(0),
+          Validators.max(1000000000)
         ]),
         estd_curso_especial:new FormControl(null, [
           Validators.required,
-          Validators.min(0)
+          Validators.min(0),
+          Validators.max(1000000000)
         ]),
         estd_bilinguismo:new FormControl(null, [
           Validators.required,
-          Validators.min(0)
+          Validators.min(0),
+          Validators.max(1000000000)
         ]),
         estd_sin_bilinguismo:new FormControl(null, [
           Validators.required,
-          Validators.min(0)
+          Validators.min(0),
+          Validators.max(1000000000)
         ]),
       });
     }

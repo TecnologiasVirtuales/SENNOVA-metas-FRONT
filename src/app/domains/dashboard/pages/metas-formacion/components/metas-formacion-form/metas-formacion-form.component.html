@@ -297,6 +297,11 @@
             <span nz-typography nzType="danger">La meta operarios debe ser mayor o igual a 0</span>
         </div>
     }
+    @if (field_met_formacion_operario.hasError('max')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de operarios es demaciado grande</span>
+      </div>
+    }
 </ng-template>
 <ng-template #erroresAuxiliar>
     @if (field_met_formacion_auxiliar.hasError('required')) {
@@ -307,6 +312,11 @@
     @if (field_met_formacion_auxiliar.hasError('min')) {
       <div nz-col nzSpan="24">
         <span nz-typography nzType="danger">La meta de auxiliares debe ser mayor o igual a 0</span>
+      </div>
+    }
+    @if (field_met_formacion_auxiliar.hasError('max')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de auxiliares es demaciado grande</span>
       </div>
     }
 </ng-template>
@@ -321,6 +331,11 @@
         <span nz-typography nzType="danger">La meta de técnicos debe ser mayor o igual a 0</span>
       </div>
     }
+    @if (field_met_formacion_tecnico.hasError('max')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de técnicos es demaciado grande</span>
+      </div>
+    }
 </ng-template>
 <ng-template #erroresProfundizacion>
     @if (field_met_formacion_profundizacion_tecnica.hasError('required')) {
@@ -331,6 +346,11 @@
     @if (field_met_formacion_profundizacion_tecnica.hasError('min')) {
       <div nz-col nzSpan="24">
         <span nz-typography nzType="danger">La meta de profundización técnica debe ser mayor o igual a 0</span>
+      </div>
+    }
+    @if (field_met_formacion_profundizacion_tecnica.hasError('max')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de profundización es demaciado grande</span>
       </div>
     }
 </ng-template>
@@ -345,6 +365,11 @@
         <span nz-typography nzType="danger">La meta de tecnólogos debe ser mayor o igual a 0</span>
       </div>
     }
+    @if (field_met_formacion_tecnologo.hasError('max')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de tecnólogos es demaciado grande</span>
+      </div>
+    }
 </ng-template>
 <ng-template #erroresEvento>
     @if (field_met_formacion_evento.hasError('required')) {
@@ -355,6 +380,11 @@
     @if (field_met_formacion_evento.hasError('min')) {
       <div nz-col nzSpan="24">
         <span nz-typography nzType="danger">La meta de eventos debe ser mayor o igual a 0</span>
+      </div>
+    }
+    @if (field_met_formacion_evento.hasError('max')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de eventos es demaciado grande</span>
       </div>
     }
 </ng-template>
@@ -369,6 +399,11 @@
         <span nz-typography nzType="danger">La meta de curso especial debe ser mayor o igual a 0</span>
       </div>
     }
+    @if (field_met_formacion_curso_especial.hasError('max')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de curso especial es demaciado grande</span>
+      </div>
+    }
 </ng-template>
 <ng-template #erroresBilinguismo>
     @if (field_met_formacion_bilinguismo.hasError('required')) {
@@ -381,6 +416,11 @@
         <span nz-typography nzType="danger">La meta de bilingüismo debe ser mayor o igual a 0</span>
       </div>
     }
+    @if (field_met_formacion_bilinguismo.hasError('max')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta de bilingüismo es demaciado grande</span>
+      </div>
+    }
 </ng-template>
 <ng-template #erroresSinBilinguismo>
     @if (field_met_formacion_sin_bilinguismo.hasError('required')) {
@@ -391,6 +431,11 @@
     @if (field_met_formacion_sin_bilinguismo.hasError('min')) {
       <div nz-col nzSpan="24">
         <span nz-typography nzType="danger">La meta sin bilingüismo debe ser mayor o igual a 0</span>
+      </div>
+    }
+    @if (field_met_formacion_sin_bilinguismo.hasError('max')) {
+      <div nz-col nzSpan="24">
+        <span nz-typography nzType="danger">La meta sin bilingüismo es demaciado grande</span>
       </div>
     }
 </ng-template>
